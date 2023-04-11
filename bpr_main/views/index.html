@@ -5,60 +5,48 @@
 {% endblock %}
 
 {% block content %}
-    <hr>
+    <div class="p-3 mb-2 bg-info text-white text-center display-5">舰上人员定位管理与落水救援系统可视化平台</div>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-9">
-                <div id="map2d" class="indexMap"></div>
+            <div class="col-3">
+                <p class="display-6 text-center">舰船信息</p>
+                <ul class="list-group list-group-flush indexPanel">
+                    <li class="list-group-item">舷号</li>
+                    <li class="list-group-item">位置</li>
+                </ul>
+                <p class="display-6 text-center">舰船信息</p>
+                <ul class="list-group list-group-flush indexPanel">
+                    <li class="list-group-item">An item</li>
+                    <li class="list-group-item">A second item</li>
+                    <li class="list-group-item">A third item</li>
+                    <li class="list-group-item">A fourth item</li>
+                    <li class="list-group-item">And a fifth one</li>
+                </ul>
+            </div>
+            <div class="col-6">
+                <p class="display-6 text-center">二维地图</p>
+                <div id="map2d" class="indexMap bg-info-subtle"></div>
                 <div style="display: none;">
                     <div id="popup"></div>
                 </div>
             </div>
             <div class="col-3">
-                <p class="display-4">Train</p>
-                <select class="btn btn-outline-warning" id="trainModelSelect">
-                    <option>Rule-based</option>
-                    <option>Model-Ruler</option>
-                    <option>Rule-based Machine-learning</option>
-                    <option>Model-Ruler Machine-learning</option>
-                </select>
-                <a class="btn btn-warning" id="trainModelBtn" onclick="trainModel()">Train Model</a>
-                <select class="btn btn-outline-warning" id="trainDataSelect">
-                    <option>Rule-based</option>
-                    <option>Model-Ruler</option>
-                </select>
-                <a class="btn btn-warning" id="trainDataBtn" onclick="trainData()">Train Data</a>
-
-
-
-
-                <p class="display-4">Update</p>
-                <select class="btn btn-outline-info" id="updateDataSelect">
-                    <option>Rule-based</option>
-                    <option>Model-Ruler</option>
-                    <option>Rule-based Machine-learning</option>
-                    <option>Model-Ruler Machine-learning</option>
-                </select>
-                <a class="btn btn-info" id="updateDataBtn" onclick="updateLocationData()">Update Data</a>
-
-
-
-                <p class="display-4">Display</p>
-                <select class="btn btn-outline-success" id="displayDataSelect">
-                    <option>Rule-based</option>
-                    <option>Model-Ruler</option>
-                    <option>Rule-based Machine-learning</option>
-                    <option>Model-Ruler Machine-learning</option>
-                </select>
-                <a class="btn btn-success" id="updateDataBtn" onclick="displayLocationData()">Display Data</a>
-
-
-
-                <p class="display-4">Statistic</p>
-                <p class="blockquote">Todo: form charts</p>
-                <p class="h4">Total Count: <span id="totalCount"></span></p>
-                <p class="h4">Recognized Count: <span id="recognizedCount"></span></p>
-                <p class="h4">Geocoded Count: <span id="geocodedCount"></span></p>
+                <p class="display-6 text-center">舰船信息</p>
+                <ul class="list-group list-group-flush indexPanel">
+                    <li class="list-group-item">An item</li>
+                    <li class="list-group-item">A second item</li>
+                    <li class="list-group-item">A third item</li>
+                    <li class="list-group-item">A fourth item</li>
+                    <li class="list-group-item">And a fifth one</li>
+                </ul>
+                <p class="display-6 text-center">舰船信息</p>
+                <ul class="list-group list-group-flush indexPanel">
+                    <li class="list-group-item">An item</li>
+                    <li class="list-group-item">A second item</li>
+                    <li class="list-group-item">A third item</li>
+                    <li class="list-group-item">A fourth item</li>
+                    <li class="list-group-item">And a fifth one</li>
+                </ul>
             </div>
         </div>
     </div>
