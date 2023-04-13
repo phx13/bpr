@@ -32,8 +32,6 @@ function initMap(center, zoom) {
 
 /*初始化地球*/
 function initEarth() {
-    Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJhN2ZhMzE2YS1mNjA5LTQwNTItYjBlOC02MGU2ZTkxNGUxOTYiLCJpZCI6MTI0MTg3LCJpYXQiOjE2NzYwMTY5MzV9.aGgrCM7Quv8A3enmSh5c0vKC8duHOyJxbQdKk0-zJyc';
-
     let cesiumConfig = {
         geocoder: false,
         homeButton: false,
@@ -43,10 +41,35 @@ function initEarth() {
         animation: false,
         timeline: false,
         fullscreenButton: false,
-        vrButton: false
+        vrButton: false,
+        imageryProvider: new Cesium.TileMapServiceImageryProvider({
+            url: Cesium.buildModuleUrl('Assets/Textures/NaturalEarthII')
+        })
     }
 
     const viewer = new Cesium.Viewer('earth', cesiumConfig);
 
+    // const imageryLayers = viewer.imageryLayers;
+    // imageryLayers.remove(imageryLayers.get(0));
+    //
+    // // 使用XYZ方式加载OSM影像服务
+    // const xyzImageryProvider = new Cesium.UrlTemplateImageryProvider({
+    //     // url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    //     url: mapUrl,
+    //     format: 'image/jpeg'
+    // });
+    //
+    // // 将OSM影像数据源组织为OSM影像图层并加入到影像图层容器中
+    // const xyzImageryLayer = new Cesium.ImageryLayer(xyzImageryProvider);
+    // imageryLayers.add(xyzImageryLayer);
+
     viewer._cesiumWidget._creditContainer.style.display = 'none';
+
+    viewer.camera.flyTo({
+        destination: Cesium.Cartesian3.fromDegrees(120, 38, 3000000),
+        orientation: {
+            heading: Cesium.Math.toRadians(0),
+            pitch: Cesium.Math.toRadians(-60.0),
+        }
+    });
 }

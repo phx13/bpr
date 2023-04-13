@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 
 # 创建sqlalchemy实例
@@ -12,6 +13,8 @@ app.config['SQLALCHEMY_POOL_SIZE'] = 1000
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # 使用app集成化的方式初始化sqlalchemy
 db.init_app(app)
+# 解决跨域
+CORS(app, supports_credentials=True)
 
 
 @app.before_request
