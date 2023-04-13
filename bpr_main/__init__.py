@@ -1,25 +1,17 @@
-import pymysql
 from flask import Flask
-
-pymysql.install_as_MySQLdb()
 from flask_sqlalchemy import SQLAlchemy
 
+# 创建sqlalchemy实例
+db = SQLAlchemy()
+# 创建app实例
 app = Flask(__name__, template_folder='views', static_url_path='/', static_folder='resources')
+# 配置mysql
 app.config['SECRET_KEY'] = '\xca\x0c\x86\x04\x98@\x02b\x1b7\x8c\x88]\x1b\xd7"+\xe6px@\xc3#\\'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:123456@localhost:3306/mlit?charset=utf8'
+app.config["SQLALCHEMY_DATABASE_URI"] = 'mysql+pymysql://root:123456@localhost:3306/bpr?charset=utf8'
 app.config['SQLALCHEMY_POOL_SIZE'] = 1000
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
-
-
-# @app.errorhandler(Exception)
-# @app.errorhandler(CSRFError)
-# def catch_http_exception(e):
-#     if isinstance(e, HTTPException):
-#         api_exception = APIException(e.code, e.description)
-#     else:
-#         api_exception = InterServerErrorException()
-#     return render_template('error.html', api_exception=api_exception)
+# 使用app集成化的方式初始化sqlalchemy
+db.init_app(app)
 
 
 @app.before_request

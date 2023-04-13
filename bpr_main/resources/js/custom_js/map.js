@@ -21,11 +21,32 @@ function initMap(center, zoom) {
     });
 
     return new ol.Map({
-        target: 'map2d', //地图元素
+        target: 'map', //地图元素
         controls: [],
         layers: [
             tileLayer
         ],
         view: view
     });
+}
+
+/*初始化地球*/
+function initEarth() {
+    Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJhN2ZhMzE2YS1mNjA5LTQwNTItYjBlOC02MGU2ZTkxNGUxOTYiLCJpZCI6MTI0MTg3LCJpYXQiOjE2NzYwMTY5MzV9.aGgrCM7Quv8A3enmSh5c0vKC8duHOyJxbQdKk0-zJyc';
+
+    let cesiumConfig = {
+        geocoder: false,
+        homeButton: false,
+        sceneModePicker: false,
+        baseLayerPicker: false,
+        navigationHelpButton: false,
+        animation: false,
+        timeline: false,
+        fullscreenButton: false,
+        vrButton: false
+    }
+
+    const viewer = new Cesium.Viewer('earth', cesiumConfig);
+
+    viewer._cesiumWidget._creditContainer.style.display = 'none';
 }
