@@ -49,27 +49,28 @@ function initEarth() {
 
     const viewer = new Cesium.Viewer('earth', cesiumConfig);
 
-    // const imageryLayers = viewer.imageryLayers;
-    // imageryLayers.remove(imageryLayers.get(0));
-    //
-    // // 使用XYZ方式加载OSM影像服务
-    // const xyzImageryProvider = new Cesium.UrlTemplateImageryProvider({
-    //     // url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-    //     url: mapUrl,
-    //     format: 'image/jpeg'
-    // });
-    //
-    // // 将OSM影像数据源组织为OSM影像图层并加入到影像图层容器中
-    // const xyzImageryLayer = new Cesium.ImageryLayer(xyzImageryProvider);
-    // imageryLayers.add(xyzImageryLayer);
+    const imageryLayers = viewer.imageryLayers;
+    imageryLayers.remove(imageryLayers.get(0));
 
+    // 使用XYZ方式加载本机服务中的地图瓦片
+    const xyzImageryProvider = new Cesium.UrlTemplateImageryProvider({
+        url: mapUrl,
+        format: 'image/jpeg'
+    });
+
+    // 将地图瓦片资源作为地图图层并加入到影像图层容器中
+    const xyzImageryLayer = new Cesium.ImageryLayer(xyzImageryProvider);
+    imageryLayers.add(xyzImageryLayer);
+
+    // 去除cesium的左下角商标
     viewer._cesiumWidget._creditContainer.style.display = 'none';
 
+    // 初始化镜头位置
     viewer.camera.flyTo({
-        destination: Cesium.Cartesian3.fromDegrees(120, 38, 3000000),
+        destination: Cesium.Cartesian3.fromDegrees(120, 20, 3500000),
         orientation: {
             heading: Cesium.Math.toRadians(0),
-            pitch: Cesium.Math.toRadians(-60.0),
+            pitch: Cesium.Math.toRadians(-65),
         }
     });
 }

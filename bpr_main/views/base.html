@@ -1,31 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Basic -->
+    <!-- HTML设置 -->
     <meta charset="utf-8">
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
 
-    <!-- Mobile Metas -->
+    <!-- HTML移动端设置 -->
     <meta content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
 
-    <!-- Site Metas -->
-    <title>MLIT</title>
+    <!-- 页面主题设置 -->
+    <title>舰上人员定位管理与落水救援系统</title>
 
-    <!-- Site Icons -->
+    <!-- 图标设置 -->
     <link href="/images/icons/favicon.ico" rel="shortcut icon" type="image/x-icon">
 
-    <!-- Import CSS -->
+    <!-- CSS -->
     <link href="/css/import_css/normalize.css" rel="stylesheet" type="text/css">
     <link href="/css/import_css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="/css/import_css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-    <!-- Site CSS -->
     <link href="/css/custom_css/style.css" rel="stylesheet" type="text/css">
     {% block heads %}
     {% endblock %}
 </head>
 
 <body>
+
+<header>
+    <div class="p-3 mb-2 bg-info text-white text-center display-5">
+        <button class="btn btn-outline-light position-relative top-50 translate-middle-y"
+                type="button"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#menu"
+                aria-controls="menu">
+            菜单
+        </button>
+        舰上人员定位管理与落水救援系统
+    </div>
+    <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="menu"
+         aria-labelledby="menu-label">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="menu-label">菜单</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="list-group list-group-flush indexPanel">
+                <a href="{{ url_for('index_bp.index_page') }}" class="list-group-item list-group-item-action">首页</a>
+                <a href="#" class="list-group-item list-group-item-action">设备管理</a>
+                <a href="{{ url_for('account_bp.account_page') }}" class="list-group-item list-group-item-action">用户管理</a>
+                {# 如果用户已经登录 #}
+                {% if current_user.is_authenticated %}
+                    {# 只显示注销 #}
+                    <a href="{{ url_for('authenticate_bp.logout') }}" class="list-group-item list-group-item-action">注销</a>
+                {% else %}
+                    {# 否则显示登录或者注册 #}
+                    <a href="{{ url_for('authenticate_bp.login') }}" class="list-group-item list-group-item-action">登录</a>
+                    <a href="{{ url_for('authenticate_bp.register') }}" class="list-group-item list-group-item-action">注册</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</header>
 
 <main>
     {% block content %}

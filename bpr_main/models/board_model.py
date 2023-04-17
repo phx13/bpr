@@ -10,7 +10,6 @@ class BoardModel(db.Model):
     id = Column(Integer, primary_key=True)
     board_id = Column(String(64), unique=True, nullable=False)
     board_name = Column(String(64))
-    board_pop = Column(Integer)
     create_time = Column(DateTime)
     update_time = Column(DateTime)
 
