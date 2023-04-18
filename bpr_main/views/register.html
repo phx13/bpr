@@ -1,8 +1,6 @@
 {% extends 'base.html' %}
 {% block heads %}
     {{ super() }}
-    <link href="/css/import_css/ol.css" rel="stylesheet" type="text/css">
-    <link href="/Cesium/Widgets/widgets.css" rel="stylesheet" type="text/css">
 {% endblock %}
 
 {% block content %}
@@ -11,17 +9,24 @@
             <div class="col"></div>
             <div class="col">
                 <p class="display-6 text-center">注册</p>
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="username" placeholder="用户名">
-                    <label for="username">用户名</label>
-                </div>
-                <div class="form-floating mb-3">
-                    <input type="password" class="form-control" id="password" placeholder="密码">
-                    <label for="password">密码</label>
-                </div>
-                <div class="d-grid gap-2">
-                    <button type="button" class="btn btn-outline-info">注册</button>
-                </div>
+                <form action="" method="post">
+                    {{ form.csrf_token() }}
+                    <div class="form-floating mb-3">
+                        {{ form.username(type="text", class="form-control", id="username", placeholder="用户名") }}
+                        {{ form.username.label(for="username") }}
+                    </div>
+                    <div class="form-floating mb-3">
+                        {{ form.password(type="password", class="form-control", id="password", placeholder="密码") }}
+                        {{ form.password.label(for="password") }}
+                    </div>
+                    <div class="form-floating mb-3">
+                        {{ form.confirm(type="password", class="form-control", id="confirm", placeholder="确认密码") }}
+                        {{ form.confirm.label(for="confirm") }}
+                    </div>
+                    <div class="d-grid gap-2">
+                        {{ form.submit(class="btn btn-outline-info") }}
+                    </div>
+                </form>
             </div>
             <div class="col"></div>
         </div>
@@ -30,8 +35,4 @@
 
 {% block scripts %}
     {{ super() }}
-    <script type="text/javascript" src="/js/import_js/ol.js"></script>
-    <script type="text/javascript" src="/Cesium/Cesium.js"></script>
-    <script type="text/javascript" src="/js/custom_js/map.js"></script>
-    <script type="text/javascript" src="/js/custom_js/index.js"></script>
 {% endblock %}

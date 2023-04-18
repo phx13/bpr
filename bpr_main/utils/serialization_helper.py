@@ -1,4 +1,9 @@
-# 序列化帮助类
+"""
+序列化帮助类
+author：phx
+"""
+
+
 class SerializationHelper:
     # model类序列化成列表的方法
     @staticmethod

@@ -1,3 +1,7 @@
+"""
+账号数据模型
+author：phx
+"""
 from flask_login import UserMixin
 from sqlalchemy import Column, Integer, String, DateTime
 
@@ -22,8 +26,11 @@ class AccountModel(db.Model, UserMixin):
 
     # 按用户名查找用户方法
     @staticmethod
-    def search_account_by_username(username):
+    def get_account_by_username(username):
         return db.session.query(AccountModel).filter_by(username=username).first()
 
-
-
+    # 新增用户方法
+    @staticmethod
+    def add_account(account):
+        db.session.add(account)
+        db.session.commit()

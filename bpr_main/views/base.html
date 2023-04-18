@@ -25,6 +25,7 @@
 
 <body>
 
+{# 头部 #}
 <header>
     <div class="p-3 mb-2 bg-info text-white text-center display-5">
         <button class="btn btn-outline-light position-relative top-50 translate-middle-y"
@@ -36,6 +37,7 @@
         </button>
         舰上人员定位管理与落水救援系统
     </div>
+    {# 边栏菜单 #}
     <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="menu"
          aria-labelledby="menu-label">
         <div class="offcanvas-header">
@@ -44,17 +46,23 @@
         </div>
         <div class="offcanvas-body">
             <div class="list-group list-group-flush indexPanel">
-                <a href="{{ url_for('index_bp.index_page') }}" class="list-group-item list-group-item-action">首页</a>
-                <a href="#" class="list-group-item list-group-item-action">设备管理</a>
-                <a href="{{ url_for('account_bp.account_page') }}" class="list-group-item list-group-item-action">用户管理</a>
+                <a href="{{ url_for('index_bp.index_page') }}"
+                   class="list-group-item list-group-item-action">首页</a>
+                <a href="#"
+                   class="list-group-item list-group-item-action">设备管理</a>
+                <a href="{{ url_for('account_bp.account_page') }}"
+                   class="list-group-item list-group-item-action">用户管理</a>
                 {# 如果用户已经登录 #}
                 {% if current_user.is_authenticated %}
                     {# 只显示注销 #}
-                    <a href="{{ url_for('authenticate_bp.logout') }}" class="list-group-item list-group-item-action">注销</a>
+                    <a href="{{ url_for('authenticate_bp.logout') }}"
+                       class="list-group-item list-group-item-action">注销</a>
                 {% else %}
                     {# 否则显示登录或者注册 #}
-                    <a href="{{ url_for('authenticate_bp.login') }}" class="list-group-item list-group-item-action">登录</a>
-                    <a href="{{ url_for('authenticate_bp.register') }}" class="list-group-item list-group-item-action">注册</a>
+                    <a href="{{ url_for('authenticate_bp.login') }}"
+                       class="list-group-item list-group-item-action">登录</a>
+                    <a href="{{ url_for('authenticate_bp.register') }}"
+                       class="list-group-item list-group-item-action">注册</a>
                 {% endif %}
             </div>
         </div>

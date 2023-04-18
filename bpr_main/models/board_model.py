@@ -1,8 +1,10 @@
+"""
+舰船数据模型
+author：phx
+"""
 from sqlalchemy import Column, Integer, String, DateTime
 
 from bpr_main import db
-from bpr_main.utils.database_helper import DatabaseHelper
-from bpr_main.utils.serialization_helper import SerializationHelper
 
 
 # 舰船model类，定义舰船自身属性
