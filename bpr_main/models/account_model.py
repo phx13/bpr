@@ -34,3 +34,14 @@ class AccountModel(db.Model, UserMixin):
     def add_account(account):
         db.session.add(account)
         db.session.commit()
+
+    # 删除用户方法
+    @staticmethod
+    def delete_account(account):
+        db.session.delete(account)
+        db.session.commit()
+
+    # 更新用户方法
+    @staticmethod
+    def update_account():
+        db.session.commit()
