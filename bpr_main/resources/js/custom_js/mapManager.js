@@ -1,6 +1,7 @@
-/* 地图管理类
+/*
+* 地图管理类
 * author：phx
- */
+*/
 
 class MapManager {
     // 构造
@@ -8,27 +9,59 @@ class MapManager {
     }
 
     // 地图
-    map = null;
+    _map = null;
 
-    // 获取地图
+    // 瓦片地图图层
+    _tileLayer = null;
+
+    // 点样式
+    _imageStyle = new ol.style.Style({
+        image: new ol.style.Circle({
+            radius: 5,
+            fill: new ol.style.Fill({color: 'yellow'}),
+            stroke: new ol.style.Stroke({color: 'red', width: 1}),
+        }),
+    });
+
+    /*
+    * 获取地图
+    */
     getMap() {
-        return this.map;
+        return this._map;
     }
 
-    /*地图初始化方法
-    * url：瓦片地图服务url
-    * lon：初始化经度
-    * lat：初始化纬度
-    * zoom：初始化层级
+    /*
+    * 设置瓦片地图图层
     */
-    initialize(url, lon, lat, zoom) {
-        //瓦片地图图层
-        let tileLayer = new ol.layer.Tile({
+    setTileLayer(url) {
+        this._tileLayer = new ol.layer.Tile({
+            preload: Infinity,
             source: new ol.source.XYZ({
                 url: url
             })
         });
+    }
 
+    /*
+    * 获取瓦片地图图层
+    */
+    getTileLayer() {
+        return this._tileLayer;
+    }
+
+    /*
+    * 获取点图标样式
+    */
+    getImageStyle() {
+        return this._imageStyle;
+    }
+
+    /*地图初始化方法
+    * lon：初始化经度
+    * lat：初始化纬度
+    * zoom：初始化层级
+    */
+    initialize(lon, lat, zoom) {
         //视角
         let view = new ol.View({
             center: ol.proj.fromLonLat([lon, lat]),
@@ -37,15 +70,17 @@ class MapManager {
             minZoom: 3
         });
 
-        this.map = new ol.Map({
+        this._map = new ol.Map({
             target: 'map', //地图元素
             controls: [],
             layers: [
-                tileLayer
+                this._tileLayer
             ],
             view: view
         });
     }
+
+
 }
 
 

@@ -32,6 +32,7 @@ db.init_app(app)
 # 引入所有数据表
 from bpr_main.models.account_model import AccountModel
 from bpr_main.models.board_model import BoardModel
+from bpr_main.models.board_info_model import BoardInfoModel
 
 with app.app_context():
     db.create_all()

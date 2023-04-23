@@ -13,6 +13,7 @@ class AccountModel(db.Model, UserMixin):
     id = Column(Integer, primary_key=True)
     username = Column(String(64), unique=True, nullable=False)
     password = Column(String(64))
+    board_id = Column(String(64))
     create_time = Column(DateTime)
     update_time = Column(DateTime)
 
@@ -20,6 +21,7 @@ class AccountModel(db.Model, UserMixin):
     id: int 主键
     username: varchar 用户名
     password: varchar 密码
+    board_id: varchar 所属舰船
     create_time: datetime 创建时间
     update_time: datetime 更新时间
     """

@@ -1,16 +1,17 @@
-/* 地球管理类
+/*
+* 地球管理类
 * author：phx
- */
+*/
 
 class EarthManager {
     // 构造
     constructor() {
     }
 
-    viewer = null;
+    _viewer = null;
 
     getViewer() {
-        return this.viewer;
+        return this._viewer;
     }
 
     // cesium配置
@@ -63,6 +64,6 @@ class EarthManager {
             }
         });
 
-        this.viewer = viewer;
+        this._viewer = viewer;
     }
 }
