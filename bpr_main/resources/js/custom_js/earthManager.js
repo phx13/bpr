@@ -15,7 +15,7 @@ class EarthManager {
     }
 
     // cesium配置
-    cesiumConfig = {
+    _cesiumConfig = {
         geocoder: false,
         homeButton: false,
         sceneModePicker: false,
@@ -37,7 +37,7 @@ class EarthManager {
     * height：初始化高度
     */
     initialize(url, lon, lat, height) {
-        let viewer = new Cesium.Viewer('earth', this.cesiumConfig);
+        let viewer = new Cesium.Viewer('earth', this._cesiumConfig);
 
         const imageryLayers = viewer.imageryLayers;
         imageryLayers.remove(imageryLayers.get(0));

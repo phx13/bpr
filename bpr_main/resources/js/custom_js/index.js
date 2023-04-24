@@ -47,60 +47,72 @@ let vectorLayer = new ol.layer.Vector({
 });
 
 
-// let tileLayer = mapManager.getTileLayer();
-// console.log(tileLayer);
-//
-//
-// const n = 200;
-// const omegaTheta = 30000; // Rotation period in ms
-// const R = 7e6;
-// const r = 2e6;
-// const p = 2e6;
-// tileLayer.on('postrender', function (event) {
-//     const vectorContext = ol.render.getVectorContext(event);
-//     const frameState = event.frameState;
-//     const theta = (2 * Math.PI * frameState.time) / omegaTheta;
-//     const coordinates = [];
-//     let i;
-//     for (i = 0; i < n; ++i) {
-//         const t = theta + (2 * Math.PI * i) / n;
-//         const x = (R + r) * Math.cos(t) + p * Math.cos(((R + r) * t) / r);
-//         const y = (R + r) * Math.sin(t) + p * Math.sin(((R + r) * t) / r);
-//         coordinates.push([x, y]);
-//     }
-//     vectorContext.setStyle(mapManager.getImageStyle());
-//     vectorContext.drawGeometry(new ol.geom.MultiPoint(coordinates));
-//
-//     const headPoint = new ol.geom.Point(coordinates[coordinates.length - 1]);
-//
-//     vectorContext.setStyle(mapManager.getImageStyle());
-//     vectorContext.drawGeometry(headPoint);
-//
-//     vectorContext.setStyle(mapManager.getImageStyle());
-//     vectorContext.drawGeometry(headPoint);
-//
-//     map.render();
-// });
-// map.render();
-//
-// const style = new ol.style.Style({
-//     fill: new ol.style.Fill({
-//         color: '#eeeeee',
-//     }),
-// });
-// const vectorLayer = new ol.layer.VectorImage({
-//     background: '#1a2b39',
-//     imageRatio: 2,
-//     source: new ol.source.Vector({
-//         url: 'https://openlayers.org/data/vector/ecoregions.json',
-//         format: new ol.format.GeoJSON(),
-//     }),
-//     style: function (feature) {
-//         const color = feature.get('COLOR') || '#eeeeee';
-//         style.getFill().setColor(color);
-//         return style;
-//     },
-// });
 map.addLayer(vectorLayer);
 console.log(map);
 console.log(vectorLayer);
+
+// earth
+
+earth.entities.add({
+    position: Cesium.Cartesian3.fromDegrees(122, 40),
+    billboard: {
+        image: '../../images/icons/location.jpg', // default: undefined
+        show: true, // default
+        pixelOffset: new Cesium.Cartesian2(0, 0), // default: (0, 0)
+        eyeOffset: new Cesium.Cartesian3(0.0, 0.0, 0.0), // default
+        horizontalOrigin: Cesium.HorizontalOrigin.CENTER, // default
+        verticalOrigin: Cesium.VerticalOrigin.BOTTOM, // default: CENTER
+        scale: 1, // default: 1.0
+        color: Cesium.Color.LIME, // default: WHITE
+        rotation: 0, // default: 0.0
+        alignedAxis: Cesium.Cartesian3.ZERO, // default
+        width: 50, // default: undefined
+        height: 25, // default: undefined
+    }
+});
+
+// earth.entities.add({
+//     position: Cesium.Cartesian3.fromDegrees(122, 40, 5000),
+//     model: {
+//         uri: '../../models/Cesium_Air.glb'
+//     }
+// });
+
+function createModel(id, url, height) {
+    // earth.entities.removeAll();
+
+    const position = Cesium.Cartesian3.fromDegrees(
+        122,
+        40,
+        height
+    );
+    const heading = Cesium.Math.toRadians(135);
+    const pitch = 0;
+    const roll = 0;
+    const hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
+    const orientation = Cesium.Transforms.headingPitchRollQuaternion(
+        position,
+        hpr
+    );
+
+    const entity = earth.entities.add({
+        id: id,
+        name: url,
+        position: position,
+        orientation: orientation,
+        model: {
+            uri: url,
+            minimumPixelSize: 128,
+            maximumScale: 20000,
+        },
+    });
+    // earth.trackedEntity = entity;
+}
+
+createModel('plane1',
+    "../../models/Cesium_Air.glb",
+    5000.0
+);
+
+let plane1 = earth.entities.getById('plane1');
+console.log(plane1);
