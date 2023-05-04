@@ -1,14 +1,34 @@
 {% extends 'base.html' %}
 {% block heads %}
     {{ super() }}
+    <link href="/css/import_css/bootstrap-table.min.css" rel="stylesheet" type="text/css">
 {% endblock %}
 
 {% block content %}
     <div class="container-fluid">
-        用户管理
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <p class="display-6 text-center">用户管理</p>
+                    <div id="dmtabletoolbar"></div>
+                    <table id="dmtable" data-toolbar="#dmtabletoolbar" data-search="true">
+                        <thead>
+                        <tr>
+                            <th data-field="id">编号</th>
+                            <th data-field="name">姓名</th>
+                            <th data-field="state">所属舰船</th>
+                            <th data-field="time">...</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}
 
 {% block scripts %}
     {{ super() }}
+    <script type="text/javascript" src="/js/import_js/bootstrap-table.min.js"></script>
+    <script type="text/javascript" src="/js/custom_js/account.js"></script>
 {% endblock %}

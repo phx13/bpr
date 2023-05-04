@@ -8,10 +8,14 @@ class EarthManager {
     constructor() {
     }
 
-    _viewer = null;
+    // 地球
+    _earth = null;
 
-    getViewer() {
-        return this._viewer;
+    /*
+    * 获取地球方法
+    */
+    getEarth() {
+        return this._earth;
     }
 
     // cesium配置
@@ -30,7 +34,30 @@ class EarthManager {
         })
     }
 
-    /*地球初始化方法
+    // billboard配置
+    _billboardConfig = {
+        image: '../../images/icons/location.jpg', // default: undefined
+        show: true, // default
+        pixelOffset: new Cesium.Cartesian2(0, 0), // default: (0, 0)
+        eyeOffset: new Cesium.Cartesian3(0.0, 0.0, 0.0), // default
+        horizontalOrigin: Cesium.HorizontalOrigin.CENTER, // default
+        verticalOrigin: Cesium.VerticalOrigin.BOTTOM, // default: CENTER
+        scale: 1, // default: 1.0
+        color: Cesium.Color.LIME, // default: WHITE
+        rotation: 0, // default: 0.0
+        alignedAxis: Cesium.Cartesian3.ZERO, // default
+        width: 50, // default: undefined
+        height: 25, // default: undefined
+    }
+
+    // 实体种类
+    ENTITYTYPE = {
+        BILLBOARD: 'Billboard',
+        MODEL: 'Model'
+    }
+
+    /*
+    * 地球初始化方法
     * url：瓦片地图服务url
     * lon：初始化经度
     * lat：初始化纬度
@@ -39,17 +66,17 @@ class EarthManager {
     initialize(url, lon, lat, height) {
         let viewer = new Cesium.Viewer('earth', this._cesiumConfig);
 
-        const imageryLayers = viewer.imageryLayers;
+        let imageryLayers = viewer.imageryLayers;
         imageryLayers.remove(imageryLayers.get(0));
 
         // 使用XYZ方式加载本机服务中的地图瓦片
-        const xyzImageryProvider = new Cesium.UrlTemplateImageryProvider({
+        let xyzImageryProvider = new Cesium.UrlTemplateImageryProvider({
             url: url,
             format: 'image/jpeg'
         });
 
         // 将地图瓦片资源作为地图图层并加入到影像图层容器中
-        const xyzImageryLayer = new Cesium.ImageryLayer(xyzImageryProvider);
+        let xyzImageryLayer = new Cesium.ImageryLayer(xyzImageryProvider);
         imageryLayers.add(xyzImageryLayer);
 
         // 去除cesium的左下角商标
@@ -64,6 +91,33 @@ class EarthManager {
             }
         });
 
-        this._viewer = viewer;
+        this._earth = viewer;
+    }
+
+    /*
+    * 添加实体方法
+    */
+    addEntity(args) {
+        const position = Cesium.Cartesian3.fromDegrees(args.lon, args.lat, args.height);
+        switch (args.entityType) {
+            case this.ENTITYTYPE.BILLBOARD:
+                return this._earth.entities.add({
+                    id: args.id,
+                    position: position,
+                    billboard: this._billboardConfig
+                })
+            case this.ENTITYTYPE.MODEL:
+                const orientation = Cesium.Transforms.headingPitchRollQuaternion(position, new Cesium.HeadingPitchRoll(args.heading, args.pitch, args.roll));
+                return this._earth.entities.add({
+                    id: args.id,
+                    position: position,
+                    orientation: orientation,
+                    model: {
+                        uri: args.url,
+                        minimumPixelSize: 128,
+                        maximumScale: 20000,
+                    },
+                })
+        }
     }
 }
