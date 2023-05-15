@@ -1,25 +1,35 @@
-/*
-* 地图管理类
-* author：phx
-*/
+/**
+ * 地图管理类
+ * author：phx
+ */
 
 class MapManager {
-    // 构造
+    /**
+     * 构造
+     */
     constructor() {
     }
 
-    // 地图
+    /**
+     * 地图
+     */
     _map = null;
 
-    // 瓦片地图图层
+    /**
+     * 瓦片地图图层
+     */
     _tileLayer = null;
 
-    // 对齐方式
+    /**
+     * 对齐方式
+     */
     ANCHORORIGIN = {
         TOP: 'top', LEFT: 'left', RIGHT: 'right', BOTTOM: 'bottom'
     }
 
-    // 几何体类型
+    /**
+     * 几何体类型
+     */
     GEOMTYPE = {
         Circle: 'Circle',
         LineString: 'LineString',
@@ -31,7 +41,9 @@ class MapManager {
         Polygon: 'Polygon',
     }
 
-    // 样式类型
+    /**
+     * 样式类型
+     */
     STYLETYPE = {
         Fill: 'Fill',
         ImageIcon: 'ImageIcon',
@@ -39,11 +51,12 @@ class MapManager {
         Stroke: 'Stroke'
     }
 
-    /*地图初始化方法
-    * lon：初始化经度
-    * lat：初始化纬度
-    * zoom：初始化层级
-    */
+    /**
+     * 地图初始化方法
+     * lon：初始化经度
+     * lat：初始化纬度
+     * zoom：初始化层级
+     */
     initialize(lon, lat, zoom) {
         //视角
         let view = new ol.View({
@@ -56,17 +69,17 @@ class MapManager {
         });
     }
 
-    /*
-    * 获取地图
-    */
+    /**
+     * 获取地图
+     */
     getMap() {
         return this._map;
     }
 
-    /*
-    * 设置瓦片地图图层
-    * url：瓦片地图地址
-    */
+    /**
+     * 设置瓦片地图图层
+     * url：瓦片地图地址
+     */
     setTileLayer(url) {
         this._tileLayer = new ol.layer.Tile({
             preload: Infinity, source: new ol.source.XYZ({
@@ -75,17 +88,17 @@ class MapManager {
         });
     }
 
-    /*
-    * 获取瓦片地图图层
-    */
+    /**
+     * 获取瓦片地图图层
+     */
     getTileLayer() {
         return this._tileLayer;
     }
 
-    /*
-    * 创建要素样式
-    * args：可选参数
-    */
+    /**
+     * 创建要素样式
+     * args：可选参数
+     */
     createStyle(args) {
         switch (args.styleType) {
             case this.STYLETYPE.Fill:
@@ -123,12 +136,12 @@ class MapManager {
         }
     }
 
-    /*
-    * 创建地图要素
-    * geomType：要素的几何体种类
-    * name：要素名字
-    * coordinates：要素经纬度坐标
-    */
+    /**
+     * 创建地图要素
+     * geomType：要素的几何体种类
+     * name：要素名字
+     * coordinates：要素经纬度坐标
+     */
     createFeature(geomType, name, coordinates) {
         switch (geomType) {
             case this.GEOMTYPE.Circle:
@@ -166,10 +179,10 @@ class MapManager {
         }
     }
 
-    /*
-    * 创建矢量点图层
-    * features：要素点集合
-    */
+    /**
+     * 创建矢量点图层
+     * features：要素点集合
+     */
     createVectorLayer(features) {
         return new ol.layer.Vector({
             source: new ol.source.Vector({

@@ -54,7 +54,9 @@ login_manager.init_app(app)
 from bpr_main.controllers.index_controller import index_bp
 from bpr_main.controllers.account_controller import account_bp
 from bpr_main.controllers.authenticate_controller import authenticate_bp
+from bpr_main.controllers.indoor_controller import indoor_bp
 
 app.register_blueprint(index_bp)
 app.register_blueprint(account_bp)
 app.register_blueprint(authenticate_bp)
+app.register_blueprint(indoor_bp)

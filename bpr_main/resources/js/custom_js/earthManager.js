@@ -1,24 +1,30 @@
-/*
-* 地球管理类
-* author：phx
-*/
+/**
+ * 地球管理类
+ * author：phx
+ */
 
 class EarthManager {
-    // 构造
+    /**
+     * 构造
+     */
     constructor() {
     }
 
-    // 地球
+    /**
+     * 地球
+     */
     _earth = null;
 
-    /*
-    * 获取地球方法
-    */
+    /**
+     * 获取地球方法
+     */
     getEarth() {
         return this._earth;
     }
 
-    // cesium配置
+    /**
+     * cesium配置
+     */
     _cesiumConfig = {
         geocoder: false,
         homeButton: false,
@@ -34,7 +40,9 @@ class EarthManager {
         })
     }
 
-    // billboard配置
+    /**
+     * billboard配置
+     */
     _billboardConfig = {
         image: '../../images/icons/location.jpg', // default: undefined
         show: true, // default
@@ -50,19 +58,21 @@ class EarthManager {
         height: 25, // default: undefined
     }
 
-    // 实体种类
+    /**
+     * 实体种类
+     */
     ENTITYTYPE = {
         BILLBOARD: 'Billboard',
         MODEL: 'Model'
     }
 
-    /*
-    * 地球初始化方法
-    * url：瓦片地图服务url
-    * lon：初始化经度
-    * lat：初始化纬度
-    * height：初始化高度
-    */
+    /**
+     * 地球初始化方法
+     * url：瓦片地图服务url
+     * lon：初始化经度
+     * lat：初始化纬度
+     * height：初始化高度
+     */
     initialize(url, lon, lat, height) {
         let viewer = new Cesium.Viewer('earth', this._cesiumConfig);
 
@@ -94,9 +104,9 @@ class EarthManager {
         this._earth = viewer;
     }
 
-    /*
-    * 添加实体方法
-    */
+    /**
+     * 添加实体方法
+     */
     addEntity(args) {
         const position = Cesium.Cartesian3.fromDegrees(args.lon, args.lat, args.height);
         switch (args.entityType) {

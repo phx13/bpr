@@ -66,6 +66,8 @@ def register():
         user = AccountModel()
         user.username = form.username.data
         user.password = form.password.data
+        user.board_id = form.board_id.data
+        user.is_admin = form.is_admin.data
         user.create_time = time.strftime('%Y-%m-%d %H:%M:%S')
         user.update_time = time.strftime('%Y-%m-%d %H:%M:%S')
         # 添加新用户

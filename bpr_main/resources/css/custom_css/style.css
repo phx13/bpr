@@ -1,4 +1,6 @@
-/*首页样式*/
+/*
+* 首页样式
+*/
 .indexMap {
     height: 400px;
     width: 100%;
@@ -32,4 +34,12 @@
 .projectChartStyle {
     height: 400px;
     width: 90%;
+}
+
+/*
+* 室内定位页样式
+*/
+.indoorScene {
+    height: 900px;
+    width: 100%;
 }

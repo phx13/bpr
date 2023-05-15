@@ -48,8 +48,8 @@
             <div class="list-group list-group-flush indexPanel">
                 <a href="{{ url_for('index_bp.index_page') }}"
                    class="list-group-item list-group-item-action">首页</a>
-                <a href="#"
-                   class="list-group-item list-group-item-action">设备管理</a>
+                <a href="{{ url_for('indoor_bp.indoor_page') }}"
+                   class="list-group-item list-group-item-action">室内定位</a>
                 <a href="{{ url_for('account_bp.account_page') }}"
                    class="list-group-item list-group-item-action">用户管理</a>
                 {# 如果用户已经登录 #}

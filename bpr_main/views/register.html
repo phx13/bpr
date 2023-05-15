@@ -23,6 +23,14 @@
                         {{ form.confirm(type="password", class="form-control", id="confirm", placeholder="确认密码") }}
                         {{ form.confirm.label(for="confirm") }}
                     </div>
+                    <div class="form-floating mb-3">
+                        {{ form.board_id(type="text", class="form-control", id="boardId", placeholder="所属舰船") }}
+                        {{ form.board_id.label(for="boardId") }}
+                    </div>
+                    <div class="form-check form-switch mb-3">
+                        {{ form.is_admin(type="checkbox", class="form-check-input", id="isAdmin", role="switch", placeholder="是否是管理员") }}
+                        {{ form.is_admin.label(for="isAdmin") }}
+                    </div>
                     <div class="d-grid gap-2">
                         {{ form.submit(class="btn btn-outline-info") }}
                     </div>
