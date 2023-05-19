@@ -28,9 +28,8 @@ function init() {
     // 将地面添加到场景中
     scene.add(planeMesh);
 
+    // 添加轨道控制器
     let orbitControls = sceneManager.createOrbitControls(camera, renderer, sceneContainer);
-    orbitControls.update();
-
 
     // 增加环境光源
     let ambientLight = sceneManager.LIGHTTYPE.AMBIENT;
@@ -42,11 +41,18 @@ function init() {
     spotLight.castShadow = true;
     scene.add(spotLight);
 
+    let globalController = sceneManager.createUIController(sceneContainer,'全局控制器','15em','45em');
+    globalController.addFolder('甲板');
+    globalController.addFolder('甲板控制器');
+
+    let globalController1 = sceneManager.createUIController(sceneContainer,'全局控制器','15em','45em');
+    globalController1.addFolder('甲板');
+    globalController1.addFolder('甲板控制器');
+
     // 渲染【场景】
     renderScene();
 
     function renderScene() {
-
         // 递归渲染
         requestAnimationFrame(renderScene);
         orbitControls.update();

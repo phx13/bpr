@@ -43,3 +43,19 @@
     height: 900px;
     width: 100%;
 }
+
+/*
+* 二维地图页样式
+*/
+.mapContainer {
+    height: 900px;
+    width: 100%;
+}
+
+/*
+* 三维地球页样式
+*/
+.earthContainer {
+    height: 900px;
+    width: 100%;
+}

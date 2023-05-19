@@ -55,8 +55,12 @@ from bpr_main.controllers.index_controller import index_bp
 from bpr_main.controllers.account_controller import account_bp
 from bpr_main.controllers.authenticate_controller import authenticate_bp
 from bpr_main.controllers.indoor_controller import indoor_bp
+from bpr_main.controllers.earth_controller import earth_bp
+from bpr_main.controllers.map_controller import map_bp
 
 app.register_blueprint(index_bp)
 app.register_blueprint(account_bp)
 app.register_blueprint(authenticate_bp)
 app.register_blueprint(indoor_bp)
+app.register_blueprint(earth_bp)
+app.register_blueprint(map_bp)

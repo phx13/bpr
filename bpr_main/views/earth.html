@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block heads %}
+    {{ super() }}
+    <link href="/Cesium/Widgets/widgets.css" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <p class="display-6 text-center">三维地球</p>
+                <div id="earth" class="earthContainer"></div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script type="text/javascript" src="/Cesium/Cesium.js"></script>
+    <script type="text/javascript" src="/js/custom_js/earthManager.js"></script>
+    <script type="text/javascript" src="/js/custom_js/earth.js"></script>
+{% endblock %}

@@ -5,6 +5,8 @@ author：phx
 from flask import Blueprint, render_template
 from flask_login import login_required
 
+from bpr_main.forms.account_form import AccountForm
+
 account_bp = Blueprint('account_bp', __name__)
 
 
@@ -16,4 +18,5 @@ def before_request():
 
 @account_bp.route('/account')
 def account_page():
-    return render_template('account.html')
+    form = AccountForm()
+    return render_template('account.html', form=form)

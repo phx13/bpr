@@ -5,6 +5,8 @@
 
 import * as THREE from '../import_js/three.module.js'
 import {OrbitControls} from "../import_js/OrbitControls.js";
+import {GLTFLoader} from "../import_js/GLTFLoader.js";
+import {GUI} from "../import_js/lil-gui.module.min.js";
 
 class SceneManager {
     constructor() {
@@ -114,6 +116,24 @@ class SceneManager {
         controls.maxPolarAngle = Math.PI / 2;
         return controls;
     }
+
+    /**
+	 * 创建控制器
+	 * @param container 所属容器
+	 * @param title 控制器标题
+	 * @param top 上边距
+	 * @param left 左边距
+	 * @returns {g} 控制器实体
+	 */
+	createUIController(container, title, top, left) {
+		const UIController = new GUI({container: container, title: title});
+		UIController.domElement.style.position = "absolute";
+		UIController.domElement.style.top = top;
+		UIController.domElement.style.left = left;
+		return UIController;
+	}
+
+
 }
 
 export {SceneManager}
