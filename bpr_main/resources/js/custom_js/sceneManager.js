@@ -89,17 +89,6 @@ class SceneManager {
     }
 
     /**
-     * 更新网格大小
-     * @param mesh 网格
-     * @param width 宽
-     * @param height 高
-     * @param depth 长
-     */
-    updateMeshScale(mesh, width, height, depth) {
-        mesh.scale.set(width, height, depth);
-    }
-
-    /**
      * 创建轨道控制器
      * @param camera 相机
      * @param renderer 渲染器
@@ -132,8 +121,6 @@ class SceneManager {
 		UIController.domElement.style.left = left;
 		return UIController;
 	}
-
-
 }
 
 export {SceneManager}

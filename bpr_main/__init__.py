@@ -33,6 +33,9 @@ db.init_app(app)
 from bpr_main.models.account_model import AccountModel
 from bpr_main.models.board_model import BoardModel
 from bpr_main.models.board_info_model import BoardInfoModel
+from bpr_main.models.bluetooth_model import BluetoothModel
+from bpr_main.models.bluetooth_info_model import BluetoothInfoModel
+from bpr_main.models.terminal_model import TerminalModel
 
 with app.app_context():
     db.create_all()
@@ -57,6 +60,8 @@ from bpr_main.controllers.authenticate_controller import authenticate_bp
 from bpr_main.controllers.indoor_controller import indoor_bp
 from bpr_main.controllers.earth_controller import earth_bp
 from bpr_main.controllers.map_controller import map_bp
+from bpr_main.controllers.terminal_controller import terminal_bp
+from bpr_main.controllers.bluetooth_controller import bluetooth_bp
 
 app.register_blueprint(index_bp)
 app.register_blueprint(account_bp)
@@ -64,3 +69,5 @@ app.register_blueprint(authenticate_bp)
 app.register_blueprint(indoor_bp)
 app.register_blueprint(earth_bp)
 app.register_blueprint(map_bp)
+app.register_blueprint(terminal_bp)
+app.register_blueprint(bluetooth_bp)

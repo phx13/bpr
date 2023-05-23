@@ -7,13 +7,12 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-3">
-                <p class="display-6 text-center">舰船信息</p>
+                <p class="display-6 text-center">蓝牙信息</p>
                 <ul class="list-group list-group-flush indexPanel">
-                    <li class="list-group-item">An item</li>
-                    <li class="list-group-item">A second item</li>
-                    <li class="list-group-item">A third item</li>
-                    <li class="list-group-item">A fourth item</li>
-                    <li class="list-group-item">And a fifth one</li>
+                    <li class="list-group-item">蓝牙基站号：{{ bluetooth_info.bluetooth_id }}</li>
+                    <li class="list-group-item">X坐标：{{ bluetooth_info.position_x }}</li>
+                    <li class="list-group-item">Y坐标：{{ bluetooth_info.position_y }}</li>
+                    <li class="list-group-item">Z坐标：{{ bluetooth_info.position_z }}</li>
                 </ul>
                 <p class="display-6 text-center">舰船信息</p>
                 <ul class="list-group list-group-flush indexPanel">
@@ -52,6 +51,11 @@
 
 {% block scripts %}
     {{ super() }}
+    <script>
+        let loadBluetoothListUrl = "{{ url_for('bluetooth_bp.load_board_bluetooth_list', board_id='board_id') }}".replace('board_id', '11');
+    </script>
+    <script type="module" src="/js/import_js/axios.min.js"></script>
+    <script type="module" src="/js/import_js/mitt.umd.js"></script>
     <script type="module" src="/js/custom_js/sceneManager.js"></script>
     <script type="module" src="/js/custom_js/indoor.js"></script>
 {% endblock %}

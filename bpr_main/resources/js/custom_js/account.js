@@ -3,5 +3,5 @@
  * author：phx
  */
 
-var dmdata = [];
-$('#dmtable').bootstrapTable({data: dmdata});
+let accountData = [];
+$('#accountTable').bootstrapTable({data: accountData});

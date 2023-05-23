@@ -11,9 +11,9 @@ from bpr_main import db
 # 用户信息类，继承UserMixin类，支持flask-login组件
 class AccountModel(db.Model, UserMixin):
     id = Column(Integer, primary_key=True)
-    username = Column(String(64), unique=True, nullable=False)
-    password = Column(String(64))
-    board_id = Column(String(64))
+    username = Column(String(32), unique=True, nullable=False)
+    password = Column(String(32))
+    board_id = Column(String(8))
     is_admin = Column(Integer)
     create_time = Column(DateTime)
     update_time = Column(DateTime)

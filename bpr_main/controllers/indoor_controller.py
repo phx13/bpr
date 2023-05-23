@@ -16,4 +16,10 @@ def before_request():
 
 @indoor_bp.route('/indoor')
 def indoor_page():
-    return render_template('indoor.html')
+    bluetooth_info = {
+        'bluetooth_id': '',
+        'position_x': '',
+        'position_y': '',
+        'position_z': '',
+    }
+    return render_template('indoor.html', bluetooth_info=bluetooth_info)

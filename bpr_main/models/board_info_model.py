@@ -7,10 +7,10 @@ from sqlalchemy import Column, Integer, String, DateTime, Float
 from bpr_main import db
 
 
-# 舰船model类，定义舰船自身属性
+# 舰船数据类，定义舰船数据
 class BoardInfoModel(db.Model):
     id = Column(Integer, primary_key=True)
-    board_id = Column(String(64), nullable=False)
+    board_id = Column(String(8), nullable=False)
     lon = Column(Float(4))
     lat = Column(Float(4))
     create_time = Column(DateTime)
