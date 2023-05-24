@@ -35,7 +35,7 @@ let boardModelArgs = {
     heading: 10,
     pitch: 0,
     roll: 0,
-    url: '../../models/Cesium_Air.glb'
+    url: '../../models/board.gltf'
 }
 // 将船舶模型加入地球
 let boardModel = earthManager.addEntity(boardModelArgs);

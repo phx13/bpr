@@ -89,6 +89,17 @@ class SceneManager {
     }
 
     /**
+     * 创建组
+     * @param name 组名字
+     * @returns {Group} 组
+     */
+    createGroup(name) {
+        const group = new THREE.Group();
+        group.name = name;
+        return group;
+    }
+
+    /**
      * 创建轨道控制器
      * @param camera 相机
      * @param renderer 渲染器
@@ -102,7 +113,7 @@ class SceneManager {
         controls.screenSpacePanning = false;
         controls.minDistance = 10;
         controls.maxDistance = 500;
-        controls.maxPolarAngle = Math.PI / 2;
+        controls.maxPolarAngle = Math.PI;
         return controls;
     }
 
@@ -121,6 +132,14 @@ class SceneManager {
 		UIController.domElement.style.left = left;
 		return UIController;
 	}
+
+    /**
+	 * 创建模型加载器
+	 * @returns {GLTFLoader} 模型加载器
+	 */
+    createGLTFLoader(){
+        return new GLTFLoader();
+    }
 }
 
 export {SceneManager}
