@@ -18,7 +18,7 @@ class BluetoothInfoModel(db.Model):
     """
     id: int 主键
     bluetooth_id: varchar 蓝牙号
-    terminal_list：varchar 蓝牙接收到的终端列表{terminal: RSSI, terminal: RSSI, terminal: RSSI...}
+    terminal_list：varchar 蓝牙接收到的终端列表{terminal_id: RSSI, ...}
     create_time: datetime 创建时间
     update_time: datetime 更新时间
     """
@@ -27,3 +27,9 @@ class BluetoothInfoModel(db.Model):
     def get_bluetooth_info_by_bluetooth_id(bluetooth_id):
         return db.session.query(BluetoothInfoModel).filter_by(bluetooth_id=bluetooth_id).order_by(
             BluetoothInfoModel.update_time).all()
+
+    # 新增蓝牙方法
+    @staticmethod
+    def add_bluetooth_info(bluetooth_info):
+        db.session.add(bluetooth_info)
+        db.session.commit()

@@ -46,10 +46,16 @@ function init() {
     let bluetoothGroup = sceneManager.createGroup('蓝牙基站组');
     scene.add(bluetoothGroup);
 
+    // 创建终端实体组
+    let terminalGroup = sceneManager.createGroup('终端组');
+    scene.add(terminalGroup);
+
     // 创建模型读取器
     let gltfLoader = sceneManager.createGLTFLoader();
     // 蓝牙基站模型
     let bluetoothModelUrl = '../../models/bluetooth.glb';
+    // 终端模型
+    let terminalModelUrl = '../../models/Cesium_Air.glb';
 
     // 创建全局控制器
     let globalController = sceneManager.createUIController(sceneContainer, '全局控制器', '15em', '45em');
@@ -71,9 +77,9 @@ function init() {
                     bluetoothControllerObjects[bluetooth['bluetooth_id']] = function () {
                         // 更新蓝牙基站信息
                         $('#bluetoothId').text('蓝牙基站号： ' + bluetooth['bluetooth_id']);
-                        $('#positionX').text('X坐标： ' + bluetooth['position_x']);
-                        $('#positionY').text('Y坐标： ' + bluetooth['position_y']);
-                        $('#positionZ').text('Z坐标： ' + bluetooth['position_z']);
+                        $('#bluetoothPositionX').text('X坐标： ' + bluetooth['position_x']);
+                        $('#bluetoothPositionY').text('Y坐标： ' + bluetooth['position_y']);
+                        $('#bluetoothPositionZ').text('Z坐标： ' + bluetooth['position_z']);
                     }
                     // 将蓝牙基站点击方法添加到基站列表
                     bluetoothController.add(bluetoothControllerObjects, bluetooth['bluetooth_id']).name('蓝牙基站 ' + bluetooth['bluetooth_id']);
@@ -101,20 +107,74 @@ function init() {
                     folder.destroy();
                     // 清除蓝牙基站信息
                     $('#bluetoothId').text('蓝牙基站号： ');
-                    $('#positionX').text('X坐标： ');
-                    $('#positionY').text('Y坐标： ');
-                    $('#positionZ').text('Z坐标： ');
+                    $('#bluetoothPositionX').text('X坐标： ');
+                    $('#bluetoothPositionY').text('Y坐标： ');
+                    $('#bluetoothPositionZ').text('Z坐标： ');
                 }
             })
-        }
+        },
+        // 加载终端方法
+        loadTerminalController: function () {
+            // 首先清除终端列表
+            globalControllerObjects.clearTerminalController();
+
+            // 创建终端列表
+            let terminalController = globalController.addFolder('终端列表');
+            // 创建终端操作
+            let terminalControllerObjects = {};
+            // 调用后端接口获取当前舰船的所有蓝牙基站
+            axios.get(loadTerminalListUrl).then(res => {
+                for (const [key, value] of Object.entries(res.data)) {
+                    // 创建终端点击方法
+                    terminalControllerObjects[key] = function () {
+                        // 更新终端信息
+                        $('#terminalId').text('终端号： ' + key);
+                        $('#terminalPositionX').text('X坐标： ' + value[1]);
+                        $('#terminalPositionY').text('Y坐标： ' + value[2]);
+                        $('#terminalPositionZ').text('Z坐标： ' + value[3]);
+                    }
+                    // 将蓝牙基站点击方法添加到基站列表
+                    terminalController.add(terminalControllerObjects, key).name('终端 ' + key);
+                    // 加载蓝牙基站模型
+                    gltfLoader.load(terminalModelUrl, function (model) {
+                        model.scene.name = key;
+                        model.scene.position.set(value[1], value[2], value[3]);
+                        // 将基站模型添加到蓝牙基站实体组
+                        terminalGroup.add(model.scene);
+                    })
+                }
+            })
+        },
+        // 清除终端方法
+        clearTerminalController: function () {
+            // 遍历全局控制器的文件夹
+            globalController.folders.forEach(function (folder) {
+                // 找到蓝牙基站文件夹
+                if (folder._title === "终端列表") {
+                    // 清除场景中的蓝牙基站实体
+                    folder.children.forEach(function (entity) {
+                        terminalGroup.remove(terminalGroup.getObjectByName(entity.property));
+                    })
+                    // 清除文件夹
+                    folder.destroy();
+                    // 清除蓝牙基站信息
+                    $('#terminalId').text('终端号： ');
+                    $('#terminalPositionX').text('X坐标： ');
+                    $('#terminalPositionY').text('Y坐标： ');
+                    $('#terminalPositionZ').text('Z坐标： ');
+                }
+            })
+        },
+
     }
     // 将加载蓝牙基站方法添加到全局控制器
     globalController.add(globalControllerObjects, 'loadBluetoothController').name('获取蓝牙基站列表');
     // 将清除蓝牙基站方法添加到全局控制器
     globalController.add(globalControllerObjects, 'clearBluetoothController').name('清除蓝牙基站列表');
-
-    globalController.addFolder('甲板');
-    globalController.addFolder('甲板控制器');
+    // 将加载终端方法添加到全局控制器
+    globalController.add(globalControllerObjects, 'loadTerminalController').name('获取终端列表');
+    // 将清除终端方法添加到全局控制器
+    globalController.add(globalControllerObjects, 'clearTerminalController').name('清除终端列表');
 
     // 渲染场景
     renderScene();
@@ -125,10 +185,6 @@ function init() {
         orbitControls.update();
         renderer.render(scene, camera);
     }
-
-    // emitter.on('bluetoothInfo', (bluetooth) => {
-    //
-    // })
 }
 
 window.onload = init;

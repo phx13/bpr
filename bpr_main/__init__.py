@@ -36,6 +36,7 @@ from bpr_main.models.board_info_model import BoardInfoModel
 from bpr_main.models.bluetooth_model import BluetoothModel
 from bpr_main.models.bluetooth_info_model import BluetoothInfoModel
 from bpr_main.models.terminal_model import TerminalModel
+from bpr_main.models.terminal_info_model import TerminalInfoModel
 
 with app.app_context():
     db.create_all()
