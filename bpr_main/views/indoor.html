@@ -52,7 +52,7 @@
     {{ super() }}
     <script>
         let loadBluetoothListUrl = "{{ url_for('bluetooth_bp.load_board_bluetooth_list', board_id='board_id') }}".replace('board_id', {{ current_user.board_id }});
-        let loadTerminalListUrl = "{{ url_for('terminal_bp.load_board_online_terminal_list', board_id='board_id') }}".replace('board_id', {{ current_user.board_id }});
+        let loadOnlineTerminalListUrl = "{{ url_for('terminal_bp.load_board_online_terminal_list', board_id='board_id') }}".replace('board_id', {{ current_user.board_id }});
     </script>
     <script type="module" src="/js/import_js/axios.min.js"></script>
     <script type="module" src="/js/import_js/mitt.umd.js"></script>

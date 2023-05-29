@@ -5,6 +5,10 @@
 import {SceneManager} from "./sceneManager.js";
 
 let sceneManager = new SceneManager();
+let emitter = new mitt();
+let request = axios.create({
+    timeout: 20000
+})
 
 // 当页面加载完毕后，调用此函数，初始化画面
 function init() {
@@ -56,6 +60,8 @@ function init() {
     let bluetoothModelUrl = '../../models/bluetooth.glb';
     // 终端模型
     let terminalModelUrl = '../../models/Cesium_Air.glb';
+    // 终端更新定时器
+    let terminalInterval;
 
     // 创建全局控制器
     let globalController = sceneManager.createUIController(sceneContainer, '全局控制器', '15em', '45em');
@@ -66,7 +72,7 @@ function init() {
             // 首先清除蓝牙基站列表
             globalControllerObjects.clearBluetoothController();
             // 调用后端接口获取当前舰船的所有蓝牙基站
-            axios.get(loadBluetoothListUrl).then(res => {
+            request.get(loadBluetoothListUrl).then(res => {
                 // 创建蓝牙基站列表
                 let bluetoothController = globalController.addFolder('蓝牙基站列表');
                 // 创建蓝牙基站操作
@@ -117,33 +123,63 @@ function init() {
         loadTerminalController: function () {
             // 首先清除终端列表
             globalControllerObjects.clearTerminalController();
-
             // 创建终端列表
             let terminalController = globalController.addFolder('终端列表');
             // 创建终端操作
             let terminalControllerObjects = {};
-            // 调用后端接口获取当前舰船的所有蓝牙基站
-            axios.get(loadTerminalListUrl).then(res => {
-                for (const [key, value] of Object.entries(res.data)) {
+            // 调用后端接口获取当前舰船的所有终端
+            request.get(loadOnlineTerminalListUrl).then(res => {
+                for (const [terminal, position] of Object.entries(res.data)) {
                     // 创建终端点击方法
-                    terminalControllerObjects[key] = function () {
+                    terminalControllerObjects[terminal] = function () {
                         // 更新终端信息
-                        $('#terminalId').text('终端号： ' + key);
-                        $('#terminalPositionX').text('X坐标： ' + value[1]);
-                        $('#terminalPositionY').text('Y坐标： ' + value[2]);
-                        $('#terminalPositionZ').text('Z坐标： ' + value[3]);
+                        globalControllerObjects.updateTerminalInfoMethod(terminal, position);
                     }
                     // 将蓝牙基站点击方法添加到基站列表
-                    terminalController.add(terminalControllerObjects, key).name('终端 ' + key);
+                    terminalController.add(terminalControllerObjects, terminal).name('终端 ' + terminal);
                     // 加载蓝牙基站模型
                     gltfLoader.load(terminalModelUrl, function (model) {
-                        model.scene.name = key;
-                        model.scene.position.set(value[1], value[2], value[3]);
+                        model.scene.name = terminal;
+                        model.scene.position.set(position[1], position[2], position[3]);
                         // 将基站模型添加到蓝牙基站实体组
                         terminalGroup.add(model.scene);
                     })
                 }
             })
+            // 更新数据
+            terminalInterval = setInterval(function () {
+                request.get(loadOnlineTerminalListUrl).then(res => {
+                    for (const [terminal, position] of Object.entries(res.data)) {
+                        // 更新终端点击方法
+                        terminalControllerObjects[terminal] = function () {
+                            // 更新终端信息
+                            globalControllerObjects.updateTerminalInfoMethod(terminal, position);
+                        }
+                        // 如果终端不在当前列表里
+                        if (!(terminal in terminalControllerObjects)) {
+                            // 将终端点击方法添加到终端列表
+                            terminalController.add(terminalControllerObjects, terminal).name('终端 ' + terminal);
+                            // 加载终端模型
+                            gltfLoader.load(terminalModelUrl, function (model) {
+                                model.scene.name = terminal;
+                                model.scene.position.set(position[1], position[2], position[3]);
+                                // 将终端模型添加到终端实体组
+                                terminalGroup.add(model.scene);
+                            })
+                        } else {
+                            let mesh = terminalGroup.getObjectByName(terminal);
+                            mesh.position.set(position[1], position[2], position[3]);
+                        }
+                    }
+                })
+            }, 10000);
+        },
+        updateTerminalInfoMethod: function (terminal, position) {
+            // 更新终端信息
+            $('#terminalId').text('终端号： ' + terminal);
+            $('#terminalPositionX').text('X坐标： ' + position[1]);
+            $('#terminalPositionY').text('Y坐标： ' + position[2]);
+            $('#terminalPositionZ').text('Z坐标： ' + position[3]);
         },
         // 清除终端方法
         clearTerminalController: function () {
@@ -151,6 +187,8 @@ function init() {
             globalController.folders.forEach(function (folder) {
                 // 找到蓝牙基站文件夹
                 if (folder._title === "终端列表") {
+                    // 清除定时器
+                    clearInterval(terminalInterval);
                     // 清除场景中的蓝牙基站实体
                     folder.children.forEach(function (entity) {
                         terminalGroup.remove(terminalGroup.getObjectByName(entity.property));
@@ -165,7 +203,6 @@ function init() {
                 }
             })
         },
-
     }
     // 将加载蓝牙基站方法添加到全局控制器
     globalController.add(globalControllerObjects, 'loadBluetoothController').name('获取蓝牙基站列表');
