@@ -7,27 +7,31 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col">
-                {% if current_user.is_admin %}
+            {% if current_user.is_admin %}
+                <div class="col">
                     {# 如果是管理员 #}
                     <p class="display-6 text-center">用户管理</p>
                     <div id="accountTableToolbar"></div>
                     <table id="accountTable" data-toolbar="#accountTableToolbar" data-search="true">
                         <thead>
-                            <tr>
-                                <th data-field="id">编号</th>
-                                <th data-field="username">姓名</th>
-                                <th data-field="board_id">所属舰船</th>
-                            </tr>
+                        <tr>
+                            <th data-field="id">编号</th>
+                            <th data-field="username">姓名</th>
+                            <th data-field="board_id">所属舰船</th>
+                            <th data-field="option">操作</th>
+                        </tr>
                         </thead>
                     </table>
-                {% else %}
-                    {# 如果不是管理员 #}
+                </div>
+            {% else %}
+                {# 如果不是管理员 #}
+                <div class="col"></div>
+                <div class="col">
                     <p class="display-6 text-center">个人管理</p>
                     <form action="" method="post">
                         {{ form.csrf_token() }}
                         <div class="form-floating mb-3">
-                            {{ form.username(type="text", class="form-control", id="username", placeholder="用户名") }}
+                            {{ form.username(type="text", class="form-control", id="username", placeholder="用户名", value=current_user.username) }}
                             {{ form.username.label(for="username") }}
                         </div>
                         <div class="form-floating mb-3">
@@ -50,14 +54,18 @@
                             {{ form.submit(class="btn btn-outline-info") }}
                         </div>
                     </form>
-                {% endif %}
-            </div>
+                </div>
+                <div class="col"></div>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
 
 {% block scripts %}
     {{ super() }}
+    <script>
+        let loadAccountUrl = "{{ url_for('account_bp.load_board_account_list', board_id='board_id') }}".replace('board_id', {{ current_user.board_id }});
+    </script>
     <script type="text/javascript" src="/js/import_js/bootstrap-table.min.js"></script>
     <script type="text/javascript" src="/js/custom_js/account.js"></script>
 {% endblock %}

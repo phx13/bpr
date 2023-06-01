@@ -28,6 +28,16 @@ class AccountModel(db.Model, UserMixin):
     update_time: datetime 更新时间
     """
 
+    # 查找所有用户方法
+    @staticmethod
+    def get_all_account():
+        return db.session.query(AccountModel).all()
+
+    # 按舰船查找所有用户方法
+    @staticmethod
+    def get_account_by_board_id(board_id):
+        return db.session.query(AccountModel).filter_by(board_id=board_id).all()
+
     # 按用户名查找用户方法
     @staticmethod
     def get_account_by_username(username):

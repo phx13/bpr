@@ -5,22 +5,9 @@
 
 class EarthManager {
     /**
-     * 构造
-     */
-    constructor() {
-    }
-
-    /**
      * 地球
      */
     _earth = null;
-
-    /**
-     * 获取地球方法
-     */
-    getEarth() {
-        return this._earth;
-    }
 
     /**
      * cesium配置
@@ -64,6 +51,19 @@ class EarthManager {
     ENTITYTYPE = {
         BILLBOARD: 'Billboard',
         MODEL: 'Model'
+    }
+
+    /**
+     * 构造
+     */
+    constructor() {
+    }
+
+    /**
+     * 获取地球方法
+     */
+    getEarth() {
+        return this._earth;
     }
 
     /**

@@ -5,12 +5,6 @@
 
 class MapManager {
     /**
-     * 构造
-     */
-    constructor() {
-    }
-
-    /**
      * 地图
      */
     _map = null;
@@ -49,6 +43,12 @@ class MapManager {
         ImageIcon: 'ImageIcon',
         ImageCircle: 'ImageCircle',
         Stroke: 'Stroke'
+    }
+
+    /**
+     * 构造
+     */
+    constructor() {
     }
 
     /**

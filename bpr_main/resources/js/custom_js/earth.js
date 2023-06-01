@@ -1,7 +1,7 @@
 /**
-* 地球脚本
-* author：phx
-*/
+ * 地球脚本
+ * author：phx
+ */
 
 // 设置地图服务地址
 const tileMapUrl = 'http://127.0.0.1:6677/{z}/{x}/{y}.png';

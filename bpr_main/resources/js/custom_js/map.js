@@ -1,7 +1,14 @@
 /**
-* 二维地图页脚本
-* author：phx
-*/
+ * 二维地图页脚本
+ * author：phx
+ */
+let request = axios.create({
+    timeout: 20000
+})
+// 调用后端接口获取当前舰船的所有蓝牙基站
+request.get(loadBluetoothListUrl).then(res => {
+
+})
 
 // 设置地图服务地址
 const tileMapUrl = 'http://127.0.0.1:6677/{z}/{x}/{y}.png';

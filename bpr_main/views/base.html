@@ -46,23 +46,23 @@
         </div>
         <div class="offcanvas-body">
             <div class="list-group list-group-flush indexPanel">
-                <a href="{{ url_for('index_bp.index_page') }}"
-                   class="list-group-item list-group-item-action">首页</a>
-                <a href="{{ url_for('map_bp.map_page') }}"
-                   class="list-group-item list-group-item-action">二维地图</a>
-                <a href="{{ url_for('earth_bp.earth_page') }}"
-                   class="list-group-item list-group-item-action">三维地球</a>
-                <a href="{{ url_for('indoor_bp.indoor_page') }}"
-                   class="list-group-item list-group-item-action">室内定位</a>
-                <a href="{{ url_for('terminal_bp.terminal_page') }}"
-                   class="list-group-item list-group-item-action">终端管理</a>
-                <a href="{{ url_for('bluetooth_bp.bluetooth_page') }}"
-                   class="list-group-item list-group-item-action">蓝牙管理</a>
-                <a href="{{ url_for('account_bp.account_page') }}"
-                   class="list-group-item list-group-item-action">用户管理</a>
                 {# 如果用户已经登录 #}
                 {% if current_user.is_authenticated %}
-                    {# 只显示注销 #}
+                    {# 显示内容 #}
+                    <a href="{{ url_for('index_bp.index_page') }}"
+                       class="list-group-item list-group-item-action">首页</a>
+                    <a href="{{ url_for('map_bp.map_page') }}"
+                       class="list-group-item list-group-item-action">二维地图</a>
+                    <a href="{{ url_for('earth_bp.earth_page') }}"
+                       class="list-group-item list-group-item-action">三维地球</a>
+                    <a href="{{ url_for('indoor_bp.indoor_page') }}"
+                       class="list-group-item list-group-item-action">室内定位</a>
+                    <a href="{{ url_for('terminal_bp.terminal_page') }}"
+                       class="list-group-item list-group-item-action">终端管理</a>
+                    <a href="{{ url_for('bluetooth_bp.bluetooth_page') }}"
+                       class="list-group-item list-group-item-action">蓝牙管理</a>
+                    <a href="{{ url_for('account_bp.account_page') }}"
+                       class="list-group-item list-group-item-action">用户管理</a>
                     <a href="{{ url_for('authenticate_bp.logout') }}"
                        class="list-group-item list-group-item-action">注销</a>
                 {% else %}
@@ -85,6 +85,10 @@
 <!-- JS -->
 <script type="text/javascript" src="/js/import_js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="/js/import_js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="/js/import_js/axios.min.js"></script>
+<script>
+    let loadConfigUrl = "{{ url_for('bluetooth_bp.load_board_bluetooth_list', board_id='board_id') }}".replace('board_id', {{ current_user.board_id }});
+</script>
 {% block scripts %}
 {% endblock %}
 </body>

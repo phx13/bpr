@@ -174,6 +174,7 @@ function init() {
                 })
             }, 10000);
         },
+        // 更新终端信息方法
         updateTerminalInfoMethod: function (terminal, position) {
             // 更新终端信息
             $('#terminalId').text('终端号： ' + terminal);
@@ -212,6 +213,13 @@ function init() {
     globalController.add(globalControllerObjects, 'loadTerminalController').name('获取终端列表');
     // 将清除终端方法添加到全局控制器
     globalController.add(globalControllerObjects, 'clearTerminalController').name('清除终端列表');
+
+    // 窗口改变刷新场景事件
+    window.onresize = function () {
+        camera.aspect = sceneContainer.offsetWidth / sceneContainer.offsetHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(sceneContainer.offsetWidth, sceneContainer.offsetHeight);
+    };
 
     // 渲染场景
     renderScene();

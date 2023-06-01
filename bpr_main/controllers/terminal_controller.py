@@ -37,6 +37,7 @@ def load_board_terminal_list(board_id):
 @terminal_bp.route('/terminal/terminal_list/bluetooth/<bluetooth_id>')
 def load_bluetooth_terminal_list(bluetooth_id):
     bluetooth_info_list = BluetoothInfoModel.get_bluetooth_info_by_bluetooth_id(bluetooth_id)
+    # 获取指定蓝牙基站的最新时刻终端列表
     terminal_list = SerializationHelper.model_to_list(bluetooth_info_list)[-1]['terminal_list']
     return terminal_list
 

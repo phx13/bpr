@@ -9,9 +9,6 @@ import {GLTFLoader} from "../import_js/GLTFLoader.js";
 import {GUI} from "../import_js/lil-gui.module.min.js";
 
 class SceneManager {
-    constructor() {
-    }
-
     /**
      * 几何体类型
      */
@@ -38,6 +35,9 @@ class SceneManager {
     LIGHTTYPE = {
         AMBIENT: new THREE.AmbientLight(0xffffff),//环境光
         SPOT: new THREE.SpotLight(0xffffff)//点光
+    }
+
+    constructor() {
     }
 
     /**
@@ -118,26 +118,26 @@ class SceneManager {
     }
 
     /**
-	 * 创建控制器
-	 * @param container 所属容器
-	 * @param title 控制器标题
-	 * @param top 上边距
-	 * @param left 左边距
-	 * @returns {g} 控制器实体
-	 */
-	createUIController(container, title, top, left) {
-		const UIController = new GUI({container: container, title: title});
-		UIController.domElement.style.position = "absolute";
-		UIController.domElement.style.top = top;
-		UIController.domElement.style.left = left;
-		return UIController;
-	}
+     * 创建控制器
+     * @param container 所属容器
+     * @param title 控制器标题
+     * @param top 上边距
+     * @param left 左边距
+     * @returns {g} 控制器实体
+     */
+    createUIController(container, title, top, left) {
+        const UIController = new GUI({container: container, title: title});
+        UIController.domElement.style.position = "absolute";
+        UIController.domElement.style.top = top;
+        UIController.domElement.style.left = left;
+        return UIController;
+    }
 
     /**
-	 * 创建模型加载器
-	 * @returns {GLTFLoader} 模型加载器
-	 */
-    createGLTFLoader(){
+     * 创建模型加载器
+     * @returns {GLTFLoader} 模型加载器
+     */
+    createGLTFLoader() {
         return new GLTFLoader();
     }
 }
