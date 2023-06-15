@@ -87,7 +87,7 @@
 <script type="text/javascript" src="/js/import_js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript" src="/js/import_js/axios.min.js"></script>
 <script>
-    let loadConfigUrl = "{{ url_for('bluetooth_bp.load_board_bluetooth_list', board_id='board_id') }}".replace('board_id', {{ current_user.board_id }});
+    let loadConfigUrl = "{{ url_for('account_bp.config', username='username') }}".replace('username', {{ current_user.username }});
 </script>
 {% block scripts %}
 {% endblock %}

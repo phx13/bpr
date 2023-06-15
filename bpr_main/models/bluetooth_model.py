@@ -10,11 +10,12 @@ from bpr_main import db
 # 蓝牙model类，定义蓝牙自身属性
 class BluetoothModel(db.Model):
     id = Column(Integer, primary_key=True)
-    bluetooth_id = Column(String(8), unique=True, nullable=False)
+    bluetooth_id = Column(String(24), unique=True, nullable=False)
     board_id = Column(String(8))
     position_x = Column(Float(2))
     position_y = Column(Float(2))
     position_z = Column(Float(2))
+    mode = Column(Integer)
     create_time = Column(DateTime)
     update_time = Column(DateTime)
 
@@ -25,6 +26,7 @@ class BluetoothModel(db.Model):
     position_x：float 蓝牙x坐标
     position_y：float 蓝牙y坐标
     position_z：float 蓝牙z坐标
+    mode：int 模式，0：单基站，1：多基站
     create_time: datetime 创建时间
     update_time: datetime 更新时间
     """

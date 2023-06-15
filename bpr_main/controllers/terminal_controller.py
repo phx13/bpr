@@ -29,8 +29,8 @@ def terminal_page():
 # 获取指定舰船上注册的所有终端
 @terminal_bp.route('/terminal/terminal_list/board/<board_id>')
 def load_board_terminal_list(board_id):
-    terminal_list = TerminalModel.get_terminal_by_board_id(board_id)
-    return SerializationHelper.model_to_list(terminal_list)
+    terminal_list = SerializationHelper.model_to_list(TerminalModel.get_terminal_by_board_id(board_id))
+    return terminal_list
 
 
 # 获取蓝牙基站定位的所有终端
@@ -38,8 +38,9 @@ def load_board_terminal_list(board_id):
 def load_bluetooth_terminal_list(bluetooth_id):
     bluetooth_info_list = BluetoothInfoModel.get_bluetooth_info_by_bluetooth_id(bluetooth_id)
     # 获取指定蓝牙基站的最新时刻终端列表
-    terminal_list = SerializationHelper.model_to_list(bluetooth_info_list)[-1]['terminal_list']
-    return terminal_list
+    if bluetooth_info_list:
+        return SerializationHelper.model_to_list(bluetooth_info_list)[-1]['terminal_list']
+    return ''
 
 
 # 获取指定舰船上在线监测的所有终端
@@ -52,25 +53,39 @@ def load_board_online_terminal_list(board_id):
     # 遍历蓝牙基站
     for bluetooth in SerializationHelper.model_to_list(bluetooth_list):
         # 获取该蓝牙基站当前收取的终端列表：格式dict，{terminal：RSSI...}
-        bluetooth_terminal_list = loads(load_bluetooth_terminal_list(bluetooth['bluetooth_id']))
-        # 遍历该终端列表
-        for terminal in bluetooth_terminal_list:
-            # 如果该终端在在线终端列表中
-            if terminal in online_terminal_list:
-                # 按比例分配位置
-                ratio = bluetooth_terminal_list[terminal] / (
-                        bluetooth_terminal_list[terminal] + online_terminal_list[terminal][0])
-                position_x = ratio * bluetooth['position_x'] + (1 - ratio) * online_terminal_list[terminal][1]
-                position_y = ratio * bluetooth['position_y'] + (1 - ratio) * online_terminal_list[terminal][2]
-                position_z = ratio * bluetooth['position_z'] + (1 - ratio) * online_terminal_list[terminal][3]
-                online_terminal_list[terminal] = [bluetooth_terminal_list[terminal],
-                                                  position_x,
-                                                  position_y,
-                                                  position_z]
-            # 如果该终端不在在线终端列表中，添加进去
-            else:
-                online_terminal_list[terminal] = [bluetooth_terminal_list[terminal],
-                                                  bluetooth['position_x'],
-                                                  bluetooth['position_y'],
-                                                  bluetooth['position_z']]
+        if load_bluetooth_terminal_list(bluetooth['bluetooth_id']) is not '':
+            bluetooth_terminal_list = loads(load_bluetooth_terminal_list(bluetooth['bluetooth_id']))
+
+            # 如果该蓝牙基站是单基站模式
+            if bluetooth['mode'] == 0:
+                # 遍历该蓝牙的终端列表
+                for terminal in bluetooth_terminal_list:
+                    # 根据rssi计算距离
+                    distance = round(10 ** ((-69 - (int(bluetooth_terminal_list[terminal]))) / (10 * 2)), 2)
+                    # 更新终端的位置
+                    online_terminal_list[terminal] = [bluetooth_terminal_list[terminal],
+                                                      bluetooth['position_x'],
+                                                      bluetooth['position_y'] + distance,
+                                                      bluetooth['position_z'] - 1]
+
+        # # 遍历该终端列表
+        # for terminal in bluetooth_terminal_list:
+        #     # 如果该终端在在线终端列表中
+        #     if terminal in online_terminal_list:
+        #         # 按比例分配位置
+        #         ratio = bluetooth_terminal_list[terminal] / (
+        #                 bluetooth_terminal_list[terminal] + online_terminal_list[terminal][0])
+        #         position_x = ratio * bluetooth['position_x'] + (1 - ratio) * online_terminal_list[terminal][1]
+        #         position_y = ratio * bluetooth['position_y'] + (1 - ratio) * online_terminal_list[terminal][2]
+        #         position_z = ratio * bluetooth['position_z'] + (1 - ratio) * online_terminal_list[terminal][3]
+        #         online_terminal_list[terminal] = [bluetooth_terminal_list[terminal],
+        #                                           position_x,
+        #                                           position_y,
+        #                                           position_z]
+        #     # 如果该终端不在在线终端列表中，添加进去
+        #     else:
+        #         online_terminal_list[terminal] = [bluetooth_terminal_list[terminal],
+        #                                           bluetooth['position_x'],
+        #                                           bluetooth['position_y'],
+        #                                           bluetooth['position_z']]
     return online_terminal_list

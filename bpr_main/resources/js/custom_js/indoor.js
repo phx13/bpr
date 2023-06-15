@@ -19,8 +19,8 @@ function init() {
     let scene = sceneManager.createScene();
 
     // 创建相机
-    let camera = sceneManager.createCamera(45, sceneContainer.offsetWidth / sceneContainer.offsetHeight, 0.1, 1000);
-    camera.position.set(40, 40, 10);
+    let camera = sceneManager.createCamera(60, sceneContainer.offsetWidth / sceneContainer.offsetHeight, 0.1, 1000);
+    camera.position.set(0, 0, 60);
     camera.lookAt(scene.position);
 
     // 创建渲染器
@@ -31,7 +31,7 @@ function init() {
     let planeGeometry = sceneManager.GEOMETRYTYPE.BOX;
     let planeMaterial = sceneManager.MATERIALTYPE.LAMBERT;
     let planeMesh = sceneManager.createMesh(planeGeometry, planeMaterial, 'plane');
-    planeMesh.scale.set(20, 20, 1);
+    planeMesh.scale.set(40, 20, 1);
     scene.add(planeMesh);
 
     // 添加轨道控制器
@@ -59,7 +59,7 @@ function init() {
     // 蓝牙基站模型
     let bluetoothModelUrl = '../../models/bluetooth.glb';
     // 终端模型
-    let terminalModelUrl = '../../models/Cesium_Air.glb';
+    let terminalModelUrl = '../../models/terminal.glb';
     // 终端更新定时器
     let terminalInterval;
 
@@ -93,6 +93,7 @@ function init() {
                     gltfLoader.load(bluetoothModelUrl, function (model) {
                         model.scene.name = bluetooth['bluetooth_id'];
                         model.scene.position.set(bluetooth['position_x'], bluetooth['position_y'], bluetooth['position_z']);
+                        model.scene.rotation.y = Math.PI / 2;
                         // 将基站模型添加到蓝牙基站实体组
                         bluetoothGroup.add(model.scene);
                     })
@@ -141,6 +142,7 @@ function init() {
                     gltfLoader.load(terminalModelUrl, function (model) {
                         model.scene.name = terminal;
                         model.scene.position.set(position[1], position[2], position[3]);
+                        model.scene.scale.set(0.5, 0.5, 0.5);
                         // 将基站模型添加到蓝牙基站实体组
                         terminalGroup.add(model.scene);
                     })
@@ -163,6 +165,7 @@ function init() {
                             gltfLoader.load(terminalModelUrl, function (model) {
                                 model.scene.name = terminal;
                                 model.scene.position.set(position[1], position[2], position[3]);
+                                model.scene.scale.set(0.5, 0.5, 0.5);
                                 // 将终端模型添加到终端实体组
                                 terminalGroup.add(model.scene);
                             })
