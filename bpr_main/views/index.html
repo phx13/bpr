@@ -32,13 +32,20 @@
                 <div id="earth" class="indexMap"></div>
             </div>
             <div class="col-3">
-                <p class="display-6 text-center">舰船信息</p>
+                <p class="display-6 text-center">控制区</p>
                 <ul class="list-group list-group-flush indexPanel">
-                    <li class="list-group-item">An item</li>
-                    <li class="list-group-item">A second item</li>
-                    <li class="list-group-item">A third item</li>
-                    <li class="list-group-item">A fourth item</li>
-                    <li class="list-group-item">And a fifth one</li>
+                    <li class="list-group-item">
+                        <button onclick="initBoardInfo()">初始化舰船信息</button>
+                    </li>
+                    <li class="list-group-item">
+                        <button onclick="updateBoardInfo()">更新舰船信息</button>
+                    </li>
+                    <li class="list-group-item">
+                        <button onclick="stopUpdateBoardInfo()">停止更新舰船信息</button>
+                    </li>
+                    <li class="list-group-item">
+                        <button onclick="clearBoardInfo()">停止更新并清除舰船信息</button>
+                    </li>
                 </ul>
                 <p class="display-6 text-center">舰船信息</p>
                 <ul class="list-group list-group-flush indexPanel">
@@ -55,6 +62,12 @@
 
 {% block scripts %}
     {{ super() }}
+    <script>
+        /**
+         * 船舶信息请求路由
+         */
+        let loadBoardInfoUrl = "{{ url_for('index_bp.board_info', board_id='board_id') }}".replace('board_id', {{ current_user.board_id }});
+    </script>
     <script type="text/javascript" src="/js/import_js/ol.js"></script>
     <script type="text/javascript" src="/Cesium/Cesium.js"></script>
     <script type="text/javascript" src="/js/custom_js/mapManager.js"></script>

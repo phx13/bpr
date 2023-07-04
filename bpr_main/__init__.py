@@ -64,6 +64,7 @@ from bpr_main.controllers.earth_controller import earth_bp
 from bpr_main.controllers.map_controller import map_bp
 from bpr_main.controllers.terminal_controller import terminal_bp
 from bpr_main.controllers.bluetooth_controller import bluetooth_bp
+from bpr_main.controllers.config_controller import config_bp
 
 app.register_blueprint(index_bp)
 app.register_blueprint(account_bp)
@@ -73,3 +74,4 @@ app.register_blueprint(earth_bp)
 app.register_blueprint(map_bp)
 app.register_blueprint(terminal_bp)
 app.register_blueprint(bluetooth_bp)
+app.register_blueprint(config_bp)

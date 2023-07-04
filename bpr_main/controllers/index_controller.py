@@ -19,10 +19,14 @@ def before_request():
 
 @index_bp.route('/')
 def index_page():
-    board_name = BoardModel.get_board_by_board_id(current_user.board_id).board_name
-    board_position = BoardInfoModel.get_board_info_by_board_id(current_user.board_id)
-    board_info = {'board_id': current_user.board_id,
-                  'board_name': board_name,
-                  'board_lon': board_position[-1].lon,
-                  'board_lat': board_position[-1].lat}
-    return render_template('index.html', board_info=board_info)
+    return render_template('index.html', board_info=board_info(current_user.board_id))
+
+
+@index_bp.route('/board_info/<board_id>')
+def board_info(board_id):
+    board_name = BoardModel.get_board_by_board_id(board_id).board_name
+    board_position = BoardInfoModel.get_board_info_by_board_id(board_id)
+    return {'board_id': board_id,
+            'board_name': board_name,
+            'board_lon': board_position[-1].lon,
+            'board_lat': board_position[-1].lat}

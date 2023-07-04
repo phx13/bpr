@@ -3,9 +3,9 @@
  * author：phx
  */
 // 创建请求实例
-let request = axios.create({
-    timeout: 20000
-})
+// let request = axios.create({
+//     timeout: 20000
+// })
 // 初始化用户列表
 let accountData = [];
 $('#accountTable').bootstrapTable({data: accountData});

@@ -77,7 +77,7 @@ class EarthManager {
         let viewer = new Cesium.Viewer('earth', this._cesiumConfig);
 
         let imageryLayers = viewer.imageryLayers;
-        imageryLayers.remove(imageryLayers.get(0));
+        // imageryLayers.remove(imageryLayers.get(0));
 
         // 使用XYZ方式加载本机服务中的地图瓦片
         let xyzImageryProvider = new Cesium.UrlTemplateImageryProvider({
@@ -129,5 +129,26 @@ class EarthManager {
                     },
                 })
         }
+    }
+
+    /**
+     * 删除全部实体方法
+     */
+    removeAllEntity() {
+        this._earth.entities.removeAll();
+    }
+
+    /**
+     * 获取实体方法
+     */
+    getEntityByName(entityName) {
+        return this._earth.entities.getById(entityName);
+    }
+
+    /**
+     * 经纬高2位置转换器
+     */
+    lonLatHeight2Position(lon, lat, height) {
+        return Cesium.Cartesian3.fromDegrees(lon, lat, height);
     }
 }

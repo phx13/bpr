@@ -87,7 +87,16 @@
 <script type="text/javascript" src="/js/import_js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript" src="/js/import_js/axios.min.js"></script>
 <script>
-    let loadConfigUrl = "{{ url_for('account_bp.config', username='username') }}".replace('username', {{ current_user.username }});
+    /**
+     * 创建请求实例
+     */
+    let request = axios.create({
+        timeout: 20000
+    })
+    /**
+     * 配置项请求路由
+     */
+    let loadConfigUrl = "{{ url_for('config_bp.config_json', username='username') }}".replace('username', {{ current_user.username }});
 </script>
 {% block scripts %}
 {% endblock %}

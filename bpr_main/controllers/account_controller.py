@@ -6,7 +6,7 @@ import time
 
 from flask import Blueprint, render_template, redirect, url_for, jsonify
 from flask.json import loads
-from flask_login import login_required
+from flask_login import login_required, current_user
 
 from bpr_main.forms.account_form import AccountForm
 from bpr_main.forms.config_form import ConfigForm
@@ -45,15 +45,3 @@ def account_page():
 def load_board_account_list(board_id):
     account_list = AccountModel.get_account_by_board_id(board_id)
     return SerializationHelper.model_to_list(account_list)
-
-
-@account_bp.route('/account/config/<username>', methods=['GET', 'POST'])
-def config_page(username):
-    form = ConfigForm()
-    return render_template('account.html', form=form)
-
-
-@account_bp.route('/config/<username>')
-def config(username):
-    user_config = ConfigModel.get_config_by_username(username)
-    return user_config

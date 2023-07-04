@@ -46,6 +46,22 @@ class MapManager {
     }
 
     /**
+     * 图层类型
+     */
+    LAYERTYPE = {
+        Tile: 'Tile',
+        Vector: 'Vector',
+    }
+
+    /**
+     * 资源类型
+     */
+    SOURCETYPE = {
+        XYZ: 'XYZ',
+        Vector: 'Vector',
+    }
+
+    /**
      * 构造
      */
     constructor() {
@@ -53,20 +69,27 @@ class MapManager {
 
     /**
      * 地图初始化方法
+     * url: 瓦片地图路径
      * lon：初始化经度
      * lat：初始化纬度
      * zoom：初始化层级
      */
-    initialize(lon, lat, zoom) {
+    initialize(url, lon, lat, zoom) {
         //视角
         let view = new ol.View({
-            center: ol.proj.fromLonLat([lon, lat]), zoom: zoom, maxZoom: 15, minZoom: 3
+            center: ol.proj.fromLonLat([lon, lat]), zoom: zoom, maxZoom: 15, minZoom: 0
         });
 
         this._map = new ol.Map({
             target: 'map', //地图元素
-            controls: [], layers: [this._tileLayer], view: view
+            controls: [],
+            view: view
         });
+
+        let tileLayer = this.createLayer(this.LAYERTYPE.Tile, 'tileLayer');
+        let tileLayerSource = this.createSource(this.SOURCETYPE.XYZ, url);
+        this.addLayer(tileLayer);
+        tileLayer.setSource(tileLayerSource);
     }
 
     /**
@@ -80,9 +103,11 @@ class MapManager {
      * 设置瓦片地图图层
      * url：瓦片地图地址
      */
-    setTileLayer(url) {
+    setTileLayer(url, id) {
         this._tileLayer = new ol.layer.Tile({
-            preload: Infinity, source: new ol.source.XYZ({
+            preload: Infinity,
+            id: id,
+            source: new ol.source.XYZ({
                 url: url
             })
         });
@@ -139,55 +164,111 @@ class MapManager {
     /**
      * 创建地图要素
      * geomType：要素的几何体种类
-     * name：要素名字
      * coordinates：要素经纬度坐标
      */
-    createFeature(geomType, name, coordinates) {
+    createFeature(geomType, coordinates) {
         switch (geomType) {
             case this.GEOMTYPE.Circle:
                 return new ol.Feature({
-                    id: name, geometry: new ol.geom.Circle(ol.proj.fromLonLat(coordinates))
+                    geometry: new ol.geom.Circle(ol.proj.fromLonLat(coordinates))
                 })
             case this.GEOMTYPE.LineString:
                 return new ol.Feature({
-                    id: name, geometry: new ol.geom.LineString(ol.proj.fromLonLat(coordinates))
+                    geometry: new ol.geom.LineString(ol.proj.fromLonLat(coordinates))
                 })
             case this.GEOMTYPE.LinearRing:
                 return new ol.Feature({
-                    id: name, geometry: new ol.geom.LinearRing(ol.proj.fromLonLat(coordinates))
+                    geometry: new ol.geom.LinearRing(ol.proj.fromLonLat(coordinates))
                 })
             case this.GEOMTYPE.MultiLineString:
                 return new ol.Feature({
-                    id: name, geometry: new ol.geom.MultiLineString(ol.proj.fromLonLat(coordinates))
+                    geometry: new ol.geom.MultiLineString(ol.proj.fromLonLat(coordinates))
                 })
             case this.GEOMTYPE.MultiPoint:
                 return new ol.Feature({
-                    id: name, geometry: new ol.geom.MultiPoint(ol.proj.fromLonLat(coordinates))
+                    geometry: new ol.geom.MultiPoint(ol.proj.fromLonLat(coordinates))
                 })
             case this.GEOMTYPE.MultiPolygon:
                 return new ol.Feature({
-                    id: name, geometry: new ol.geom.MultiPolygon(ol.proj.fromLonLat(coordinates))
+                    geometry: new ol.geom.MultiPolygon(ol.proj.fromLonLat(coordinates))
                 })
             case this.GEOMTYPE.Point:
                 return new ol.Feature({
-                    id: name, geometry: new ol.geom.Point(ol.proj.fromLonLat(coordinates))
+                    geometry: new ol.geom.Point(ol.proj.fromLonLat(coordinates))
                 })
             case this.GEOMTYPE.Polygon:
                 return new ol.Feature({
-                    id: name, geometry: new ol.geom.Polygon(ol.proj.fromLonLat(coordinates))
+                    geometry: new ol.geom.Polygon(ol.proj.fromLonLat(coordinates))
                 })
         }
     }
 
     /**
-     * 创建矢量点图层
-     * features：要素点集合
+     * 设置要素坐标
+     * feature：要素
+     * coordinates：要素坐标
      */
-    createVectorLayer(features) {
-        return new ol.layer.Vector({
-            source: new ol.source.Vector({
-                features: features
-            })
-        });
+    setFeatureGeomCoord(feature, coordinates) {
+        feature.getGeometry().setCoordinates(ol.proj.fromLonLat(coordinates));
+    }
+
+    /**
+     * 创建图层
+     * layerType：图层类型
+     * id：图层id
+     */
+    createLayer(layerType, id) {
+        switch (layerType) {
+            case this.LAYERTYPE.Tile:
+                return new ol.layer.Tile({
+                    preload: Infinity,
+                    id: id
+                });
+            case this.LAYERTYPE.Vector:
+                return new ol.layer.Vector({
+                    preload: Infinity,
+                    id: id
+                });
+        }
+    }
+
+    /**
+     * 创建图层资源
+     * sourceType：资源类型
+     * id：资源id
+     */
+    createSource(sourceType, id) {
+        switch (sourceType) {
+            case this.SOURCETYPE.XYZ:
+                return new ol.source.XYZ({
+                    url: id
+                });
+            case this.SOURCETYPE.Vector:
+                return new ol.source.Vector({
+                    id: id
+                });
+        }
+    }
+
+    /**
+     * 为地图添加图层
+     * layer：图层
+     */
+    addLayer(layer) {
+        this._map.addLayer(layer);
+    }
+
+    /**
+     * 根据图层id获取图层
+     * id：图层id
+     */
+    getLayerById(id) {
+        let layers = this._map.getAllLayers();
+        for (let i = 0; i < layers.length; i++) {
+            if (layers[i].values_.id === id) {
+                return layers[i];
+            }
+        }
+        return undefined;
     }
 }
