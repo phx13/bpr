@@ -24,13 +24,31 @@ function initMapAndEarth() {
     // 获取当前用户配置项
     request.get(loadConfigUrl).then(res => {
         // 设置地图服务地址
-        const tileMapUrl = 'http://' + res.data['tile_map_ip'] + ':' + res.data['tile_map_port'] + '/{z}/{x}/{y}.png';
+        const tileMap2DUrl = 'http://' + res.data['tile_map_ip'] + ':' + res.data['tile_map_port'] + '/{z}/{x}/{-y}.png';
+        const tileMap3DUrl = 'http://' + res.data['tile_map_ip'] + ':' + res.data['tile_map_port'];
         // 设置数据更新频度
         timeInterval = res.data['time_interval'];
         // 初始化地图
-        mapManager.initialize(tileMapUrl, res.data['map_init_lon'], res.data['map_init_lat'], res.data['map_init_zoom']);
+        mapManager.initialize(tileMap2DUrl, res.data['map_init_lon'], res.data['map_init_lat'], res.data['map_init_zoom']);
         // 初始化地球
-        earthManager.initialize(tileMapUrl, res.data['map_init_lon'], res.data['map_init_lat'], res.data['map_init_height']);
+        earthManager.initialize(tileMap3DUrl, res.data['map_init_lon'], res.data['map_init_lat'], res.data['map_init_height']);
+
+        function onLeftClick() {
+            let handler = earthManager.getHandler();
+            let viewer = earthManager.getEarth();
+            handler.setInputAction(function (movement) {
+                viewer.selectedEntity = undefined;
+                // const pickedEntity = viewer.scene.pick(movement.position);
+                const pickPosition = viewer.scene.pickPosition(movement.position);
+                // console.log(pickedEntity)
+                console.log(pickPosition);
+                if (pickPosition) {
+                    earthManager.zoomTo(pickPosition);
+                }
+            }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+        }
+
+        onLeftClick();
     })
 }
 
@@ -161,3 +179,122 @@ function clearBoardInfo() {
     mapManager.getLayerById('boardIconLayer').getSource().removeFeature(mapManager.getLayerById('boardIconLayer').getSource().getFeatureById('boardIcon'));
     earthManager.removeAllEntity();
 }
+
+/**
+ * 初始化首页终端情况图表
+ */
+function initTerminalIndexChart() {
+    // 基于准备好的dom，初始化echarts实例
+    let terminalIndexChart = echarts.init(document.getElementById('terminalIndexChart'));
+
+    // 指定图表的配置项和数据
+    let terminalIndexChartOption = {
+        tooltip: {
+            trigger: 'item'
+        },
+        legend: {
+            top: '5%',
+            left: 'center'
+        },
+        series: [
+            {
+                name: '终端在线情况',
+                type: 'pie',
+                radius: ['40%', '70%'],
+                avoidLabelOverlap: false,
+                itemStyle: {
+                    borderRadius: 10,
+                    borderColor: '#fff',
+                    borderWidth: 2
+                },
+                label: {
+                    show: false,
+                    position: 'center'
+                },
+                emphasis: {
+                    label: {
+                        show: true,
+                        fontSize: 30,
+                        fontWeight: 'bold'
+                    }
+                },
+                labelLine: {
+                    show: false
+                },
+                data: [
+                    {value: 60, name: '在线数量'},
+                    {value: 40, name: '离线数量'}
+                ]
+            }
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    terminalIndexChart.setOption(terminalIndexChartOption);
+}
+
+initTerminalIndexChart();
+
+/**
+ * 初始化首页设备情况图表
+ */
+function initEquipmentIndexChart() {
+    // 基于准备好的dom，初始化echarts实例
+    let equipmentIndexChart = echarts.init(document.getElementById('equipmentIndexChart'));
+
+    // 指定图表的配置项和数据
+    let equipmentIndexChartOption = {
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                // Use axis to trigger tooltip
+                type: 'shadow' // 'shadow' as default; can also be 'line' or 'shadow'
+            }
+        },
+        legend: {},
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis: {
+            type: 'value'
+        },
+        yAxis: {
+            type: 'category',
+            data: ['蓝牙基站', 'LoRa基站', '北斗数传']
+        },
+        series: [
+            {
+                name: '在线数量',
+                type: 'bar',
+                stack: 'total',
+                label: {
+                    show: true
+                },
+                emphasis: {
+                    focus: 'series'
+                },
+                data: [15, 4, 1]
+            },
+            {
+                name: '离线数量',
+                type: 'bar',
+                stack: 'total',
+                label: {
+                    show: true
+                },
+                emphasis: {
+                    focus: 'series'
+                },
+                data: [5, 2, 0]
+            }
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    equipmentIndexChart.setOption(equipmentIndexChartOption);
+}
+
+initEquipmentIndexChart();

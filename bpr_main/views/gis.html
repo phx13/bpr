@@ -1,33 +1,31 @@
 {% extends 'base.html' %}
 {% block heads %}
     {{ super() }}
-    <link href="/css/import_css/ol.css" rel="stylesheet" type="text/css">
     <link href="/Cesium/Widgets/widgets.css" rel="stylesheet" type="text/css">
+    <link href="/css/import_css/ol.css" rel="stylesheet" type="text/css">
 {% endblock %}
 
 {% block content %}
     <div class="container-fluid">
         <div class="row">
-            <div class="col-3">
-                <p class="display-6 text-center">舰船信息</p>
-                <ul class="list-group list-group-flush indexPanel">
-                    <li class="list-group-item">舷号：{{ board_info.board_id }}</li>
-                    <li class="list-group-item">舰名：{{ board_info.board_name }}</li>
-                    <li class="list-group-item">经度：{{ board_info.board_lon }}°E</li>
-                    <li class="list-group-item">纬度：{{ board_info.board_lat }}°N</li>
-                </ul>
-                <p class="display-6 text-center">终端在线情况</p>
-                <div id="terminalIndexChart" style="height:400px;"></div>
-            </div>
-            <div class="col-6">
-                <p class="display-6 text-center">二维地图</p>
-                <div id="map" class="indexMap"></div>
-                <p class="display-6 text-center">三维地图</p>
-                <div id="earth" class="indexMap"></div>
+            <div class="col-9 position-relative">
+                <div class="position-absolute">
+                    <p id="earthTitle" class="display-6 text-center">三维地球</p>
+                    <div id="earth" class="earthContainer"></div>
+                </div>
+                <div class="position-absolute">
+                    <p id="mapTitle" class="display-6 text-center" style="display: none">二维地图</p>
+                    <div id="map" class="earthContainer" style="display: none"></div>
+                </div>
             </div>
             <div class="col-3">
-                <p class="display-6 text-center">控制区</p>
+                <p class="display-6 text-center">显控区</p>
                 <ul class="list-group list-group-flush indexPanel">
+                    <li class="list-group-item d-grid gap-2">
+                        <button class="btn btn-outline-primary position-relative top-50 translate-middle-y"
+                                onclick="changeGIS()">二/三维地图切换
+                        </button>
+                    </li>
                     <li class="list-group-item d-grid gap-2">
                         <button class="btn btn-outline-primary position-relative top-50 translate-middle-y"
                                 onclick="initBoardInfo()">初始化舰船信息
@@ -49,8 +47,6 @@
                         </button>
                     </li>
                 </ul>
-                <p class="display-6 text-center">设备在线情况</p>
-                <div id="equipmentIndexChart" style="height:400px;"></div>
             </div>
         </div>
     </div>
@@ -64,10 +60,9 @@
          */
         let loadBoardInfoUrl = "{{ url_for('index_bp.board_info', board_id='board_id') }}".replace('board_id', {{ current_user.board_id }});
     </script>
-    <script type="text/javascript" src="/js/import_js/ol.js"></script>
-    <script type="text/javascript" src="/js/import_js/echarts.min.js"></script>
     <script type="text/javascript" src="/Cesium/Cesium.js"></script>
-    <script type="text/javascript" src="/js/custom_js/mapManager.js"></script>
     <script type="text/javascript" src="/js/custom_js/earthManager.js"></script>
-    <script type="text/javascript" src="/js/custom_js/index.js"></script>
+    <script type="text/javascript" src="/js/import_js/ol.js"></script>
+    <script type="text/javascript" src="/js/custom_js/mapManager.js"></script>
+    <script type="text/javascript" src="/js/custom_js/gis.js"></script>
 {% endblock %}

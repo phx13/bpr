@@ -2,7 +2,7 @@ from http.server import HTTPServer, SimpleHTTPRequestHandler
 
 IP = "127.0.0.1"
 PORT = 6677
-DIRECTORY = "/Map"
+DIRECTORY = "/DHGStreet_World_00-13/"
 
 
 class CORSRequestHandler(SimpleHTTPRequestHandler):

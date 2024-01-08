@@ -17,6 +17,7 @@ db = SQLAlchemy()
 
 # 创建app实例，设置文件夹路径
 app = Flask(__name__, template_folder='views', static_url_path='/', static_folder='resources')
+# app = Flask(__name__, template_folder="../../rescue-manage/dist", static_folder="../../rescue-manage/dist/static")
 
 # 配置mysql
 app.config['SECRET_KEY'] = os.urandom(32)
@@ -46,7 +47,7 @@ with app.app_context():
 请求初始化部分
 """
 # 解决跨域
-CORS(app, supports_credentials=True)
+CORS(app, resources={r'/*': {'origins': '*'}}, supports_credentials=True)
 
 # 注册登录管理模块
 login_manager = LoginManager()
@@ -60,8 +61,7 @@ from bpr_main.controllers.index_controller import index_bp
 from bpr_main.controllers.account_controller import account_bp
 from bpr_main.controllers.authenticate_controller import authenticate_bp
 from bpr_main.controllers.indoor_controller import indoor_bp
-from bpr_main.controllers.earth_controller import earth_bp
-from bpr_main.controllers.map_controller import map_bp
+from bpr_main.controllers.gis_controller import gis_bp
 from bpr_main.controllers.terminal_controller import terminal_bp
 from bpr_main.controllers.bluetooth_controller import bluetooth_bp
 from bpr_main.controllers.config_controller import config_bp
@@ -70,8 +70,7 @@ app.register_blueprint(index_bp)
 app.register_blueprint(account_bp)
 app.register_blueprint(authenticate_bp)
 app.register_blueprint(indoor_bp)
-app.register_blueprint(earth_bp)
-app.register_blueprint(map_bp)
+app.register_blueprint(gis_bp)
 app.register_blueprint(terminal_bp)
 app.register_blueprint(bluetooth_bp)
 app.register_blueprint(config_bp)
