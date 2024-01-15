@@ -8,15 +8,18 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <p class="display-6 text-center">终端管理</p>
-                <div id="terminalTableToolbar"></div>
-                <table id="terminalTable" data-toolbar="#terminalTableToolbar" data-search="true">
+                <p class="display-6 text-center">北斗管理</p>
+                <div id="beidouTableToolbar"></div>
+                <table id="beidouTable" data-toolbar="#beidouTableToolbar" data-search="true">
                     <thead>
                     <tr>
-                        <th data-field="terminal_id">终端号</th>
+                        <th data-field="beidou_id">北斗数传号</th>
                         <th data-field="board_id">所属舰船</th>
-                        <th data-field="mode">工作状态</th>
-                        <th data-field="battery">电量</th>
+                        <th data-field="position_x">X坐标</th>
+                        <th data-field="position_y">Y坐标</th>
+                        <th data-field="position_z">Z坐标</th>
+                        <th data-field="mode">设备状态</th>
+                        <th data-field="card_id">北斗卡号</th>
                         {% if current_user.is_admin %}
                             <th data-field="option">操作</th>
                         {% else %}
@@ -33,8 +36,8 @@
 {% block scripts %}
     {{ super() }}
     <script>
-        let loadTerminalUrl = "{{ url_for('terminal_bp.load_board_terminal_list', board_id='board_id') }}".replace('board_id', {{ current_user.board_id }});
+        let loadBeidouUrl = "{{ url_for('beidou_bp.load_board_beidou_list', board_id='board_id') }}".replace('board_id', {{ current_user.board_id }});
     </script>
     <script type="text/javascript" src="/js/import_js/bootstrap-table.min.js"></script>
-    <script type="text/javascript" src="/js/custom_js/terminal.js"></script>
+    <script type="text/javascript" src="/js/custom_js/beidou.js"></script>
 {% endblock %}

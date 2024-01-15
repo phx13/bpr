@@ -2,7 +2,7 @@
 终端索引模型
 author：phx
 """
-from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, Integer, String, DateTime, Double
 
 from bpr_main import db
 
@@ -12,6 +12,8 @@ class TerminalModel(db.Model):
     id = Column(Integer, primary_key=True)
     terminal_id = Column(String(8), unique=True, nullable=False)
     board_id = Column(String(8))
+    mode = Column(Integer)
+    battery = Column(Double)
     create_time = Column(DateTime)
     update_time = Column(DateTime)
 
@@ -19,6 +21,8 @@ class TerminalModel(db.Model):
     id: int 主键
     terminal_id: varchar 终端号
     board_id: varchar 舷号
+    mode: int 工作状态
+    battery: double 电量
     create_time: datetime 创建时间
     update_time: datetime 更新时间
     """

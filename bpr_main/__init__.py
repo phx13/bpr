@@ -64,7 +64,9 @@ from bpr_main.controllers.indoor_controller import indoor_bp
 from bpr_main.controllers.gis_controller import gis_bp
 from bpr_main.controllers.terminal_controller import terminal_bp
 from bpr_main.controllers.bluetooth_controller import bluetooth_bp
+from bpr_main.controllers.beidou_controller import beidou_bp
 from bpr_main.controllers.config_controller import config_bp
+from bpr_main.controllers.error_controller import error_bp
 
 app.register_blueprint(index_bp)
 app.register_blueprint(account_bp)
@@ -73,4 +75,6 @@ app.register_blueprint(indoor_bp)
 app.register_blueprint(gis_bp)
 app.register_blueprint(terminal_bp)
 app.register_blueprint(bluetooth_bp)
+app.register_blueprint(beidou_bp)
 app.register_blueprint(config_bp)
+app.register_blueprint(error_bp)

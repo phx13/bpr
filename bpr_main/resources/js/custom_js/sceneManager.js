@@ -60,6 +60,11 @@ class SceneManager {
         return new THREE.PerspectiveCamera(fov, aspect, near, far);
     }
 
+    // 更新相机朝向函数
+    updateCameraLookAt(camera, x, y, z) {
+        camera.lookAt(new THREE.Vector3(x, y, z)); // 调整相机朝向到目标位置
+    }
+
     /**
      * 创建渲染器
      * @param color 背景颜色

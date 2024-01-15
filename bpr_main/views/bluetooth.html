@@ -18,6 +18,12 @@
                         <th data-field="position_x">X坐标</th>
                         <th data-field="position_y">Y坐标</th>
                         <th data-field="position_z">Z坐标</th>
+                        <th data-field="mode">设备状态</th>
+                        {% if current_user.is_admin %}
+                            <th data-field="option">操作</th>
+                        {% else %}
+
+                        {% endif %}
                     </tr>
                     </thead>
                 </table>
@@ -28,6 +34,9 @@
 
 {% block scripts %}
     {{ super() }}
+    <script>
+        let loadBluetoothUrl = "{{ url_for('bluetooth_bp.load_board_bluetooth_list', board_id='board_id') }}".replace('board_id', {{ current_user.board_id }});
+    </script>
     <script type="text/javascript" src="/js/import_js/bootstrap-table.min.js"></script>
     <script type="text/javascript" src="/js/custom_js/bluetooth.js"></script>
 {% endblock %}

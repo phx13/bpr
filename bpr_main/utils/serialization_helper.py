@@ -5,7 +5,7 @@ author：phx
 
 
 class SerializationHelper:
-    # model类序列化成列表的方法
+    # model类序列化成列表
     @staticmethod
     def model_to_list(models):
         list_data = []

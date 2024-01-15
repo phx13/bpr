@@ -11,16 +11,16 @@
             <div class="col-9 position-relative">
                 <div class="position-absolute">
                     <p id="earthTitle" class="display-6 text-center">三维地球</p>
-                    <div id="earth" class="earthContainer"></div>
+                    <div id="earth" class="gisContainer"></div>
                 </div>
                 <div class="position-absolute">
                     <p id="mapTitle" class="display-6 text-center" style="display: none">二维地图</p>
-                    <div id="map" class="earthContainer" style="display: none"></div>
+                    <div id="map" class="gisContainer" style="display: none"></div>
                 </div>
             </div>
             <div class="col-3">
                 <p class="display-6 text-center">显控区</p>
-                <ul class="list-group list-group-flush indexPanel">
+                <ul class="list-group list-group-flush gisControlPanel">
                     <li class="list-group-item d-grid gap-2">
                         <button class="btn btn-outline-primary position-relative top-50 translate-middle-y"
                                 onclick="changeGIS()">二/三维地图切换
@@ -46,6 +46,35 @@
                                 onclick="clearBoardInfo()">停止更新并清除舰船信息
                         </button>
                     </li>
+                </ul>
+                <p class="display-6 text-center">北斗通信区</p>
+                <ul class="list-group list-group-flush gisControlPanel">
+                    <form action="" method="post">
+                        {{ form.csrf_token() }}
+                        <li class="list-group-item d-grid gap-2">
+                            <div class="input-group">
+                                {{ form.message.label(class="input-group-text") }}
+                                {{ form.message(type="textarea", class="form-control", id="message") }}
+                            </div>
+                        </li>
+                        <li class="list-group-item d-grid gap-2">
+                            <div class="input-group">
+                                {{ form.target_card_id.label(class="input-group-text") }}
+                                {{ form.target_card_id(type="text", class="form-control", id="targetCardId") }}
+                            </div>
+                        </li>
+                        <li class="list-group-item d-grid gap-2">
+                            <div class="input-group">
+                                {{ form.host_card_id.label(class="input-group-text") }}
+                                {{ form.host_card_id(type="text", class="form-control", id="hostCardId") }}
+                                {{ form.interval.label(class="input-group-text") }}
+                                {{ form.interval(type="text", class="form-control", id="interval") }}
+                            </div>
+                        </li>
+                        <li class="list-group-item d-grid gap-2">
+                            {{ form.submit(class="btn btn-outline-primary", onclick="sendBeidouMessage(this)") }}
+                        </li>
+                    </form>
                 </ul>
             </div>
         </div>

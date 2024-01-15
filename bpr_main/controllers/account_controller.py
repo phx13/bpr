@@ -4,14 +4,11 @@ author：phx
 """
 import time
 
-from flask import Blueprint, render_template, redirect, url_for, jsonify
-from flask.json import loads
-from flask_login import login_required, current_user
+from flask import Blueprint, render_template, redirect, url_for
+from flask_login import login_required
 
 from bpr_main.forms.account_form import AccountForm
-from bpr_main.forms.config_form import ConfigForm
 from bpr_main.models.account_model import AccountModel
-from bpr_main.models.config_model import ConfigModel
 from bpr_main.utils.serialization_helper import SerializationHelper
 
 account_bp = Blueprint('account_bp', __name__)

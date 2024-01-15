@@ -5,7 +5,6 @@
 import {SceneManager} from "./sceneManager.js";
 
 let sceneManager = new SceneManager();
-let emitter = new mitt();
 let request = axios.create({
     timeout: 20000
 })
@@ -20,8 +19,10 @@ function init() {
 
     // 创建相机
     let camera = sceneManager.createCamera(60, sceneContainer.offsetWidth / sceneContainer.offsetHeight, 0.1, 1000);
-    camera.position.set(0, 0, 60);
-    camera.lookAt(scene.position);
+    camera.position.set(0, -40, 90);
+    // camera.lookAt(scene.position);
+    sceneManager.updateCameraLookAt(camera, 0, 0, 0);
+    // camera.lookAt(50,0,2);
 
     // 创建渲染器
     let renderer = sceneManager.createRenderer(0xdddddd, 1, sceneContainer);
@@ -31,7 +32,7 @@ function init() {
     let planeGeometry = sceneManager.GEOMETRYTYPE.BOX;
     let planeMaterial = sceneManager.MATERIALTYPE.LAMBERT;
     let planeMesh = sceneManager.createMesh(planeGeometry, planeMaterial, 'plane');
-    planeMesh.scale.set(40, 20, 1);
+    planeMesh.scale.set(160, 20, 1);
     scene.add(planeMesh);
 
     // 添加轨道控制器
@@ -64,7 +65,7 @@ function init() {
     let terminalInterval;
 
     // 创建全局控制器
-    let globalController = sceneManager.createUIController(sceneContainer, '全局控制器', '15em', '45em');
+    let globalController = sceneManager.createUIController(sceneContainer, '全局控制器', '15em', '2em');
     // 全局控制器中的操作
     let globalControllerObjects = {
         // 加载蓝牙基站方法
@@ -86,6 +87,8 @@ function init() {
                         $('#bluetoothPositionX').text('X坐标： ' + bluetooth['position_x']);
                         $('#bluetoothPositionY').text('Y坐标： ' + bluetooth['position_y']);
                         $('#bluetoothPositionZ').text('Z坐标： ' + bluetooth['position_z']);
+                        camera.position.set(bluetooth['position_x'], bluetooth['position_y'], bluetooth['position_z'] + 10);
+                        sceneManager.updateCameraLookAt(camera, bluetooth['position_x'], bluetooth['position_y'], bluetooth['position_z']);
                     }
                     // 将蓝牙基站点击方法添加到基站列表
                     bluetoothController.add(bluetoothControllerObjects, bluetooth['bluetooth_id']).name('蓝牙基站 ' + bluetooth['bluetooth_id']);
@@ -231,6 +234,7 @@ function init() {
         // 递归渲染
         requestAnimationFrame(renderScene);
         orbitControls.update();
+        camera.updateProjectionMatrix();
         renderer.render(scene, camera);
     }
 }

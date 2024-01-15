@@ -53,9 +53,13 @@
 }
 
 /*
-* 三维地球页样式
+* GIS页样式
 */
-.earthContainer {
+.gisContainer {
     height: 900px;
     width: 1400px;
+}
+.gisControlPanel {
+    height: 300px;
+    width: 100%;
 }

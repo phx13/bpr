@@ -138,7 +138,9 @@ function initBoardInfo() {
     })
 }
 
-// 船舶数据更新定时器
+/**
+ * 船舶数据更新定时器
+ */
 let boardInterval;
 
 /**
@@ -200,5 +202,90 @@ function changeGIS() {
         document.getElementById('earthTitle').style.display = 'block';
         document.getElementById('earth').style.zIndex = '0';
         document.getElementById('earthTitle').style.zIndex = '0';
+    }
+}
+
+/**
+ * 发送北斗短报文消息
+ */
+function sendBeidouMessage(element) {
+    //目标北斗卡号
+    let targetCardId = $.trim($("#targetCardId").val());
+    //本机北斗卡号
+    let hostCardId = $.trim($("#hostCardId").val());
+    //北斗短报文
+    let message = $.trim($("#message").val());
+    //频度
+    let interval = $.trim($("#interval").val());
+
+    if (targetCardId !== undefined && hostCardId !== undefined) {
+        //设置按钮发送中状态
+        changeButtonState(element, "sending", interval);
+        $("#targetCardId").attr("disabled", true);
+        $("#hostCardId").attr("disabled", true);
+        $("#message").attr("disabled", true);
+        $("#interval").attr("disabled", true);
+        //设置按钮倒计时状态
+        changeButtonState(element, "tick", interval);
+        $("#targetCardId").attr("disabled", false);
+        $("#hostCardId").attr("disabled", false);
+        $("#message").attr("disabled", false);
+        $("#interval").attr("disabled", false);
+
+        let param = "targetCardId=" + targetCardId;
+        param += "&hostCardId=" + hostCardId;
+        param += "&message=" + message;
+        $.post('/rescue/beidou', param, function (data) {
+            alert(data);
+            if (data.startsWith("北斗短报文发送成功")) {
+                changeButtonState(element, "tick");
+                $("#message").val("");
+                $("#message").focus();
+            } else {
+                changeButtonState(element, "retry");
+                $("#targetCardId").attr("disabled", false);
+                $("#hostCardId").attr("disabled", false);
+                $("#message").attr("disabled", false);
+            }
+        })
+    } else {
+        return false;
+    }
+}
+
+/**
+ * 按钮状态控制方法
+ * @param element 被控按钮元素
+ * @param status 状态，三种"sending""tick""retry"
+ * @param ticks 时间频度
+ */
+function changeButtonState(element, status, ticks) {
+    let tick = function () {
+        if (ticks >= 0) {
+            setTimeout(function () {
+                $(element).val("已发送(" + ticks + ")");
+                ticks--;
+                tick();
+            }, 1000);
+        } else {
+            changeButtonState(element, "retry", ticks);
+        }
+    };
+    switch (status) {
+        case "sending": {
+            $(element).attr("disabled", true);
+            $(element).val("发送中");
+            break;
+        }
+        case "tick": {
+            $(element).attr("disabled", true);
+            tick("Sent");
+            break;
+        }
+        case "retry": {
+            $(element).attr("disabled", false);
+            $(element).val("发送");
+            break;
+        }
     }
 }

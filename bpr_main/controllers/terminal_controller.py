@@ -29,8 +29,8 @@ def terminal_page():
 # 获取指定舰船上注册的所有终端
 @terminal_bp.route('/terminal/terminal_list/board/<board_id>')
 def load_board_terminal_list(board_id):
-    terminal_list = SerializationHelper.model_to_list(TerminalModel.get_terminal_by_board_id(board_id))
-    return terminal_list
+    terminal_list = TerminalModel.get_terminal_by_board_id(board_id)
+    return SerializationHelper.model_to_list(terminal_list)
 
 
 # 获取蓝牙基站定位的所有终端
@@ -53,7 +53,7 @@ def load_board_online_terminal_list(board_id):
     # 遍历蓝牙基站
     for bluetooth in SerializationHelper.model_to_list(bluetooth_list):
         # 获取该蓝牙基站当前收取的终端列表：格式dict，{terminal：RSSI...}
-        if load_bluetooth_terminal_list(bluetooth['bluetooth_id']) is not '':
+        if load_bluetooth_terminal_list(bluetooth['bluetooth_id']) != '':
             bluetooth_terminal_list = loads(load_bluetooth_terminal_list(bluetooth['bluetooth_id']))
 
             # 如果该蓝牙基站是单基站模式
