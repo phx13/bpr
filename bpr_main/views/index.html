@@ -8,49 +8,44 @@
 {% block content %}
     <div class="container-fluid">
         <div class="row">
+            <div class="col-12">
+                <p class="display-6 text-center">预警信息</p>
+                <div class="breathingText display-6">告警信息告警信息告警信息告警信息告警信息告警信息</div>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-3">
                 <p class="display-6 text-center">舰船信息</p>
                 <ul class="list-group list-group-flush indexPanel">
-                    <li class="list-group-item">舷号：{{ board_info.board_id }}</li>
-                    <li class="list-group-item">舰名：{{ board_info.board_name }}</li>
-                    <li class="list-group-item">经度：{{ board_info.board_lon }}°E</li>
-                    <li class="list-group-item">纬度：{{ board_info.board_lat }}°N</li>
+                    <li class="list-group-item text-center">舷号：{{ board_info.board_id }}</li>
+                    <li class="list-group-item text-center">舰名：{{ board_info.board_name }}</li>
+                    <li class="list-group-item text-center">经度：{{ board_info.board_lon }}°E</li>
+                    <li class="list-group-item text-center">纬度：{{ board_info.board_lat }}°N</li>
                 </ul>
                 <p class="display-6 text-center">终端在线情况</p>
-                <div id="terminalIndexChart" style="height:400px;"></div>
+                <div id="terminalIndexChart" class="indexChart"></div>
             </div>
             <div class="col-6">
-                <p class="display-6 text-center">二维地图</p>
-                <div id="map" class="indexMap"></div>
-                <p class="display-6 text-center">三维地图</p>
-                <div id="earth" class="indexMap"></div>
+                <div class="indexImageContainer">
+                    <div class="indexImages">
+                        <img class="indexImage" src="/images/thumbs/index1.jpg">
+                        <img class="indexImage" src="/images/thumbs/index2.webp">
+                        <img class="indexImage" src="/images/thumbs/index3.jpg">
+                        <img class="indexImage" src="/images/thumbs/index4.jpg">
+                        <img class="indexImage" src="/images/thumbs/index5.webp">
+                        <img class="indexImage" src="/images/thumbs/index6.png">
+                    </div>
+                </div>
+                <p class="display-6 text-center">XXX</p>
+                <div class="indexChart"></div>
             </div>
             <div class="col-3">
-                <p class="display-6 text-center">控制区</p>
+                <p class="display-6 text-center">XXX</p>
                 <ul class="list-group list-group-flush indexPanel">
-                    <li class="list-group-item d-grid gap-2">
-                        <button class="btn btn-outline-primary position-relative top-50 translate-middle-y"
-                                onclick="initBoardInfo()">初始化舰船信息
-                        </button>
-                    </li>
-                    <li class="list-group-item d-grid gap-2">
-                        <button class="btn btn-outline-primary position-relative top-50 translate-middle-y"
-                                onclick="updateBoardInfo()">更新舰船信息
-                        </button>
-                    </li>
-                    <li class="list-group-item d-grid gap-2">
-                        <button class="btn btn-outline-primary position-relative top-50 translate-middle-y"
-                                onclick="stopUpdateBoardInfo()">停止更新舰船信息
-                        </button>
-                    </li>
-                    <li class="list-group-item d-grid gap-2">
-                        <button class="btn btn-outline-primary position-relative top-50 translate-middle-y"
-                                onclick="clearBoardInfo()">停止更新并清除舰船信息
-                        </button>
-                    </li>
+
                 </ul>
                 <p class="display-6 text-center">设备在线情况</p>
-                <div id="equipmentIndexChart" style="height:400px;"></div>
+                <div id="equipmentIndexChart" class="indexChart"></div>
             </div>
         </div>
     </div>
@@ -64,10 +59,6 @@
          */
         let loadBoardInfoUrl = "{{ url_for('index_bp.board_info', board_id='board_id') }}".replace('board_id', {{ current_user.board_id }});
     </script>
-    <script type="text/javascript" src="/js/import_js/ol.js"></script>
     <script type="text/javascript" src="/js/import_js/echarts.min.js"></script>
-    <script type="text/javascript" src="/Cesium/Cesium.js"></script>
-    <script type="text/javascript" src="/js/custom_js/mapManager.js"></script>
-    <script type="text/javascript" src="/js/custom_js/earthManager.js"></script>
     <script type="text/javascript" src="/js/custom_js/index.js"></script>
 {% endblock %}

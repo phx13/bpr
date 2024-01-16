@@ -1,19 +1,14 @@
 /*
 * 首页样式
 */
-.indexMap {
-    height: 400px;
-    width: 100%;
-}
 
 .indexPanel {
-    height: 400px;
+    height: 300px;
     width: 100%;
-}
-
-.indexChartStyle {
-    height: 50%;
-    width: 100%;
+    background-image: url("../../images/thumbs/techborder.png");
+    background-size: cover;
+    background-repeat: round;
+    padding: 20px;
 }
 
 .popover-body {
@@ -21,20 +16,138 @@
     width: 300px;
 }
 
-.projectInfoMap {
+.indexChart {
     height: 400px;
     width: 100%;
+    background-image: url("../../images/thumbs/techborder.png");
+    background-size: cover;
+    background-repeat: round;
+    padding: 20px;
 }
 
-.projectInfo {
-    height: 400px;
+.breathingText {
     width: 100%;
+    border: 2px solid #de2929;
+    -webkit-animation: breathing 3s ease-out infinite normal;
+    animation: breathing 3s ease-out infinite normal;
+    background: #aaefdd;
+    color: #de2929;
+    -webkit-font-smoothing: antialiased;
+    border-radius: 2px;
+    text-align: center;
 }
 
-.projectChartStyle {
-    height: 400px;
-    width: 90%;
+@-webkit-keyframes breathing {
+    0% {
+        -webkit-transform: scale(0.98);
+        transform: scale(0.98);
+    }
+
+    25% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
+
+    60% {
+        -webkit-transform: scale(0.98);
+        transform: scale(0.98);
+    }
+
+    100% {
+        -webkit-transform: scale(0.98);
+        transform: scale(0.98);
+    }
 }
+
+@keyframes breathing {
+    0% {
+        -webkit-transform: scale(0.98);
+        -ms-transform: scale(0.98);
+        transform: scale(0.98);
+    }
+
+    25% {
+        -webkit-transform: scale(1);
+        -ms-transform: scale(1);
+        transform: scale(1);
+    }
+
+    60% {
+        -webkit-transform: scale(0.98);
+        -ms-transform: scale(0.98);
+        transform: scale(0.98);
+    }
+
+    100% {
+        -webkit-transform: scale(0.98);
+        -ms-transform: scale(0.98);
+        transform: scale(0.98);
+    }
+}
+
+.indexImage {
+    width: 320px;
+    height: 200px;
+    position: absolute;
+}
+
+.indexImageContainer {
+    width: 350px;
+    height: 270px;
+	margin-top: 10%;
+    margin-left: 32%;
+	perspective: 20000px;
+    position: relative;
+    transform-style: preserve-3d;
+    transform: rotateX(-6deg);
+}
+
+.indexImages {
+    width: 100%;
+    position: absolute;
+    transform-style: preserve-3d;
+    animation: rotate 60s linear infinite;
+}
+
+@keyframes rotate {
+    from {
+
+    }
+    to {
+        transform: rotateY(360deg);
+    }
+}
+
+img:nth-child(1) {
+    transform: rotateY(60deg) translateZ(300px);
+}
+
+img:nth-child(2) {
+    transform: rotateY(120deg) translateZ(300px);
+}
+
+img:nth-child(3) {
+    transform: rotateY(180deg) translateZ(300px);
+}
+
+img:nth-child(4) {
+    transform: rotateY(240deg) translateZ(300px);
+}
+
+img:nth-child(5) {
+    transform: rotateY(300deg) translateZ(300px);
+}
+
+img:nth-child(6) {
+    transform: rotateY(360deg) translateZ(300px);
+}
+
+img:hover {
+    width: 340px;
+    height: 220px;
+    cursor: pointer;
+}
+
 
 /*
 * 室内定位页样式
@@ -42,14 +155,19 @@
 .indoorScene {
     height: 900px;
     width: 100%;
+    background-image: url("../../images/thumbs/techborder.png");
+    background-size: cover;
+    background-repeat: round;
+    padding: 60px;
 }
 
-/*
-* 二维地图页样式
-*/
-.mapContainer {
-    height: 900px;
+.indoorPanel {
+    height: 200px;
     width: 100%;
+    background-image: url("../../images/thumbs/techborder.png");
+    background-size: cover;
+    background-repeat: round;
+    padding: 20px;
 }
 
 /*
@@ -58,8 +176,26 @@
 .gisContainer {
     height: 900px;
     width: 1400px;
+    background-image: url("../../images/thumbs/techborder.png");
+    background-size: cover;
+    background-repeat: round;
+    padding: 60px;
 }
+
 .gisControlPanel {
-    height: 300px;
+    height: 320px;
     width: 100%;
+    background-image: url("../../images/thumbs/techborder.png");
+    background-size: cover;
+    background-repeat: round;
+    padding: 20px;
+}
+
+.beidouControlPanel {
+    height: 290px;
+    width: 100%;
+    background-image: url("../../images/thumbs/techborder.png");
+    background-size: cover;
+    background-repeat: round;
+    padding: 20px;
 }

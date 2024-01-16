@@ -5,9 +5,6 @@
 import {SceneManager} from "./sceneManager.js";
 
 let sceneManager = new SceneManager();
-let request = axios.create({
-    timeout: 20000
-})
 
 // 当页面加载完毕后，调用此函数，初始化画面
 function init() {
@@ -18,11 +15,9 @@ function init() {
     let scene = sceneManager.createScene();
 
     // 创建相机
-    let camera = sceneManager.createCamera(60, sceneContainer.offsetWidth / sceneContainer.offsetHeight, 0.1, 1000);
+    let camera = sceneManager.createCamera(60, (sceneContainer.offsetWidth - 120) / (sceneContainer.offsetHeight - 120), 0.1, 1000);
     camera.position.set(0, -40, 90);
-    // camera.lookAt(scene.position);
     sceneManager.updateCameraLookAt(camera, 0, 0, 0);
-    // camera.lookAt(50,0,2);
 
     // 创建渲染器
     let renderer = sceneManager.createRenderer(0xdddddd, 1, sceneContainer);
@@ -65,7 +60,7 @@ function init() {
     let terminalInterval;
 
     // 创建全局控制器
-    let globalController = sceneManager.createUIController(sceneContainer, '全局控制器', '15em', '2em');
+    let globalController = sceneManager.createUIController(sceneContainer, '全局控制器', '22em', '8em');
     // 全局控制器中的操作
     let globalControllerObjects = {
         // 加载蓝牙基站方法
