@@ -1,3 +1,8 @@
+"""
+http服务帮助类，主要用于地图服务
+author：phx
+"""
+
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 
 IP = "127.0.0.1"

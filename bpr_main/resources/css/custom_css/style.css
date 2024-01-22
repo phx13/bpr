@@ -1,4 +1,17 @@
 /*
+* 全局样式
+*/
+
+.mainBackground {
+    height: 1080px;
+    width: 100%;
+    background-image: url("../../images/thumbs/mainBackground.png");
+    background-size: cover;
+    background-repeat: round;
+    z-index: -1;
+}
+
+/*
 * 首页样式
 */
 
@@ -144,8 +157,7 @@ img:nth-child(6) {
 
 img:hover {
     width: 340px;
-    height: 220px;
-    cursor: pointer;
+    height: 220px
 }
 
 
@@ -175,7 +187,7 @@ img:hover {
 */
 .gisContainer {
     height: 900px;
-    width: 1400px;
+    width: 1420px;
     background-image: url("../../images/thumbs/techborder.png");
     background-size: cover;
     background-repeat: round;
@@ -193,6 +205,15 @@ img:hover {
 
 .beidouControlPanel {
     height: 290px;
+    width: 100%;
+    background-image: url("../../images/thumbs/techborder.png");
+    background-size: cover;
+    background-repeat: round;
+    padding: 20px;
+}
+
+.loraControlPanel {
+    height: 160px;
     width: 100%;
     background-image: url("../../images/thumbs/techborder.png");
     background-size: cover;

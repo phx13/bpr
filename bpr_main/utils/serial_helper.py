@@ -1,3 +1,8 @@
+"""
+串口通信服务帮助类，主要用于北斗服务
+author：phx
+"""
+
 import serial
 import serial.tools.list_ports
 

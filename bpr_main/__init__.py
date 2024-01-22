@@ -32,13 +32,17 @@ db.init_app(app)
 
 # 引入所有数据表
 from bpr_main.models.account_model import AccountModel
-from bpr_main.models.board_model import BoardModel
-from bpr_main.models.board_info_model import BoardInfoModel
-from bpr_main.models.bluetooth_model import BluetoothModel
+from bpr_main.models.beidou_message_model import BeidouMessageModel
+from bpr_main.models.beidou_model import BeidouModel
 from bpr_main.models.bluetooth_info_model import BluetoothInfoModel
-from bpr_main.models.terminal_model import TerminalModel
-from bpr_main.models.terminal_info_model import TerminalInfoModel
+from bpr_main.models.bluetooth_model import BluetoothModel
+from bpr_main.models.board_info_model import BoardInfoModel
+from bpr_main.models.board_model import BoardModel
+from bpr_main.models.card_model import CardModel
 from bpr_main.models.config_model import ConfigModel
+from bpr_main.models.terminal_indoor_info_model import TerminalIndoorInfoModel
+from bpr_main.models.terminal_gis_info_model import TerminalGISInfoModel
+from bpr_main.models.terminal_model import TerminalModel
 
 with app.app_context():
     db.create_all()

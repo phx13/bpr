@@ -1,3 +1,9 @@
+"""
+socket通信帮助类，主要用于蓝牙和LoRa
+该脚本为socket客户端
+author：phx
+"""
+
 # multiconn-client.py
 
 import selectors

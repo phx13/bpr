@@ -1,3 +1,8 @@
+"""
+主程序启动
+author：phx
+"""
+
 import logging
 import threading
 
@@ -6,12 +11,15 @@ from bpr_main.utils.http_server_helper import http_server
 from bpr_main.utils.socket_server_helper import tcp_server
 
 if __name__ == '__main__':
+    # tcp通信线程，启动tcp server监听蓝牙客户端
     t_tcp = threading.Thread(target=tcp_server)
     t_tcp.daemon = True
     t_tcp.start()
+    # http服务线程，启动http server加载地图服务
     t_http = threading.Thread(target=http_server)
     t_http.daemon = True
     t_http.start()
+    # flask启动
     application.run(debug=True, use_reloader=False)
 else:
     gunicorn_logger = logging.getLogger('gunicorn.error')

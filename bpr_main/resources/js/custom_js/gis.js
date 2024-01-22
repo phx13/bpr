@@ -21,7 +21,7 @@ let timeInterval;
 /**
  * 初始化二三维地图
  */
-function initEarth() {
+function initMapAndEarth() {
     // 获取当前用户配置项
     request.get(loadConfigUrl).then(res => {
         // 设置地图服务地址
@@ -40,7 +40,7 @@ function initEarth() {
     })
 }
 
-initEarth();
+initMapAndEarth();
 
 // 设置船舶billboard和model位置变量
 let boardBillboardPosition, boardModelPosition;

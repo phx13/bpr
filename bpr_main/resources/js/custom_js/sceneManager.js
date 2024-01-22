@@ -60,9 +60,16 @@ class SceneManager {
         return new THREE.PerspectiveCamera(fov, aspect, near, far);
     }
 
-    // 更新相机朝向函数
-    updateCameraLookAt(camera, x, y, z) {
-        camera.lookAt(new THREE.Vector3(x, y, z)); // 调整相机朝向到目标位置
+    /**
+     * 更新相机视角
+     * @param orbitControls 滑轨控制器
+     * @param x 目标x坐标
+     * @param y 目标y坐标
+     * @param z 目标z坐标
+     */
+    updateCameraTarget(orbitControls, x, y, z) {
+        orbitControls.target = new THREE.Vector3(x, y, z);
+        orbitControls.update();
     }
 
     /**

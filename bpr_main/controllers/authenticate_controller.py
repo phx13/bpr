@@ -11,6 +11,7 @@ from bpr_main import login_manager
 from bpr_main.forms.login_form import LoginForm
 from bpr_main.forms.register_form import RegisterForm
 from bpr_main.models.account_model import AccountModel
+from bpr_main.models.config_model import ConfigModel
 
 authenticate_bp = Blueprint('authenticate_bp', __name__)
 # 设置登录页面，当访问任何需要登录但未登录的url时，返回此页面
@@ -72,6 +73,21 @@ def register():
         user.update_time = time.strftime('%Y-%m-%d %H:%M:%S')
         # 添加新用户
         AccountModel.add_account(user)
+
+        # 添加一个默认的配置项
+        user_config = ConfigModel()
+        user_config.username = user.username
+        user_config.tile_map_ip = '127.0.0.1'
+        user_config.tile_map_port = '6677'
+        user_config.map_init_lon = 110
+        user_config.map_init_lat = 30
+        user_config.map_init_zoom = 4
+        user_config.map_init_height = 9000000
+        user_config.time_interval = 10000
+        user_config.create_time = time.strftime('%Y-%m-%d %H:%M:%S')
+        user_config.update_time = time.strftime('%Y-%m-%d %H:%M:%S')
+        # 添加用户配置项
+        ConfigModel.add_config(user_config)
 
         # 登录成功记录当前用户
         login_user(user, remember=True)

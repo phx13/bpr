@@ -15,20 +15,20 @@ function init() {
     let scene = sceneManager.createScene();
 
     // 创建相机
-    let camera = sceneManager.createCamera(60, (sceneContainer.offsetWidth - 120) / (sceneContainer.offsetHeight - 120), 0.1, 1000);
-    camera.position.set(0, -40, 90);
-    sceneManager.updateCameraLookAt(camera, 0, 0, 0);
+    let camera = sceneManager.createCamera(60, (sceneContainer.offsetWidth) / (sceneContainer.offsetHeight), 0.1, 1000);
+    camera.position.set(0, 70, 70);
+    camera.lookAt(scene.position);
 
     // 创建渲染器
     let renderer = sceneManager.createRenderer(0xdddddd, 1, sceneContainer);
     sceneContainer.appendChild(renderer.domElement);
 
     // 创建地面
-    let planeGeometry = sceneManager.GEOMETRYTYPE.BOX;
-    let planeMaterial = sceneManager.MATERIALTYPE.LAMBERT;
-    let planeMesh = sceneManager.createMesh(planeGeometry, planeMaterial, 'plane');
-    planeMesh.scale.set(160, 20, 1);
-    scene.add(planeMesh);
+    // let planeGeometry = sceneManager.GEOMETRYTYPE.BOX;
+    // let planeMaterial = sceneManager.MATERIALTYPE.LAMBERT;
+    // let planeMesh = sceneManager.createMesh(planeGeometry, planeMaterial, 'plane');
+    // planeMesh.scale.set(160, 20, 1);
+    // scene.add(planeMesh);
 
     // 添加轨道控制器
     let orbitControls = sceneManager.createOrbitControls(camera, renderer, sceneContainer);
@@ -53,11 +53,22 @@ function init() {
     // 创建模型读取器
     let gltfLoader = sceneManager.createGLTFLoader();
     // 蓝牙基站模型
+    let boardModelUrl = '../../models/chuan.glb';
+    // 蓝牙基站模型
     let bluetoothModelUrl = '../../models/bluetooth.glb';
     // 终端模型
     let terminalModelUrl = '../../models/terminal.glb';
     // 终端更新定时器
     let terminalInterval;
+
+    // 加载蓝牙基站模型
+    gltfLoader.load(boardModelUrl, function (model) {
+        model.scene.name = 'boardplane';
+        model.scene.position.set(0, 0, -10);
+        // model.scene.rotation.y = Math.PI / 2;
+        // 将基站模型添加到蓝牙基站实体组
+        scene.add(model.scene);
+    })
 
     // 创建全局控制器
     let globalController = sceneManager.createUIController(sceneContainer, '全局控制器', '22em', '8em');
@@ -82,8 +93,8 @@ function init() {
                         $('#bluetoothPositionX').text('X坐标： ' + bluetooth['position_x']);
                         $('#bluetoothPositionY').text('Y坐标： ' + bluetooth['position_y']);
                         $('#bluetoothPositionZ').text('Z坐标： ' + bluetooth['position_z']);
-                        camera.position.set(bluetooth['position_x'], bluetooth['position_y'], bluetooth['position_z'] + 10);
-                        sceneManager.updateCameraLookAt(camera, bluetooth['position_x'], bluetooth['position_y'], bluetooth['position_z']);
+                        camera.position.set(bluetooth['position_x'], bluetooth['position_y'] + 20, bluetooth['position_z'] +5);
+                        sceneManager.updateCameraTarget(orbitControls, bluetooth['position_x'], bluetooth['position_y'], bluetooth['position_z'])
                     }
                     // 将蓝牙基站点击方法添加到基站列表
                     bluetoothController.add(bluetoothControllerObjects, bluetooth['bluetooth_id']).name('蓝牙基站 ' + bluetooth['bluetooth_id']);
@@ -91,7 +102,8 @@ function init() {
                     gltfLoader.load(bluetoothModelUrl, function (model) {
                         model.scene.name = bluetooth['bluetooth_id'];
                         model.scene.position.set(bluetooth['position_x'], bluetooth['position_y'], bluetooth['position_z']);
-                        model.scene.rotation.y = Math.PI / 2;
+                        model.scene.scale.set(0.5, 0.5, 0.5);
+                        // model.scene.rotation.y = Math.PI / 2;
                         // 将基站模型添加到蓝牙基站实体组
                         bluetoothGroup.add(model.scene);
                     })
@@ -150,6 +162,19 @@ function init() {
             terminalInterval = setInterval(function () {
                 request.get(loadOnlineTerminalListUrl).then(res => {
                     for (const [terminal, position] of Object.entries(res.data)) {
+                        // 将获取到的终端信息添加到终端信息历史数据中
+                        let param = "terminalId=" + terminal;
+                        param += "&terminalPositionX=" + position[1];
+                        param += "&terminalPositionY=" + position[2];
+                        param += "&terminalPositionZ=" + position[3];
+                        $.post('/terminal/online_terminal_indoor_info', param, function (data) {
+                            alert(data);
+                            if (data.startsWith("终端室内定位更新成功")) {
+
+                            } else {
+
+                            }
+                        })
                         // 更新终端点击方法
                         terminalControllerObjects[terminal] = function () {
                             // 更新终端信息
@@ -173,7 +198,7 @@ function init() {
                         }
                     }
                 })
-            }, 10000);
+            }, 1000);
         },
         // 更新终端信息方法
         updateTerminalInfoMethod: function (terminal, position) {
@@ -216,11 +241,11 @@ function init() {
     globalController.add(globalControllerObjects, 'clearTerminalController').name('清除终端列表');
 
     // 窗口改变刷新场景事件
-    window.onresize = function () {
-        camera.aspect = sceneContainer.offsetWidth / sceneContainer.offsetHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(sceneContainer.offsetWidth, sceneContainer.offsetHeight);
-    };
+    // window.onresize = function () {
+    //     camera.aspect = sceneContainer.offsetWidth / sceneContainer.offsetHeight;
+    //     camera.updateProjectionMatrix();
+    //     renderer.setSize(sceneContainer.offsetWidth, sceneContainer.offsetHeight);
+    // };
 
     // 渲染场景
     renderScene();

@@ -9,21 +9,68 @@
         <div class="row">
             <div class="col">
                 <p class="display-6 text-center">终端管理</p>
+                <!-- Button trigger modal -->
+                {#                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#terminalDetail">#}
+                {#                    编辑#}
+                {#                </button>#}
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#terminalDetail"
+                        onclick="initTerminalDetail()">
+                    新建终端
+                </button>
+                <button type="button" class="btn btn-danger" onclick="deleteTerminal()">
+                    删除终端
+                </button>
+                <!-- Modal -->
+                <div class="modal fade" id="terminalDetail" data-bs-backdrop="static" data-bs-keyboard="false"
+                     tabindex="-1" aria-labelledby="terminalDetailLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="terminalDetailLabel">终端编辑</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div style="display: none" id="hiddenId"></div>
+                                <form action="" method="post">
+                                    {{ form.csrf_token() }}
+                                    <div class="form-floating mb-3">
+                                        {{ form.terminal_id(type="text", class="form-control", id="terminalId", placeholder="终端编号") }}
+                                        {{ form.terminal_id.label(for="terminalId") }}
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        {{ form.board_id(type="text", class="form-control", id="boardId", placeholder="所属舰船") }}
+                                        {{ form.board_id.label(for="boardId") }}
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        {{ form.mode(type="text", class="form-control", id="mode", placeholder="工作模式") }}
+                                        {{ form.mode.label(for="mode") }}
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        {{ form.battery(type="text", class="form-control", id="battery", placeholder="剩余电量") }}
+                                        {{ form.battery.label(for="battery") }}
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
+                                <button type="button" class="btn btn-success"
+                                        data-bs-dismiss="modal" id="createTerminal"
+                                        onclick="createTerminal()">
+                                    创建终端
+                                </button>
+                                <button type="button" class="btn btn-success" data-bs-dismiss="modal"
+                                        id="updateTerminal"
+                                        onclick="updateTerminal()">
+                                    更新终端
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div id="terminalTableToolbar"></div>
-                <table id="terminalTable" data-toolbar="#terminalTableToolbar" data-search="true">
-                    <thead>
-                    <tr>
-                        <th data-field="terminal_id">终端号</th>
-                        <th data-field="board_id">所属舰船</th>
-                        <th data-field="mode">工作状态</th>
-                        <th data-field="battery">电量</th>
-                        {% if current_user.is_admin %}
-                            <th data-field="option">操作</th>
-                        {% else %}
-
-                        {% endif %}
-                    </tr>
-                    </thead>
+                <table id="terminalTable" data-toolbar="#terminalTableToolbar" data-search="true" data-toggle="table">
                 </table>
             </div>
         </div>
@@ -33,7 +80,7 @@
 {% block scripts %}
     {{ super() }}
     <script>
-        let loadTerminalUrl = "{{ url_for('terminal_bp.load_board_terminal_list', board_id='board_id') }}".replace('board_id', {{ current_user.board_id }});
+        let loadTerminalListUrl = "{{ url_for('terminal_bp.load_board_terminal_list', board_id='board_id') }}".replace('board_id', {{ current_user.board_id }});
     </script>
     <script type="text/javascript" src="/js/import_js/bootstrap-table.min.js"></script>
     <script type="text/javascript" src="/js/custom_js/terminal.js"></script>

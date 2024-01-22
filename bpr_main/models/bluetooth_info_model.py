@@ -23,6 +23,7 @@ class BluetoothInfoModel(db.Model):
     update_time: datetime 更新时间
     """
 
+    # 获取指定蓝牙基站的全部蓝牙基站信息
     @staticmethod
     def get_bluetooth_info_by_bluetooth_id(bluetooth_id):
         return db.session.query(BluetoothInfoModel).filter_by(bluetooth_id=bluetooth_id).order_by(

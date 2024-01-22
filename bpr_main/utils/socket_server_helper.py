@@ -14,7 +14,6 @@ from bpr_main.models.bluetooth_info_model import BluetoothInfoModel
 def tcp_server():
     sel = selectors.DefaultSelector()
 
-    # ...
     # 设置tcp本机监听ip和port
     host, port = '192.168.3.2', 6789
     lsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -64,7 +63,7 @@ def tcp_server():
                     bluetooth_info.update_time = time.strftime('%Y-%m-%d %H:%M:%S')
                     BluetoothInfoModel.add_bluetooth_info(bluetooth_info)
 
-                time.sleep(10)
+                time.sleep(1)
 
                 # print(f"Echoing {data.outb!r} to {data.addr}")
                 sent = sock.send(data.outb)  # Should be ready to write

@@ -2,7 +2,7 @@
 北斗卡模型
 author：phx
 """
-from sqlalchemy import Column, Integer, String, DateTime, Float
+from sqlalchemy import Column, Integer, String, DateTime
 
 from bpr_main import db
 

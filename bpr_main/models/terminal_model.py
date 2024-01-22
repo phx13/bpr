@@ -32,6 +32,11 @@ class TerminalModel(db.Model):
     def get_all_terminal():
         return db.session.query(TerminalModel).all()
 
+    # 根据id号查找终端方法
+    @staticmethod
+    def get_terminal_by_id(id):
+        return db.session.query(TerminalModel).filter_by(id=id).first()
+
     # 根据终端号查找终端方法
     @staticmethod
     def get_terminal_by_terminal_id(terminal_id):
