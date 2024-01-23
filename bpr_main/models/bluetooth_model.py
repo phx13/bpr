@@ -31,34 +31,39 @@ class BluetoothModel(db.Model):
     update_time: datetime 更新时间
     """
 
-    # 查找所有蓝牙方法
+    # 查找所有蓝牙基站方法
     @staticmethod
     def get_all_bluetooth():
         return db.session.query(BluetoothModel).all()
 
-    # 根据蓝牙号查找蓝牙方法
+    # 根据主键号查找蓝牙基站方法
+    @staticmethod
+    def get_bluetooth_by_id(id):
+        return db.session.query(BluetoothModel).filter_by(id=id).first()
+
+    # 根据蓝牙号查找蓝牙基站方法
     @staticmethod
     def get_bluetooth_by_bluetooth_id(bluetooth_id):
         return db.session.query(BluetoothModel).filter_by(bluetooth_id=bluetooth_id).first()
 
-    # 根据舷号查找蓝牙方法
+    # 根据舷号查找蓝牙基站方法
     @staticmethod
     def get_bluetooth_by_board_id(board_id):
         return db.session.query(BluetoothModel).filter_by(board_id=board_id).all()
 
-    # 新增蓝牙方法
+    # 新增蓝牙基站方法
     @staticmethod
     def add_bluetooth(bluetooth):
         db.session.add(bluetooth)
         db.session.commit()
 
-    # 删除蓝牙方法
+    # 删除蓝牙基站方法
     @staticmethod
     def delete_bluetooth(bluetooth):
         db.session.delete(bluetooth)
         db.session.commit()
 
-    # 更新蓝牙方法
+    # 更新蓝牙基站方法
     @staticmethod
     def update_bluetooth():
         db.session.commit()

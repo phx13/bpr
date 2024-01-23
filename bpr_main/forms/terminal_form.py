@@ -1,5 +1,5 @@
 """
-注册表单
+终端表单
 author：phx
 """
 
@@ -12,4 +12,3 @@ class TerminalForm(FlaskForm):
     board_id = StringField('所属舰船')
     mode = StringField('工作模式')
     battery = StringField('剩余电量')
-    # submit = SubmitField('注册')

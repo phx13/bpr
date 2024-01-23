@@ -9,23 +9,72 @@
         <div class="row">
             <div class="col">
                 <p class="display-6 text-center">蓝牙管理</p>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#bluetoothDetail"
+                        onclick="initBluetoothDetail()">
+                    新建蓝牙基站
+                </button>
+                <button type="button" class="btn btn-danger" onclick="deleteBluetooth()">
+                    删除蓝牙基站
+                </button>
+                <!-- Modal -->
+                <div class="modal fade" id="bluetoothDetail" data-bs-backdrop="static" data-bs-keyboard="false"
+                     tabindex="-1" aria-labelledby="bluetoothDetailLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="bluetoothDetailLabel">编辑蓝牙基站</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div style="display: none" id="hiddenId"></div>
+                                <form action="" method="post">
+                                    {{ form.csrf_token() }}
+                                    <div class="form-floating mb-3">
+                                        {{ form.bluetooth_id(type="text", class="form-control", id="bluetoothId", placeholder="蓝牙基站编号") }}
+                                        {{ form.bluetooth_id.label(for="bluetoothId") }}
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        {{ form.board_id(type="text", class="form-control", id="boardId", placeholder="所属舰船") }}
+                                        {{ form.board_id.label(for="boardId") }}
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        {{ form.position_x(type="text", class="form-control", id="bluetoothPositionX", placeholder="x坐标") }}
+                                        {{ form.position_x.label(for="bluetoothPositionX") }}
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        {{ form.position_y(type="text", class="form-control", id="bluetoothPositionY", placeholder="y坐标") }}
+                                        {{ form.position_y.label(for="bluetoothPositionY") }}
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        {{ form.position_z(type="text", class="form-control", id="bluetoothPositionZ", placeholder="z坐标") }}
+                                        {{ form.position_z.label(for="bluetoothPositionZ") }}
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        {{ form.mode(type="text", class="form-control", id="mode", placeholder="工作模式") }}
+                                        {{ form.mode.label(for="mode") }}
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
+                                <button type="button" class="btn btn-success"
+                                        data-bs-dismiss="modal" id="createBluetooth"
+                                        onclick="createBluetooth()">
+                                    创建蓝牙基站
+                                </button>
+                                <button type="button" class="btn btn-success" data-bs-dismiss="modal"
+                                        id="updateBluetooth"
+                                        onclick="updateBluetooth()">
+                                    更新蓝牙基站
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div id="bluetoothTableToolbar"></div>
-                <table id="bluetoothTable" data-toolbar="#bluetoothTableToolbar" data-search="true">
-                    <thead>
-                    <tr>
-                        <th data-field="bluetooth_id">蓝牙号</th>
-                        <th data-field="board_id">所属舰船</th>
-                        <th data-field="position_x">X坐标</th>
-                        <th data-field="position_y">Y坐标</th>
-                        <th data-field="position_z">Z坐标</th>
-                        <th data-field="mode">设备状态</th>
-                        {% if current_user.is_admin %}
-                            <th data-field="option">操作</th>
-                        {% else %}
-
-                        {% endif %}
-                    </tr>
-                    </thead>
+                <table id="bluetoothTable" data-toolbar="#bluetoothTableToolbar" data-search="true" data-toggle="table">
                 </table>
             </div>
         </div>
@@ -35,7 +84,7 @@
 {% block scripts %}
     {{ super() }}
     <script>
-        let loadBluetoothUrl = "{{ url_for('bluetooth_bp.load_board_bluetooth_list', board_id='board_id') }}".replace('board_id', {{ current_user.board_id }});
+        let loadBluetoothListUrl = "{{ url_for('bluetooth_bp.load_board_bluetooth_list', board_id='board_id') }}".replace('board_id', {{ current_user.board_id }});
     </script>
     <script type="text/javascript" src="/js/import_js/bootstrap-table.min.js"></script>
     <script type="text/javascript" src="/js/custom_js/bluetooth.js"></script>

@@ -86,6 +86,15 @@ def load_board_online_terminal_list(board_id):
                                                       bluetooth['position_x'],
                                                       bluetooth['position_y'] + new_distance,
                                                       bluetooth['position_z'] - 1]
+                    # 将终端室内位置信息更新到数据库
+                    terminal_indoor_info = TerminalIndoorInfoModel()
+                    terminal_indoor_info.terminal_id = terminal
+                    terminal_indoor_info.position_x = bluetooth['position_x']
+                    terminal_indoor_info.position_y = bluetooth['position_y']
+                    terminal_indoor_info.position_z = bluetooth['position_z']
+                    terminal_indoor_info.create_time = time.strftime('%Y-%m-%d %H:%M:%S')
+                    terminal_indoor_info.update_time = time.strftime('%Y-%m-%d %H:%M:%S')
+                    TerminalIndoorInfoModel.add_terminal_indoor_info(terminal_indoor_info)
 
         # # 遍历该终端列表
         # for terminal in bluetooth_terminal_list:
