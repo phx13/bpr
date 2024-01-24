@@ -205,6 +205,21 @@ function changeGIS() {
     }
 }
 
+function loadBeidouInfo() {
+    let port = $("#port").val();
+    let baud = $("#baud").val();
+    if (port === '0' || baud === '0') {
+        alert('选择串口号和波特率');
+        return false;
+    }
+    request.get('/beidou/info/' + port.substring(0, 4) + '/' + baud).then(res => {
+        alert('读卡信息完毕');
+        $("#hostCardId").val(res.data[0])
+        $("#interval").val(res.data[1])
+        $("#stars").val(res.data[2])
+    })
+}
+
 /**
  * 发送北斗短报文消息
  */
@@ -225,12 +240,14 @@ function sendBeidouMessage(element) {
         $("#hostCardId").attr("disabled", true);
         $("#message").attr("disabled", true);
         $("#interval").attr("disabled", true);
+        $("#stars").attr("disabled", true);
         //设置按钮倒计时状态
         changeButtonState(element, "tick", interval);
         $("#targetCardId").attr("disabled", false);
         $("#hostCardId").attr("disabled", false);
         $("#message").attr("disabled", false);
         $("#interval").attr("disabled", false);
+        $("#stars").attr("disabled", false);
 
         let param = "targetCardId=" + targetCardId;
         param += "&hostCardId=" + hostCardId;
@@ -246,6 +263,7 @@ function sendBeidouMessage(element) {
                 $("#targetCardId").attr("disabled", false);
                 $("#hostCardId").attr("disabled", false);
                 $("#message").attr("disabled", false);
+                $("#stars").attr("disabled", false);
             }
         })
     } else {
