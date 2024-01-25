@@ -90,12 +90,12 @@
                             </div>
                         </li>
                         <li class="list-group-item d-grid gap-2">
-                            <div class="input-group">
-                                <button class="btn btn-outline-primary position-relative top-50 translate-middle-y"
-                                        onclick="loadBeidouInfo()" type="button">读取北斗信息
-                                </button>
-                                {{ form.submit(class="btn btn-outline-primary", onclick="sendBeidouMessage(this)") }}
-                            </div>
+                            <button class="btn btn-outline-primary position-relative top-50 translate-middle-y"
+                                    onclick="loadBeidouInfo()" type="button">读取北斗信息
+                            </button>
+                        </li>
+                        <li class="list-group-item d-grid gap-2">
+                            {{ form.submit(class="btn btn-outline-primary", onclick="sendBeidouMessage(this)") }}
                         </li>
                     </form>
                 </ul>

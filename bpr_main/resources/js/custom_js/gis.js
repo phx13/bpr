@@ -205,18 +205,21 @@ function changeGIS() {
     }
 }
 
+/**
+ * 读取北斗信息
+ */
 function loadBeidouInfo() {
-    let port = $("#port").val();
-    let baud = $("#baud").val();
+    let port = $.trim($("#port").val());
+    let baud = $.trim($("#baud").val());
     if (port === '0' || baud === '0') {
         alert('选择串口号和波特率');
         return false;
     }
     request.get('/beidou/info/' + port.substring(0, 4) + '/' + baud).then(res => {
-        alert('读卡信息完毕');
-        $("#hostCardId").val(res.data[0])
-        $("#interval").val(res.data[1])
-        $("#stars").val(res.data[2])
+        alert(res.data);
+        $("#hostCardId").val(res.data[0]);
+        $("#interval").val(res.data[1]);
+        $("#stars").val(res.data[2]);
     })
 }
 
@@ -232,39 +235,38 @@ function sendBeidouMessage(element) {
     let message = $.trim($("#message").val());
     //频度
     let interval = $.trim($("#interval").val());
+    // 串口号
+    let port = $.trim($("#port").val()).substring(0, 4);
+    // 波特率
+    let baud = $.trim($("#baud").val());
 
-    if (targetCardId !== undefined && hostCardId !== undefined) {
+    if (targetCardId !== undefined && hostCardId !== undefined && message !== undefined) {
         //设置按钮发送中状态
         changeButtonState(element, "sending", interval);
         $("#targetCardId").attr("disabled", true);
-        $("#hostCardId").attr("disabled", true);
         $("#message").attr("disabled", true);
-        $("#interval").attr("disabled", true);
-        $("#stars").attr("disabled", true);
         //设置按钮倒计时状态
         changeButtonState(element, "tick", interval);
         $("#targetCardId").attr("disabled", false);
-        $("#hostCardId").attr("disabled", false);
         $("#message").attr("disabled", false);
-        $("#interval").attr("disabled", false);
-        $("#stars").attr("disabled", false);
 
         let param = "targetCardId=" + targetCardId;
         param += "&hostCardId=" + hostCardId;
         param += "&message=" + message;
+        param += "&port=" + port;
+        param += "&baud=" + baud;
         $.post('/rescue/beidou', param, function (data) {
             alert(data);
             if (data.startsWith("北斗短报文发送成功")) {
                 changeButtonState(element, "tick");
                 $("#message").val("");
                 $("#message").focus();
-            } else {
-                changeButtonState(element, "retry");
-                $("#targetCardId").attr("disabled", false);
-                $("#hostCardId").attr("disabled", false);
-                $("#message").attr("disabled", false);
-                $("#stars").attr("disabled", false);
             }
+            // else {
+            //     changeButtonState(element, "retry");
+            //     $("#targetCardId").attr("disabled", false);
+            //     $("#message").attr("disabled", false);
+            // }
         })
     } else {
         return false;

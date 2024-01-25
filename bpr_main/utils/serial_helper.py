@@ -64,9 +64,3 @@ class SerialHelper:
     @staticmethod
     def find_ports():
         return list(serial.tools.list_ports.comports())
-
-# baundRate = 115200
-# serialPort_w = "COM3"
-# mSerial_w = SerialHelper(serialPort_w, baundRate)
-# mSerial_w.send_data('$CCICA,0,00*7B\r\n')
-# mSerial_w.read_data()
