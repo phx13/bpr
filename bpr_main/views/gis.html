@@ -10,17 +10,29 @@
         <div class="row">
             <div class="col-9 position-relative">
                 <div class="position-absolute">
-                    <p id="earthTitle" class="display-6 text-center">三维地球</p>
-                    <div id="earth" class="gisContainer"></div>
+                    <div class="subtitle-3">
+                        <p id="earthTitle" class="subtitle-text text-center">
+                            三维地球
+                        </p>
+                    </div>
+                    <div id="earth" class="gisContainer p-2"></div>
                 </div>
                 <div class="position-absolute">
-                    <p id="mapTitle" class="display-6 text-center" style="display: none">二维地图</p>
-                    <div id="map" class="gisContainer" style="display: none"></div>
+                    <div class="subtitle-3">
+                        <p id="mapTitle" class="subtitle-text text-center" style="display: none">
+                            二维地图
+                        </p>
+                    </div>
+                    <div id="map" class="gisContainer p-2" style="display: none"></div>
                 </div>
             </div>
             <div class="col-3">
-                <p class="display-6 text-center">显控区</p>
-                <ul class="list-group list-group-flush gisControlPanel">
+                <div class="subtitle-3">
+                    <p class="subtitle-text text-center">
+                        显控区
+                    </p>
+                </div>
+                <ul class="list-group list-group-flush gisControlPanel p-2">
                     <li class="list-group-item d-grid gap-2">
                         <button class="btn btn-outline-primary position-relative top-50 translate-middle-y"
                                 onclick="changeGIS()">二/三维地图切换
@@ -47,8 +59,12 @@
                         </button>
                     </li>
                 </ul>
-                <p class="display-6 text-center">北斗通信区</p>
-                <ul class="list-group list-group-flush beidouControlPanel">
+                <div class="subtitle-3">
+                    <p class="subtitle-text text-center">
+                        北斗通信区
+                    </p>
+                </div>
+                <ul class="list-group list-group-flush beidouControlPanel p-2">
                     <form action="" method="post">
                         {{ form.csrf_token() }}
                         <li class="list-group-item d-grid gap-2">

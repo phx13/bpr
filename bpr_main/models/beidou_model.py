@@ -48,3 +48,20 @@ class BeidouModel(db.Model):
         return db.session.query(BeidouModel, CardModel).join(CardModel,
                                                              BeidouModel.beidou_id == CardModel.beidou_id).filter(
             BeidouModel.board_id == board_id).all()
+
+    # 新增北斗数传方法
+    @staticmethod
+    def add_beidou(beidou):
+        db.session.add(beidou)
+        db.session.commit()
+
+    # 删除北斗数传方法
+    @staticmethod
+    def delete_beidou(beidou):
+        db.session.delete(beidou)
+        db.session.commit()
+
+    # 更新北斗数传方法
+    @staticmethod
+    def update_beidou():
+        db.session.commit()

@@ -27,16 +27,10 @@
 
 {# 头部 #}
 <header>
-    <div class="p-3 mb-2 bg-info text-white text-center display-5">
-        <button class="btn btn-outline-light position-relative"
-                type="button"
-                data-bs-toggle="offcanvas"
-                data-bs-target="#menu"
-                aria-controls="menu">
-            菜单
-        </button>
+    <div class="mainTitle text-center mb-2 p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#menu" aria-controls="menu">
         舰上人员定位管理与落水救援系统
     </div>
+
     {# 边栏菜单 #}
     <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="menu"
          aria-labelledby="menu-label">
@@ -77,6 +71,7 @@
     </div>
 </header>
 
+{#内容#}
 <main>
     {% block content %}
     {% endblock %}
@@ -100,5 +95,6 @@
 </script>
 {% block scripts %}
 {% endblock %}
+
 </body>
 </html>

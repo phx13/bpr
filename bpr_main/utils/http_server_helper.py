@@ -24,5 +24,5 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
 
 def http_server():
     with HTTPServer((IP, PORT), CORSRequestHandler) as httpd:
-        print("serving at port", PORT)
+        print("HTTP服务启动，地址为：", (IP, PORT))
         httpd.serve_forever()

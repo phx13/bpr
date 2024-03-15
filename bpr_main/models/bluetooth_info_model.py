@@ -10,7 +10,7 @@ from bpr_main import db
 # 蓝牙数据模型类，定义蓝牙数据
 class BluetoothInfoModel(db.Model):
     id = Column(Integer, primary_key=True)
-    bluetooth_id = Column(String(8), nullable=False)
+    bluetooth_id = Column(String(24), nullable=False)
     terminal_list = Column(String(256))
     create_time = Column(DateTime)
     update_time = Column(DateTime)

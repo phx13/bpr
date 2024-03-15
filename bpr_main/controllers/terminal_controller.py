@@ -51,10 +51,12 @@ def load_latest_bluetooth_terminal_list(bluetooth_id):
 # 获取指定终端全部的室内定位信息
 @terminal_bp.route('/terminal/terminal_indoor_info/all/<terminal_id>')
 def load_all_terminal_indoor_info_by_terminal_id(terminal_id):
-    terminal_indoor_info_list = TerminalIndoorInfoModel.get_terminal_indoor_info_by_terminal_id(terminal_id)
-    if terminal_indoor_info_list:
-        return SerializationHelper.model_to_list(terminal_indoor_info_list)
-    return ''
+    try:
+        terminal_indoor_info_list = TerminalIndoorInfoModel.get_terminal_indoor_info_by_terminal_id(terminal_id)
+        if terminal_indoor_info_list:
+            return SerializationHelper.model_to_list(terminal_indoor_info_list)
+    except:
+        return 'error'
 
 
 # 获取指定舰船上在线监测的所有终端
@@ -75,26 +77,44 @@ def load_board_online_terminal_list(board_id):
                 # 遍历该蓝牙的终端列表
                 for terminal in bluetooth_terminal_list:
                     # 标定距离1m时候的rssi值
-                    rssi_one_meter = -59
+                    rssi_one_meter = -34
                     # 根据rssi计算距离，单位米
                     distance = round(10 ** ((rssi_one_meter - (int(bluetooth_terminal_list[terminal]))) / (10 * 2)), 2)
+                    # print(distance)
                     # 平滑处理
+                    # print(len(load_all_terminal_indoor_info_by_terminal_id(terminal)))
+                    # 如果该终端一条数据都没有
+                    # if len(load_all_terminal_indoor_info_by_terminal_id(terminal)) == 0:
+                    #     # 初始化该终端一条室内位置信息更新到数据库
+                    #     terminal_indoor_info = TerminalIndoorInfoModel()
+                    #     terminal_indoor_info.terminal_id = terminal
+                    #     terminal_indoor_info.position_x = float(bluetooth['position_x'])
+                    #     terminal_indoor_info.position_y = float(bluetooth['position_y'] - 1)
+                    #     terminal_indoor_info.position_z = float(bluetooth['position_z'] + distance)
+                    #     terminal_indoor_info.create_time = time.strftime('%Y-%m-%d %H:%M:%S')
+                    #     terminal_indoor_info.update_time = time.strftime('%Y-%m-%d %H:%M:%S')
+                    #     print(terminal_indoor_info.position_y)
+                    #     TerminalIndoorInfoModel.add_terminal_indoor_info(terminal_indoor_info)
                     previous_distance = float(load_all_terminal_indoor_info_by_terminal_id(terminal)[-1]['position_y'])
-                    new_distance = 0.1 * distance + 0.9 * previous_distance
+                    if abs(previous_distance - distance) > 2:
+                        new_distance = distance
+                    else:
+                        new_distance = 0.1 * distance + 0.9 * previous_distance
+                    # print('new distance:', new_distance)
                     # 更新终端的位置
                     online_terminal_list[terminal] = [bluetooth_terminal_list[terminal],
                                                       bluetooth['position_x'],
-                                                      bluetooth['position_y'] + new_distance,
-                                                      bluetooth['position_z'] - 1]
+                                                      bluetooth['position_y'] - 1,
+                                                      bluetooth['position_z'] + new_distance]
                     # 将终端室内位置信息更新到数据库
-                    terminal_indoor_info = TerminalIndoorInfoModel()
-                    terminal_indoor_info.terminal_id = terminal
-                    terminal_indoor_info.position_x = bluetooth['position_x']
-                    terminal_indoor_info.position_y = bluetooth['position_y']
-                    terminal_indoor_info.position_z = bluetooth['position_z']
-                    terminal_indoor_info.create_time = time.strftime('%Y-%m-%d %H:%M:%S')
-                    terminal_indoor_info.update_time = time.strftime('%Y-%m-%d %H:%M:%S')
-                    TerminalIndoorInfoModel.add_terminal_indoor_info(terminal_indoor_info)
+                    # terminal_indoor_info = TerminalIndoorInfoModel()
+                    # terminal_indoor_info.terminal_id = terminal
+                    # terminal_indoor_info.position_x = float(bluetooth['position_x'])
+                    # terminal_indoor_info.position_y = float(bluetooth['position_y'] - 1)
+                    # terminal_indoor_info.position_z = float(bluetooth['position_z'] + new_distance)
+                    # terminal_indoor_info.create_time = time.strftime('%Y-%m-%d %H:%M:%S')
+                    # terminal_indoor_info.update_time = time.strftime('%Y-%m-%d %H:%M:%S')
+                    # TerminalIndoorInfoModel.add_terminal_indoor_info(terminal_indoor_info)
 
         # # 遍历该终端列表
         # for terminal in bluetooth_terminal_list:

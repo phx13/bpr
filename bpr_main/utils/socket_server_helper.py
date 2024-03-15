@@ -19,14 +19,14 @@ def tcp_server():
     lsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     lsock.bind((host, port))
     lsock.listen()
-    print(f"Listening on {(host, port)}")
+    print(f"TCP服务监听启动，地址为： {(host, port)}")
     lsock.setblocking(False)
     sel.register(lsock, selectors.EVENT_READ, data=None)
 
     # 接收客户端
     def accept_wrapper(sock):
         conn, addr = sock.accept()  # Should be ready to read
-        print(f"Accepted connection from {addr}")
+        print(f"接收到蓝牙网关连接，地址为： {addr}")
         conn.setblocking(False)
         data = types.SimpleNamespace(addr=addr, inb=b"", outb=b"")
         events = selectors.EVENT_READ | selectors.EVENT_WRITE
@@ -41,7 +41,7 @@ def tcp_server():
             if recv_data:
                 data.outb += recv_data
             else:
-                print(f"Closing connection to {data.addr}")
+                print(f"关闭蓝牙网关连接，地址为： {data.addr}")
                 sel.unregister(sock)
                 sock.close()
         if mask & selectors.EVENT_WRITE:

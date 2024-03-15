@@ -20,7 +20,7 @@ function init() {
     camera.lookAt(scene.position);
 
     // 创建渲染器
-    let renderer = sceneManager.createRenderer(0xdddddd, 1, sceneContainer);
+    let renderer = sceneManager.createRenderer(0xadd8e6, 1, sceneContainer);
     sceneContainer.appendChild(renderer.domElement);
 
     // 创建地面
@@ -39,7 +39,7 @@ function init() {
 
     // 增加点光源
     let spotLight = sceneManager.LIGHTTYPE.SPOT;
-    spotLight.position.set(-40, 60, -10);
+    spotLight.position.set(0, 1000, 0);
     scene.add(spotLight);
 
     // 创建蓝牙基站实体组
@@ -52,26 +52,28 @@ function init() {
 
     // 创建模型读取器
     let gltfLoader = sceneManager.createGLTFLoader();
-    // 蓝牙基站模型
+    // 船体模型
     let boardModelUrl = '../../models/chuan.glb';
     // 蓝牙基站模型
     let bluetoothModelUrl = '../../models/bluetooth.glb';
     // 终端模型
-    let terminalModelUrl = '../../models/terminal.glb';
+    let terminalModelUrl = '../../models/shoubiao.glb';
     // 终端更新定时器
     let terminalInterval;
 
-    // 加载蓝牙基站模型
+    // 加载船体模型
     gltfLoader.load(boardModelUrl, function (model) {
         model.scene.name = 'boardplane';
-        model.scene.position.set(0, 0, -10);
+        model.scene.scale.set(4, 4, 4);
+        model.scene.position.set(0, 0, 0);
+        // model.scene.material.color.set(0x808080);
         // model.scene.rotation.y = Math.PI / 2;
         // 将基站模型添加到蓝牙基站实体组
         scene.add(model.scene);
     })
 
     // 创建全局控制器
-    let globalController = sceneManager.createUIController(sceneContainer, '全局控制器', '22em', '8em');
+    let globalController = sceneManager.createUIController(sceneContainer, '全局控制器', '17em', '6em');
     // 全局控制器中的操作
     let globalControllerObjects = {
         // 加载蓝牙基站方法
@@ -93,7 +95,7 @@ function init() {
                         $('#bluetoothPositionX').text('X坐标： ' + bluetooth['position_x']);
                         $('#bluetoothPositionY').text('Y坐标： ' + bluetooth['position_y']);
                         $('#bluetoothPositionZ').text('Z坐标： ' + bluetooth['position_z']);
-                        camera.position.set(bluetooth['position_x'], bluetooth['position_y'] + 20, bluetooth['position_z'] +5);
+                        camera.position.set(bluetooth['position_x'], bluetooth['position_y'] + 20, bluetooth['position_z'] + 5);
                         sceneManager.updateCameraTarget(orbitControls, bluetooth['position_x'], bluetooth['position_y'], bluetooth['position_z'])
                     }
                     // 将蓝牙基站点击方法添加到基站列表
@@ -102,7 +104,7 @@ function init() {
                     gltfLoader.load(bluetoothModelUrl, function (model) {
                         model.scene.name = bluetooth['bluetooth_id'];
                         model.scene.position.set(bluetooth['position_x'], bluetooth['position_y'], bluetooth['position_z']);
-                        model.scene.scale.set(0.5, 0.5, 0.5);
+                        // model.scene.scale.set(0.1, 0.1, 0.1);
                         // model.scene.rotation.y = Math.PI / 2;
                         // 将基站模型添加到蓝牙基站实体组
                         bluetoothGroup.add(model.scene);
@@ -146,13 +148,13 @@ function init() {
                         // 更新终端信息
                         globalControllerObjects.updateTerminalInfoMethod(terminal, position);
                     }
-                    // 将蓝牙基站点击方法添加到基站列表
+                    // 将终端点击方法添加到终端列表
                     terminalController.add(terminalControllerObjects, terminal).name('终端 ' + terminal);
-                    // 加载蓝牙基站模型
+                    // 加载终端模型
                     gltfLoader.load(terminalModelUrl, function (model) {
                         model.scene.name = terminal;
                         model.scene.position.set(position[1], position[2], position[3]);
-                        model.scene.scale.set(0.5, 0.5, 0.5);
+                        // model.scene.scale.set(1, 1, 0.1);
                         // 将基站模型添加到蓝牙基站实体组
                         terminalGroup.add(model.scene);
                     })
@@ -168,12 +170,7 @@ function init() {
                         param += "&terminalPositionY=" + position[2];
                         param += "&terminalPositionZ=" + position[3];
                         $.post('/terminal/online_terminal_indoor_info', param, function (data) {
-                            alert(data);
-                            if (data.startsWith("终端室内定位更新成功")) {
 
-                            } else {
-
-                            }
                         })
                         // 更新终端点击方法
                         terminalControllerObjects[terminal] = function () {
@@ -188,7 +185,7 @@ function init() {
                             gltfLoader.load(terminalModelUrl, function (model) {
                                 model.scene.name = terminal;
                                 model.scene.position.set(position[1], position[2], position[3]);
-                                model.scene.scale.set(0.5, 0.5, 0.5);
+                                // model.scene.scale.set(0.1, 0.1, 0.1);
                                 // 将终端模型添加到终端实体组
                                 terminalGroup.add(model.scene);
                             })

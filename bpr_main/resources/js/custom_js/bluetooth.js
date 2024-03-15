@@ -38,30 +38,62 @@ $('#bluetoothTable').bootstrapTable({
             }
         }, {
             field: 'id',
-            title: 'Id'
+            title: 'Id',
+            align: "center",
+            cellStyle: function () {
+                return {css: {"color": "white"}}
+            }
         }, {
             field: 'bluetooth_id',
-            title: '蓝牙号'
+            title: '蓝牙号',
+            align: "center",
+            cellStyle: function () {
+                return {css: {"color": "white"}}
+            }
         }, {
             field: 'board_id',
-            title: '所属舰船'
+            title: '所属舰船',
+            align: "center",
+            cellStyle: function () {
+                return {css: {"color": "white"}}
+            }
         }, {
             field: 'position_x',
-            title: 'x坐标'
+            title: 'x坐标',
+            align: "center",
+            cellStyle: function () {
+                return {css: {"color": "white"}}
+            }
         }, {
             field: 'position_y',
-            title: 'y坐标'
+            title: 'y坐标',
+            align: "center",
+            cellStyle: function () {
+                return {css: {"color": "white"}}
+            }
         }, {
             field: 'position_z',
-            title: 'z坐标'
+            title: 'z坐标',
+            align: "center",
+            cellStyle: function () {
+                return {css: {"color": "white"}}
+            }
         }, {
             field: 'mode',
-            title: '工作模式'
+            title: '工作模式',
+            align: "center",
+            cellStyle: function () {
+                return {css: {"color": "white"}}
+            }
         }, {
             field: 'operation',
             title: '操作',
             formatter: function (value, row, index) {
                 return '<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#bluetoothDetail" onclick="editBluetooth(' + row.id + ')">编辑</button>'
+            },
+            align: "center",
+            cellStyle: function () {
+                return {css: {"color": "white"}}
             }
         }]
 });

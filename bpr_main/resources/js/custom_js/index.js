@@ -8,7 +8,7 @@
  */
 function initTerminalIndexChart() {
     // 基于准备好的dom，初始化echarts实例
-    let terminalIndexChart = echarts.init(document.getElementById('terminalIndexChart'));
+    let terminalIndexChart = echarts.init(document.getElementById('terminalIndexChart'), 'dark');
 
     // 指定图表的配置项和数据
     let terminalIndexChartOption = {
@@ -63,7 +63,7 @@ initTerminalIndexChart();
  */
 function initEquipmentIndexChart() {
     // 基于准备好的dom，初始化echarts实例
-    let equipmentIndexChart = echarts.init(document.getElementById('equipmentIndexChart'));
+    let equipmentIndexChart = echarts.init(document.getElementById('equipmentIndexChart'), 'dark');
 
     // 指定图表的配置项和数据
     let equipmentIndexChartOption = {

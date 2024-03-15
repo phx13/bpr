@@ -9,43 +9,70 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
-                <p class="display-6 text-center">预警信息</p>
-                <div class="breathingText display-6">告警信息告警信息告警信息告警信息告警信息告警信息</div>
+                <div class="subtitle-3">
+                    <p class="subtitle-text text-center">
+                        预警信息
+                    </p>
+                </div>
+                <div class="breathingText display-6">当前未发现告警信息</div>
             </div>
         </div>
         <div class="row">
             <div class="col-3">
-                <p class="display-6 text-center">舰船信息</p>
-                <ul class="list-group list-group-flush indexPanel">
-                    <li class="list-group-item text-center">舷号：{{ board_info.board_id }}</li>
-                    <li class="list-group-item text-center">舰名：{{ board_info.board_name }}</li>
+                <div class="subtitle-3">
+                    <p class="subtitle-text text-center">
+                        舰船信息
+                    </p>
+                </div>
+                <ul class="list-group list-group-flush indexPanel p-2">
+                    <li class="list-group-item text-center">舰船舷号：{{ board_info.board_id }}</li>
+                    <li class="list-group-item text-center">舰船名称：{{ board_info.board_name }}</li>
                     <li class="list-group-item text-center">经度：{{ board_info.board_lon }}°E</li>
                     <li class="list-group-item text-center">纬度：{{ board_info.board_lat }}°N</li>
                 </ul>
-                <p class="display-6 text-center">终端在线情况</p>
-                <div id="terminalIndexChart" class="indexChart"></div>
+                <div class="subtitle-3">
+                    <p class="subtitle-text text-center">
+                        终端在线情况
+                    </p>
+                </div>
+                <div id="terminalIndexChart" class="indexChart p-2"></div>
             </div>
             <div class="col-6">
-                <div class="indexImageContainer">
-                    <div class="indexImages">
-                        <img class="indexImage" src="/images/thumbs/index1.jpg">
-                        <img class="indexImage" src="/images/thumbs/index2.webp">
-                        <img class="indexImage" src="/images/thumbs/index3.jpg">
-                        <img class="indexImage" src="/images/thumbs/index4.jpg">
-                        <img class="indexImage" src="/images/thumbs/index5.webp">
-                        <img class="indexImage" src="/images/thumbs/index6.png">
-                    </div>
-                </div>
-                <p class="display-6 text-center">XXX</p>
-                <div class="indexChart"></div>
+                {#                <div class="indexImageContainer">#}
+                {#                    <div class="indexImages">#}
+                {#                        <img class="indexImage" src="/images/thumbs/index1.jpg">#}
+                {#                        <img class="indexImage" src="/images/thumbs/index2.webp">#}
+                {#                        <img class="indexImage" src="/images/thumbs/index3.jpg">#}
+                {#                        <img class="indexImage" src="/images/thumbs/index4.jpg">#}
+                {#                        <img class="indexImage" src="/images/thumbs/index5.webp">#}
+                {#                        <img class="indexImage" src="/images/thumbs/index6.png">#}
+                {#                    </div>#}
+                {#                </div>#}
+                {#                <p class="display-6 text-center">XXX</p>#}
+                {#                <div class="indexChart"></div>#}
+                <div class="indexEarth"></div>
             </div>
             <div class="col-3">
-                <p class="display-6 text-center">XXX</p>
-                <ul class="list-group list-group-flush indexPanel">
-
+                <div class="subtitle-3">
+                    <p class="subtitle-text text-center">
+                        当前用户
+                    </p>
+                </div>
+                <ul class="list-group list-group-flush indexPanel p-2">
+                    <li class="list-group-item text-center">用户名：{{ current_user.username }}</li>
+                    <li class="list-group-item text-center">权限角色：
+                        {% if current_user.is_admin %}
+                            管理员
+                        {% else %}
+                            普通用户
+                        {% endif %}</li>
                 </ul>
-                <p class="display-6 text-center">设备在线情况</p>
-                <div id="equipmentIndexChart" class="indexChart"></div>
+                <div class="subtitle-3">
+                    <p class="subtitle-text text-center">
+                        设备在线情况
+                    </p>
+                </div>
+                <div id="equipmentIndexChart" class="indexChart p-2"></div>
             </div>
         </div>
     </div>

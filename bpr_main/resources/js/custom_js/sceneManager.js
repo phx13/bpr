@@ -82,7 +82,7 @@ class SceneManager {
     createRenderer(color, alpha, container) {
         let renderer = new THREE.WebGLRenderer();
         renderer.setClearColor(color, alpha);
-        renderer.setSize(container.offsetWidth - 120, container.offsetHeight - 120);
+        renderer.setSize(container.offsetWidth - 20, container.offsetHeight - 20);
         renderer.shadowMapEnabled = true;
         return renderer;
     }

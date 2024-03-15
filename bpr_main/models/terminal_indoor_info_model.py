@@ -10,7 +10,7 @@ from bpr_main import db
 # 终端数据模型
 class TerminalIndoorInfoModel(db.Model):
     id = Column(Integer, primary_key=True)
-    terminal_id = Column(String(8), unique=True, nullable=False)
+    terminal_id = Column(String(24), nullable=False)
     position_x = Column(Float(2))
     position_y = Column(Float(2))
     position_z = Column(Float(2))
