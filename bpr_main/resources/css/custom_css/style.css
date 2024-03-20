@@ -13,7 +13,7 @@
 
 .mainTitle {
     font-size: 36px;
-    font-weight: 400;
+    font-weight: bold;
     font-style: italic;
     color: #FFFFFF;
     line-height: 110px;
@@ -30,17 +30,33 @@
     background-repeat: round;
 }
 
-.subtitle-3 {
+.subtitle-6 {
     height: 30px;
     width: 100%;
-    background-image: url("../../images/thumbs/subtitleBackground-3.png");
+    background-image: url("../../images/thumbs/subtitleBackground-6.png");
+    background-size: cover;
+    background-repeat: round;
+}
+
+.subtitle-9 {
+    height: 30px;
+    width: 100%;
+    background-image: url("../../images/thumbs/subtitleBackground-9.png");
+    background-size: cover;
+    background-repeat: round;
+}
+
+.subtitle-12 {
+    height: 30px;
+    width: 100%;
+    background-image: url("../../images/thumbs/subtitleBackground-12.png");
     background-size: cover;
     background-repeat: round;
 }
 
 .subtitle-text {
     font-size: 20px;
-    font-weight: 400;
+    font-weight: bold;
     font-style: italic;
     color: #FFFFFF;
     background: linear-gradient(180deg, #FFFFFF 39.1845703125%, #13A6E4 100%);

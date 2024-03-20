@@ -27,6 +27,8 @@ class AccountModel(db.Model, UserMixin):
     create_time: datetime 创建时间
     update_time: datetime 更新时间
     """
+    def get_id(self):
+        return self.username
 
     # 查找所有用户方法
     @staticmethod

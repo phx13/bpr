@@ -4,7 +4,7 @@ author：phx
 """
 import time
 
-from flask import Blueprint, render_template, redirect, url_for
+from flask import Blueprint, render_template, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
 
 from bpr_main import login_manager
@@ -38,14 +38,26 @@ def login():
     if form.validate_on_submit():
         # 获取登录用户
         user = AccountModel.get_account_by_username(form.username.data)
-        # 如果用户不存在或者密码错误
-        if not user or form.password.data != user.password:
-            # 返回页面重新登录
-            return render_template('login.html', form=form)
-        # 登录成功记录当前用户
-        login_user(user, remember=True)
-        # 登录成功返回首页
-        return redirect(url_for('index_bp.index_page'))
+        # 如果用户存在并且密码正确
+        if user and form.password.data == user.password:
+            # 登录成功记录当前用户
+            login_user(user, remember=True)
+            arg_next = request.args.get('next')
+            if not arg_next or not arg_next.startswith('/'):
+                arg_next = url_for('index_bp.index_page')
+            return redirect(arg_next)
+        elif not user:
+            return '用户不存在'
+        elif form.password.data != user.password:
+            return '用户名或密码错误'
+        # # 如果用户不存在或者密码错误
+        # if not user or form.password.data != user.password:
+        #     # 返回页面重新登录
+        #     return render_template('login.html', form=form)
+        # # 登录成功记录当前用户
+        # login_user(user, remember=True)
+        # # 登录成功返回首页
+        # return redirect(url_for('index_bp.index_page'))
 
     return render_template('login.html', form=form)
 

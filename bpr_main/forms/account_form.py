@@ -8,7 +8,7 @@ from wtforms import SubmitField, StringField, PasswordField, BooleanField
 
 
 class AccountForm(FlaskForm):
-    username = StringField('用户名', render_kw={'readonly': True})
+    username = StringField('用户名')
     password = PasswordField('密码')
     confirm = PasswordField('确认密码')
     board_id = StringField('所属舰船')
