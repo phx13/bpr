@@ -45,7 +45,14 @@ $('#beidouTable').bootstrapTable({
             }
         }, {
             field: 'beidou_id',
-            title: '北斗号',
+            title: '北斗数传号',
+            align: "center",
+            cellStyle: function () {
+                return {css: {"color": "white"}}
+            }
+        }, {
+            field: 'card_id',
+            title: '北斗卡号',
             align: "center",
             cellStyle: function () {
                 return {css: {"color": "white"}}
@@ -80,8 +87,16 @@ $('#beidouTable').bootstrapTable({
             }
         }, {
             field: 'mode',
-            title: '工作模式',
+            title: '在线情况',
             align: "center",
+            formatter: function (value, row, index) {
+                switch (value) {
+                    case 1:
+                        return '在线'
+                    case 0:
+                        return '不在线'
+                }
+            },
             cellStyle: function () {
                 return {css: {"color": "white"}}
             }
@@ -99,13 +114,14 @@ $('#beidouTable').bootstrapTable({
 });
 
 /**
- * 初始化蓝牙基站详细信息
+ * 初始化北斗详细信息
  * （将所有控件init）
  */
 function initBeidouDetail() {
-    // 初始化蓝牙基站信息
+    // 初始化北斗信息
     $("#hiddenId").text("");
     $("#beidouId").val("");
+    $("#cardId").val("");
     $("#boardId").val("");
     $("#beidouPositionX").val("");
     $("#beidouPositionY").val("");
@@ -118,19 +134,20 @@ function initBeidouDetail() {
 
 
 /**
- * 蓝牙基站编辑方法
- * 根据蓝牙基站主键id获取蓝牙基站信息
- * @param id 蓝牙基站主键id
+ * 北斗编辑方法
+ * 根据北斗主键id获取北斗信息
+ * @param id 北斗主键id
  */
 function editBeidou(id) {
-    // 初始化蓝牙基站信息
+    // 初始化北斗信息
     initBeidouDetail();
-    // 根据蓝牙基站主键id获取蓝牙基站信息
+    // 根据北斗主键id获取北斗信息
     request.get('/beidou/data/load/' + id).then(res => {
         if (!jQuery.isEmptyObject(res.data)) {
-            // 设置蓝牙基站信息
+            // 设置北斗信息
             $("#hiddenId").text(id);
             $("#beidouId").val(res.data[0]['beidou_id']);
+            $("#cardId").val(res.data[0]['card_id']);
             $("#boardId").val(res.data[0]['board_id']);
             $("#beidouPositionX").val(res.data[0]['position_x']);
             $("#beidouPositionY").val(res.data[0]['position_y']);
@@ -144,7 +161,7 @@ function editBeidou(id) {
 }
 
 /**
- * 创建蓝牙基站方法
+ * 创建北斗方法
  */
 function createBeidou() {
     // 拼写参数串
@@ -167,13 +184,13 @@ function createBeidou() {
 }
 
 /**
- * 删除蓝牙基站方法
+ * 删除北斗方法
  * 可批量删除
  */
 function deleteBeidou() {
-    // 收集复选框选中的蓝牙基站集合
+    // 收集复选框选中的北斗集合
     let beidous = $('#beidouTable').bootstrapTable('getSelections');
-    // 拼写参数串，按“蓝牙基站主键id=id”的格式累加
+    // 拼写参数串，按“北斗主键id=id”的格式累加
     let param = "";
     beidous.forEach(function (item) {
         param += item["id"] + "=id&";
@@ -183,7 +200,7 @@ function deleteBeidou() {
     $.post('/beidou/data/delete', param, function (data) {
             if (!jQuery.isEmptyObject(data)) {
                 alert(data);
-                // 刷新蓝牙基站列表
+                // 刷新北斗列表
                 $('#beidouTable').bootstrapTable('refresh');
             }
         }
@@ -191,7 +208,7 @@ function deleteBeidou() {
 }
 
 /**
- * 更新蓝牙基站方法
+ * 更新北斗方法
  */
 function updateBeidou() {
     // 拼写参数串

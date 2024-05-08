@@ -37,6 +37,14 @@ class BeidouModel(db.Model):
     def get_all_beidou():
         return db.session.query(BeidouModel).all()
 
+    # 根据主键号查找北斗方法
+    @staticmethod
+    def get_beidou_by_id(id):
+        return db.session.query(BeidouModel, CardModel).join(CardModel,
+                                                             BeidouModel.beidou_id == CardModel.beidou_id).filter(
+            BeidouModel.id == id).all()
+        # return db.session.query(BeidouModel).filter_by(id=id).first()
+
     # 获取指定北斗数传设备
     @staticmethod
     def get_beidou_by_beidou_id(beidou_id):

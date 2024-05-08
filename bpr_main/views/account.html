@@ -101,8 +101,8 @@
                                 {{ form.board_id.label(for="boardId") }}
                             </div>
                             <div class="form-check form-switch mb-3">
-                                {{ form.is_admin(type="checkbox", class="form-check-input", id="isAdmin", role="switch", placeholder="是否是管理员") }}
-                                {{ form.is_admin.label(for="isAdmin") }}
+                                {{ form.is_admin(type="checkbox", class="form-check-input text-white", id="isAdmin", role="switch", placeholder="是否是管理员") }}
+                                {{ form.is_admin.label(for="isAdmin", class="text-white") }}
                             </div>
                             <div class="d-grid gap-2">
                                 {{ form.submit(class="btn btn-success") }}

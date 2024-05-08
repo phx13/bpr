@@ -42,6 +42,10 @@
                                             {{ form.board_id.label(for="boardId") }}
                                         </div>
                                         <div class="form-floating mb-3">
+                                            {{ form.board_id(type="text", class="form-control", id="cardId", placeholder="北斗卡号") }}
+                                            {{ form.board_id.label(for="cardId") }}
+                                        </div>
+                                        <div class="form-floating mb-3">
                                             {{ form.position_x(type="text", class="form-control", id="beidouPositionX", placeholder="x坐标") }}
                                             {{ form.position_x.label(for="beidouPositionX") }}
                                         </div>
@@ -54,7 +58,7 @@
                                             {{ form.position_z.label(for="beidouPositionZ") }}
                                         </div>
                                         <div class="form-floating mb-3">
-                                            {{ form.mode(type="text", class="form-control", id="mode", placeholder="工作模式") }}
+                                            {{ form.mode(type="text", class="form-control", id="mode", placeholder="在线情况") }}
                                             {{ form.mode.label(for="mode") }}
                                         </div>
                                     </form>

@@ -85,28 +85,29 @@
 */
 
 .indexEarth {
-    background: url("../../images/thumbs/indexMap.jfif") repeat-x 0 0; /* 背景图片在水平方向复制*/
-    height: 450px;
+    background: url("../../images/thumbs/indexMap.jpg") repeat-x 0 0; /* 背景图片在水平方向复制*/
+    height: 600px;
     left: 50%;
-    margin: -225px 0 0 -225px;
+    margin: -250px 0 0 -300px;
     position: absolute;
     top: 50%;
-    width: 450px;
+    width: 600px;
     border: 1px solid rgba(26, 18, 101, 0.3); /*形成圆边效果，视觉效果更好，不用也行*/
-    border-radius: 225px; /*使地球形成圆形效果*/
+    border-radius: 300px; /*使地球形成圆形效果*/
     box-shadow: -8px 0 25px rgba(256, 256, 256, 0.3), -1px -2px 14px rgba(256, 256, 256, 0.5) inset; /*形成圆形外面的模糊月晕效果*/
     -webkit-animation: loop 20s linear infinite;
+    cursor: pointer;
 }
 
 .indexEarth:before {
     content: "";
-    border-radius: 225px;
+    border-radius: 300px;
     box-shadow: -150px -6px 25px rgba(0, 0, 0, 0.7) inset; /*弧形阴影，形成白天黑夜效果*/
     left: 0;
     position: absolute;
     top: 0;
-    height: 450px;
-    width: 450px;
+    height: 600px;
+    width: 600px;
 }
 
 @keyframes loop {
@@ -114,7 +115,7 @@
         background-position: 0 0
     }
     to {
-        background-position: -900px 0
+        background-position: -1200px 0
     }
 }
 

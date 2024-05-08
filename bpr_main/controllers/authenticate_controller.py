@@ -50,15 +50,6 @@ def login():
             return '用户不存在'
         elif form.password.data != user.password:
             return '用户名或密码错误'
-        # # 如果用户不存在或者密码错误
-        # if not user or form.password.data != user.password:
-        #     # 返回页面重新登录
-        #     return render_template('login.html', form=form)
-        # # 登录成功记录当前用户
-        # login_user(user, remember=True)
-        # # 登录成功返回首页
-        # return redirect(url_for('index_bp.index_page'))
-
     return render_template('login.html', form=form)
 
 

@@ -33,6 +33,7 @@ def load_board_beidou_list(board_id):
     beidou_list = BeidouModel.get_beidou_by_board_id(board_id)
     return SerializationHelper.join_model_to_list(beidou_list)
 
+
 # 新增北斗数传信息
 @beidou_bp.route('/beidou/data/add', methods=['POST'])
 def add_beidou():
@@ -51,7 +52,7 @@ def add_beidou():
     return '北斗数传信息添加成功\n北斗数传号：' + beidou.beidou_id
 
 
-# 新增北斗数传信息
+# 更新北斗数传信息
 @beidou_bp.route('/beidou/data/update/<id>', methods=['POST'])
 def update_beidou_by_id(id):
     # 根据主键id查找北斗数传
@@ -84,3 +85,16 @@ def delete_beidou_by_id():
             BeidouModel.delete_beidou(beidou)
         return '北斗数传信息删除成功\n北斗数传号：' + beidou.beidou_id
     return '删除失败'
+
+
+@beidou_bp.route('/beidou/data/load/<id>', methods=['GET'])
+def load_beidou_by_id(id):
+    # 根据北斗数传主键id查找北斗数传
+    beidou = BeidouModel.get_beidou_by_id(id)
+    # 如果北斗数传存在
+    if beidou:
+        # 返回北斗数传信息
+        print(SerializationHelper.model_to_list(beidou))
+        # return SerializationHelper.model_to_list([beidou])
+        return SerializationHelper.model_to_list(beidou)
+    return '获取失败'

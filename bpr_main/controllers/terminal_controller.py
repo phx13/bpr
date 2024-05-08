@@ -95,7 +95,7 @@ def load_board_online_terminal_list(board_id):
                     #     terminal_indoor_info.update_time = time.strftime('%Y-%m-%d %H:%M:%S')
                     #     print(terminal_indoor_info.position_y)
                     #     TerminalIndoorInfoModel.add_terminal_indoor_info(terminal_indoor_info)
-                    previous_distance = float(load_all_terminal_indoor_info_by_terminal_id(terminal)[-1]['position_y'])
+                    previous_distance = float(load_all_terminal_indoor_info_by_terminal_id(terminal)[-1]['position_z'])
                     if abs(previous_distance - distance) > 2:
                         new_distance = distance
                     else:
@@ -226,5 +226,5 @@ def add_online_terminal_gis_info():
     terminal_gis_info.create_time = time.strftime('%Y-%m-%d %H:%M:%S')
     terminal_gis_info.update_time = time.strftime('%Y-%m-%d %H:%M:%S')
     # 添加终端室外定位信息
-    TerminalIndoorInfoModel.add_terminal_indoor_info(terminal_gis_info)
+    TerminalGISInfoModel.add_terminal_gis_info(terminal_gis_info)
     return '终端室外定位更新成功\n终端号：' + terminal_gis_info.terminal_id + '\n室外定位[' + terminal_gis_info.lon + ',' + terminal_gis_info.lat + ']'

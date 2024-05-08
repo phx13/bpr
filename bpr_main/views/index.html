@@ -38,19 +38,7 @@
                 <div id="terminalIndexChart" class="indexChart p-2"></div>
             </div>
             <div class="col-6">
-                {#                <div class="indexImageContainer">#}
-                {#                    <div class="indexImages">#}
-                {#                        <img class="indexImage" src="/images/thumbs/index1.jpg">#}
-                {#                        <img class="indexImage" src="/images/thumbs/index2.webp">#}
-                {#                        <img class="indexImage" src="/images/thumbs/index3.jpg">#}
-                {#                        <img class="indexImage" src="/images/thumbs/index4.jpg">#}
-                {#                        <img class="indexImage" src="/images/thumbs/index5.webp">#}
-                {#                        <img class="indexImage" src="/images/thumbs/index6.png">#}
-                {#                    </div>#}
-                {#                </div>#}
-                {#                <p class="display-6 text-center">XXX</p>#}
-                {#                <div class="indexChart"></div>#}
-                <div class="indexEarth"></div>
+                <a class="indexEarth" href="{{ url_for('gis_bp.gis_page') }}"></a>
             </div>
             <div class="col-3">
                 <div class="subtitle-3">
@@ -60,7 +48,7 @@
                 </div>
                 <ul class="list-group list-group-flush indexPanel p-2">
                     <li class="list-group-item text-center">用户名：{{ current_user.username }}</li>
-                    <li class="list-group-item text-center">权限角色：
+                    <li class="list-group-item text-center">角色权限：
                         {% if current_user.is_admin %}
                             管理员
                         {% else %}
