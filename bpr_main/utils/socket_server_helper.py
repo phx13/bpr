@@ -74,7 +74,7 @@ def tcp_server():
                 terminal_id = info[0].split(':')[1]
                 rssi = int(info[1])
                 bluetooth_id = info[2].split('\\')[0]
-                # print(terminal_id, rssi, bluetooth_id)
+                print(terminal_id, rssi, bluetooth_id)
                 terminal_list[terminal_id] = rssi
                 with app.app_context():
                     bluetooth_info = BluetoothInfoModel()

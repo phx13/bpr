@@ -151,11 +151,19 @@ function updateBoardInfo() {
     boardInterval = setInterval(function () {
         request.get(loadBoardInfoUrl).then(res => {
             // 更新三维地球坐标点
-            boardBillboardPosition = earthManager.lonLatHeight2Position(res.data['board_lon'], res.data['board_lat'], 0);
-            boardModelPosition = earthManager.lonLatHeight2Position(res.data['board_lon'], res.data['board_lat'], 0);
+            boardBillboardPosition = earthManager
+                .lonLatHeight2Position(res.data['board_lon']
+                    , res.data['board_lat'], 0);
+            boardModelPosition = earthManager
+                .lonLatHeight2Position(res.data['board_lon']
+                    , res.data['board_lat'], 0);
 
             // 更新二维地图坐标点
-            mapManager.setFeatureGeomCoord(mapManager.getLayerById('boardIconLayer').getSource().getFeatureById('boardIcon'), [res.data['board_lon'], res.data['board_lat']]);
+            mapManager.setFeatureGeomCoord(mapManager
+                    .getLayerById('boardIconLayer')
+                .getSource()
+                    .getFeatureById('boardIcon'),
+                [res.data['board_lon'], res.data['board_lat']]);
         })
     }, timeInterval);
 }

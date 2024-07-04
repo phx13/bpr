@@ -39,13 +39,12 @@ def add_beidou_message():
         port = request.form.get('port').strip()
         baud = request.form.get('baud').strip()
         # 短报文发送指令
-        # $--TXA,xxxxxxx,x,x,c--c*hh<CR><LF>
-        # message_command = 'CCTXA,0' + target_card_id + ',1,1,' + message
-        # message_bcc_checksum = bcc_checksum(ascii2hex(message_command))
-        # MESSAGE_COMMAND = '$' + message_command + '*' + message_bcc_checksum + '\r\n'
-
-        # 混合模式传输；电文内容首字母固定为“A4”，按先后顺序每4bit截取一次，转换成16进制数，每个16进制数以ASCII的形式表示。如数据长度不是4bit的整数倍，高位补0，凑成整数倍
-        message_command = 'CCTXA,0' + target_card_id + ',1,2,' + 'A4' + message
+        # 混合模式传输；电文内容首字母固定为“A4”，按先后顺序每4bit截取一次，转换成16进制数，
+        # 每个16进制数以ASCII的形式表示。如数据长度不是4bit的整数倍，高位补0，凑成整数倍
+        # 将字符串编码成GBK格式的字节串，再转换成十六进制表示
+        # 比如'你好T123'会转换成'C4E3BAC354313233'
+        hex_string = message.encode('gbk').hex().upper()
+        message_command = 'CCTXA,0' + target_card_id + ',1,2,' + 'A4' + hex_string
         message_bcc_checksum = bcc_checksum(ascii2hex(message_command))
         MESSAGE_COMMAND = '$' + message_command + '*' + message_bcc_checksum + '\r\n'
         # 根据串口号和波特率创建串口实例
